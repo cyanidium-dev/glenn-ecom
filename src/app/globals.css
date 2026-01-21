@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-roboto: var(--font-roboto);
+  --font-rubik: var(--font-rubik);
+  --font-actay: var(--font-actay);
+}
+
