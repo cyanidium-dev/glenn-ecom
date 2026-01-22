@@ -1,5 +1,4 @@
 import OrderBlock from "./OrderBlock";
-import Container from "../shared/container/Container";
 
 interface ItemHeadingProps {
     title: string;
@@ -8,12 +7,10 @@ interface ItemHeadingProps {
 
 export default function ItemHeading({ title, price }: ItemHeadingProps) {
     return (
-        <section className="pt-5">
-            <Container className="px-[15px] ssm:px-[30px]">
-                <h1 className="font-andes text-[48px] leading-[44px] lowercase mb-[10px] tracking-0">{title}</h1>
-                <p className="text-[14px] leading-[17px] mb-5">{price}.- CHF</p>
-                <OrderBlock />
-            </Container>
+        <section>
+            <h1 className="font-andes text-[48px] lg:text-[56px] leading-[91%] lowercase mb-[10px] tracking-0">{title}</h1>
+            <p className="text-[14px] lg:text-[18px] leading-[121%] lg:leading-[117%] mb-5 lg:mb-[15px]">{price}.- CHF</p>
+            <OrderBlock />
         </section>
     );
 }

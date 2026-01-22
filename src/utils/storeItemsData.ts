@@ -67,6 +67,7 @@ export const storeItemsData: Item[] = [
             _type: "span",
             _key: "1",
             text: "First Pressing · 180g Red Vinyl · 45 RPM",
+            marks: ["strong"],
           },
         ],
       },
@@ -99,10 +100,85 @@ export const storeItemsData: Item[] = [
         ],
       },
     ],
-    tracklist: {
-      sideA: ["1. Love's Just Another Word", "2. Clouds"],
-      sideB: ["3. The Unspoken Part", "4. 6/10"],
-    },
+    tracklist: [
+      {
+        _type: "block",
+        _key: "side-a-label",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "side-a-text",
+            text: "Side A",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "side-a-list",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "track-1",
+            text: "Love's Just Another Word",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "side-a-list-2",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "track-2",
+            text: "Clouds",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "side-b-label",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "side-b-text",
+            text: "Side B",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "side-b-list",
+        listItem: "number",
+        level: 1,
+        start: 3,
+        children: [
+          {
+            _type: "span",
+            _key: "track-3",
+            text: "The Unspoken Part",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "side-b-list-2",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "track-4",
+            text: "6/10",
+          },
+        ],
+      },
+    ],
     image: {
       url: "/images/resilence_ave@2x.png",
       alt: "Resilience Avenue Vinyl",
@@ -175,6 +251,7 @@ export const storeItemsData: Item[] = [
             _type: "span",
             _key: "1",
             text: "First Run · 2025 Issue · Vinyl-CD Format",
+            marks: ["strong"],
           },
         ],
       },
@@ -207,10 +284,60 @@ export const storeItemsData: Item[] = [
         ],
       },
     ],
-    tracklist: {
-      sideA: ["1. Love's Just Another Word", "2. Clouds"],
-      sideB: ["3. The Unspoken Part", "4. 6/10"],
-    },
+    tracklist: [
+      {
+        _type: "block",
+        _key: "cd-list-1",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "cd-track-1",
+            text: "Love's Just Another Word",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "cd-list-2",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "cd-track-2",
+            text: "Clouds",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "cd-list-3",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "cd-track-3",
+            text: "The Unspoken Part",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "cd-list-4",
+        listItem: "number",
+        level: 1,
+        children: [
+          {
+            _type: "span",
+            _key: "cd-track-4",
+            text: "6/10",
+          },
+        ],
+      },
+    ],
     image: { url: "/images/resilence_ave@2x.png", alt: "Resilience Avenue CD" },
     isVinyl: false,
   },

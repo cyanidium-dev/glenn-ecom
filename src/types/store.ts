@@ -9,15 +9,18 @@ export interface Item {
   price: number;
   aboutEP: PortableTextBlock[];
   aboutMedium: PortableTextBlock[];
-  tracklist: { sideA: string[]; sideB: string[] };
+  tracklist: PortableTextBlock[];
   image: { url: string; alt: string };
   isVinyl: boolean;
 }
 
-// Type for text block from Sanity (normal text only)
+// Type for text block from Sanity (supports normal blocks and list items)
 export type PortableTextBlock = SanityPortableTextBlock & {
   _type: "block";
   style?: "normal";
+  listItem?: "bullet" | "number";
+  level?: number;
+  start?: number; // Starting number for ordered lists
   children: {
     _key: string;
     _type: "span";
