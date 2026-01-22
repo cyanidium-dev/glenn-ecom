@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import ItemHeading from "@/components/storeItemPage/ItemHeading";
 import ItemDescription from "@/components/storeItemPage/ItemDescription";
 import Link from "next/link";
@@ -20,10 +21,7 @@ export async function generateMetadata({
   const itemData = storeItemsData.find((itemData) => itemData.slug === item);
 
   if (!itemData) {
-    return {
-      title: "Item not found",
-      description: "The requested item could not be found.",
-    };
+    notFound();
   }
 
   const description = extractTextFromBlocks(itemData.aboutEP);
@@ -53,7 +51,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
   const { item } = await params;
   const itemData = storeItemsData.find((itemData) => itemData.slug === item);
   if (!itemData) {
-    return <div>Item not found</div>;
+    notFound();
   }
   return (
     <div className="pt-[141px] lg:pt-[192px] lg:pb-50 pb-25">
