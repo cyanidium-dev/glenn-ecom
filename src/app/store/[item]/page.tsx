@@ -18,23 +18,26 @@ export async function generateMetadata({
   params,
 }: ItemPageProps): Promise<Metadata> {
   const { item } = await params;
-  const itemData = storeItemsData.find((itemData) => itemData.slug === item);
+  const itemData = storeItemsData.find(itemData => itemData.slug === item);
 
   if (!itemData) {
     notFound();
   }
 
   const description = extractTextFromBlocks(itemData.aboutEP);
-  const shortDescription = description.length > 160 
-    ? description.substring(0, 157) + "..." 
-    : description;
+  const shortDescription =
+    description.length > 160
+      ? description.substring(0, 157) + "..."
+      : description;
 
   return {
     title: `${itemData.title} | Store`,
-    description: shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
+    description:
+      shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
     openGraph: {
       title: itemData.title,
-      description: shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
+      description:
+        shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
       images: [
         {
           url: itemData.image.url,
@@ -49,7 +52,7 @@ export async function generateMetadata({
 
 export default async function ItemPage({ params }: ItemPageProps) {
   const { item } = await params;
-  const itemData = storeItemsData.find((itemData) => itemData.slug === item);
+  const itemData = storeItemsData.find(itemData => itemData.slug === item);
   if (!itemData) {
     notFound();
   }
@@ -69,7 +72,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
           {itemData.isVinyl && (
             <Link
               href="/care-instructions"
-              className="text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] underline block"
+              className="text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] underline block hover:text-white/60 transition duration-300 ease-in-out"
             >
               Care Instructions
             </Link>
