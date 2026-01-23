@@ -57,18 +57,20 @@ export default async function ItemPage({ params }: ItemPageProps) {
   }
   return (
     <div className="pt-[141px] lg:pt-[192px] lg:pb-50 pb-25">
-      <Container className="px-[15px] ssm:px-[30px] flex flex-col lg:flex-row lg:gap-20">
-        <ImageBlock image={itemData.image} isVinyl={itemData.isVinyl} />
-        <div className="pt-10 lg:pt-0 lg:w-[44.7%] lg:shrink-0">
-          <ItemHeading title={itemData.title} price={itemData.price} />
-          <ItemDescription
-            releaseDate={itemData.releaseDate}
-            aboutEP={itemData.aboutEP}
-            aboutMedium={itemData.aboutMedium}
-            tracklist={itemData.tracklist}
-            isVinyl={itemData.isVinyl}
-          />
-        </div>
+      <Container className="px-[15px] ssm:px-[30px]">
+        <article className="flex flex-col lg:flex-row lg:gap-20">
+          <ImageBlock image={itemData.image} isVinyl={itemData.isVinyl} />
+          <div className="pt-10 lg:pt-0 lg:w-[44.7%] lg:shrink-0">
+            <ItemHeading title={itemData.title} price={itemData.price} />
+            <ItemDescription
+              releaseDate={itemData.releaseDate}
+              aboutEP={itemData.aboutEP}
+              aboutMedium={itemData.aboutMedium}
+              tracklist={itemData.tracklist}
+              isVinyl={itemData.isVinyl}
+            />
+          </div>
+        </article>
       </Container>
     </div>
   );
