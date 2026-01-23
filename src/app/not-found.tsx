@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <section className="pt-[231px] lg:pt-[218px] lg:pb-[128px] pb-[167px]">
       <Container className="px-[15px] ssm:px-[20px]">
-        <motion.h2
+        <motion.h1
           initial="hidden"
           whileInView="visible"
           exit="exit"
@@ -18,7 +18,7 @@ export default function NotFound() {
           404
           <br />
           Page not found
-        </motion.h2>
+        </motion.h1>
         <motion.p
           initial="hidden"
           whileInView="visible"
