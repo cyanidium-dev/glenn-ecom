@@ -1,6 +1,7 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useId, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import Select, { StylesConfig, components } from "react-select";
 import SelectArrowIcon from "../icons/SelectArrowIcon";
 
 interface SelectInputProps {
@@ -16,80 +17,186 @@ export default function SelectInput({
   onChange,
   className = "",
 }: SelectInputProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const selectInputId = useId();
   const [selectedValue, setSelectedValue] = useState(defaultValue);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
   const selectedOption = options.find(opt => opt.value === selectedValue);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+  const handleChange = (selected: { value: string; label: string } | null) => {
+    if (selected) {
+      setSelectedValue(selected.value);
+      onChange(selected.value);
     }
+  };
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  // Custom DropdownIndicator component to use our SelectArrowIcon
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const DropdownIndicator = (props: any) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <div
+          className="transition-transform duration-300 ease-in-out"
+          style={{
+            transform: props.selectProps.menuIsOpen
+              ? "rotate(180deg)"
+              : "rotate(0deg)",
+          }}
+        >
+          <SelectArrowIcon className="w-4 h-[9px]" />
+        </div>
+      </components.DropdownIndicator>
+    );
+  };
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) return;
+  // Custom Menu component to add gradient border effect
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Menu = (props: any) => {
+    return (
+      <components.Menu {...props}>
+        <div className="relative" style={{ backgroundColor: "#93001c" }}>
+          {/* Gradient border effect */}
+          <div
+            className="absolute z-20 inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 89.31%, rgba(255, 255, 255, 0.2) 144.45%, rgba(255, 255, 255, 0.7) 210.6%)",
+              padding: "1.5px",
+              WebkitMask:
+                "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
+            }}
+          />
+          <div className="relative z-10" style={{ backgroundColor: "#93001c" }}>
+            {props.children}
+          </div>
+        </div>
+      </components.Menu>
+    );
+  };
 
-      if (event.key === "Escape") {
-        setIsOpen(false);
-        buttonRef.current?.focus();
-      } else if (event.key === "ArrowDown") {
-        event.preventDefault();
-        const currentIndex = options.findIndex(
-          opt => opt.value === selectedValue
-        );
-        const nextIndex = Math.min(currentIndex + 1, options.length - 1);
-        setSelectedValue(options[nextIndex].value);
-      } else if (event.key === "ArrowUp") {
-        event.preventDefault();
-        const currentIndex = options.findIndex(
-          opt => opt.value === selectedValue
-        );
-        const prevIndex = Math.max(currentIndex - 1, 0);
-        setSelectedValue(options[prevIndex].value);
-      } else if (event.key === "Enter") {
-        event.preventDefault();
-        onChange(selectedValue);
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, selectedValue, options, onChange]);
-
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    onChange(value);
-    setIsOpen(false);
+  // Custom styles to match the original design
+  const customStyles: StylesConfig<{ value: string; label: string }, false> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: (provided: any, state: any) => ({
+      ...provided,
+      width: "100%",
+      minHeight: "32px",
+      height: "32px",
+      "@media (min-width: 1024px)": {
+        minHeight: "40px",
+        height: "40px",
+      },
+      backgroundColor: "transparent",
+      border: "none",
+      boxShadow: "none",
+      cursor: "pointer",
+      padding: 0,
+      opacity: state.isFocused ? 0.8 : 1,
+      transform: state.isFocused ? "scale(0.98)" : "scale(1)",
+      transition: "opacity 300ms ease-in-out, transform 300ms ease-in-out",
+      "&:hover": {
+        border: "none",
+        opacity: 0.8,
+      },
+      "&:active": {
+        transform: "scale(0.98)",
+      },
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    valueContainer: (provided: any) => ({
+      ...provided,
+      padding: 0,
+      paddingLeft: "9px",
+      paddingRight: "35px",
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    singleValue: (provided: any) => ({
+      ...provided,
+      color: "#ffffff",
+      fontSize: "14px",
+      lineHeight: "1",
+      "@media (min-width: 1024px)": {
+        fontSize: "18px",
+      },
+      fontWeight: 400,
+      margin: 0,
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    input: (provided: any) => ({
+      ...provided,
+      color: "#ffffff",
+      margin: 0,
+      padding: 0,
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    indicatorsContainer: (provided: any) => ({
+      ...provided,
+      padding: 0,
+      paddingRight: "11px",
+    }),
+    indicatorSeparator: () => ({
+      display: "none",
+    }),
+    dropdownIndicator: () => ({
+      padding: 0,
+      color: "#ffffff",
+      "&:hover": {
+        color: "#ffffff",
+      },
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    menu: (provided: any) => ({
+      ...provided,
+      backgroundColor: "#93001c !important",
+      border: "1.5px solid #ffffff",
+      borderRadius: 0,
+      marginTop: "4px",
+      zIndex: 9999,
+      overflow: "hidden",
+      boxShadow: "none",
+      position: "absolute",
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    menuList: (provided: any) => ({
+      ...provided,
+      padding: 0,
+      backgroundColor: "#93001c !important",
+      overflow: "hidden",
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    option: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor:
+        state.isSelected
+          ? "#ffffff !important"
+          : state.isFocused
+            ? "rgba(255, 255, 255, 0.1) !important"
+            : "#93001c !important",
+      color: state.isSelected ? "#93001c" : "#ffffff",
+      padding: "8px 9px",
+      cursor: "pointer",
+      fontSize: "14px",
+      lineHeight: "1",
+      "@media (min-width: 1024px)": {
+        fontSize: "18px",
+      },
+      fontWeight: state.isSelected ? 500 : 400,
+      "&:active": {
+        backgroundColor: state.isSelected
+          ? "#ffffff !important"
+          : "rgba(255, 255, 255, 0.1) !important",
+      },
+    }),
   };
 
   return (
     <div
-      ref={containerRef}
       className={twMerge("relative w-[92px] h-[32px] lg:h-[40px]", className)}
     >
+      {/* Gradient border effect */}
       <div
         className="absolute z-0 inset-0 pointer-events-none"
         style={{
@@ -102,64 +209,20 @@ export default function SelectInput({
           maskComposite: "exclude",
         }}
       />
-      <button
-        ref={buttonRef}
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative z-10 w-full h-[32px] lg:h-[40px] px-[9px] pr-[35px] bg-transparent text-white text-[14px] leading-none lg:text-[18px] 
-                   cursor-pointer
-                   border-none outline-none
-                   hover:opacity-80 active:scale-[98%] 
-                   will-change-transform transition duration-300 ease-in-out
-                   flex items-center justify-start"
-      >
-        <span className="truncate">{selectedOption?.label || ""}</span>
-      </button>
-      <div
-        className="absolute z-10 right-[11px] top-1/2 pointer-events-none transition duration-300 ease-in-out"
-        style={{
-          transform: `translateY(-50%) ${isOpen ? "rotate(180deg)" : "rotate(0deg)"}`,
-        }}
-      >
-        <SelectArrowIcon className="w-4 h-[9px]" />
-      </div>
-
-      {/* Dropdown */}
-      {isOpen && (
-        <div className="absolute z-20 top-full mt-1 w-full">
-          <div className="relative">
-            <div
-              className="absolute z-20 inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 89.31%, rgba(255, 255, 255, 0.2) 144.45%, rgba(255, 255, 255, 0.7) 210.6%)",
-                padding: "1.5px",
-                WebkitMask:
-                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                WebkitMaskComposite: "xor",
-                maskComposite: "exclude",
-              }}
-            />
-            <div className="relative z-10 bg-red">
-              {options.map(option => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => handleSelect(option.value)}
-                  className={`w-full text-left px-[9px] py-2 text-[14px] leading-none lg:text-[18px] transition-colors duration-200
-                    ${
-                      option.value === selectedValue
-                        ? "bg-white text-red font-medium"
-                        : "bg-transparent text-white hover:bg-white/10"
-                    }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <Select
+        instanceId={selectInputId}
+        options={options}
+        value={selectedOption}
+        onChange={handleChange}
+        styles={customStyles}
+        components={{ DropdownIndicator, Menu }}
+        isSearchable={false}
+        menuPosition="absolute"
+        menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
+        menuShouldScrollIntoView={false}
+        className="react-select-container"
+        classNamePrefix="react-select"
+      />
     </div>
   );
 }

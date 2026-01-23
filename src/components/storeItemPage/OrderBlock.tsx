@@ -1,6 +1,8 @@
 "use client";
 import MainButton from "../shared/buttons/MainButton";
 import SelectInput from "../shared/selectInput/SelectInput";
+import * as motion from "motion/react-client";
+import { fadeInAnimation } from "@/utils/utils/animationVariants";
 
 export default function OrderBlock() {
   const options = [
@@ -17,18 +19,41 @@ export default function OrderBlock() {
 
   return (
     <div>
-      <p className="text-[14px] lg:text-[18px] leading-[121%] lg:leading-[117%] mb-[5px] lg:mb-2">
+      <motion.p
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeInAnimation({ y: 20, delay: 0.3 })}
+        className="text-[14px] lg:text-[18px] leading-[121%] lg:leading-[117%] mb-[5px] lg:mb-2"
+      >
         Quantity
-      </p>
-      <SelectInput
-        options={options}
-        defaultValue="1"
-        onChange={handleChange}
-        className="mb-5 lg:mb-[17px]"
-      />
-      <MainButton variant="outline" className="h-10 md:h-[45px]">
-        Add to Basket
-      </MainButton>
+      </motion.p>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeInAnimation({ y: 20, delay: 0.4 })}
+      >
+        <SelectInput
+          options={options}
+          defaultValue="1"
+          onChange={handleChange}
+          className="mb-5 lg:mb-[17px]"
+        />
+      </motion.div>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeInAnimation({ y: 20, delay: 0.5 })}
+      >
+        <MainButton variant="outline" className="h-10 md:h-[45px]">
+          Add to Basket
+        </MainButton>
+      </motion.div>
     </div>
   );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ItemHeading from "@/components/storeItemPage/ItemHeading";
 import ItemDescription from "@/components/storeItemPage/ItemDescription";
-import Link from "next/link";
 import ImageBlock from "@/components/storeItemPage/ImageBlock";
 import { storeItemsData } from "@/utils/storeItemsData";
 import Container from "@/components/shared/container/Container";
@@ -67,16 +66,8 @@ export default async function ItemPage({ params }: ItemPageProps) {
             aboutEP={itemData.aboutEP}
             aboutMedium={itemData.aboutMedium}
             tracklist={itemData.tracklist}
+            isVinyl={itemData.isVinyl}
           />
-
-          {itemData.isVinyl && (
-            <Link
-              href="/care-instructions"
-              className="text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] underline block hover:text-white/60 transition duration-300 ease-in-out"
-            >
-              Care Instructions
-            </Link>
-          )}
         </div>
       </Container>
     </div>
