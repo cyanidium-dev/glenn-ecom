@@ -12,7 +12,7 @@ interface ImageBlockProps {
 
 export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
   return (
-    <section className="relative lg:pt-[147px] lg:w-[49.4%]">
+    <div className="relative lg:pt-[147px] lg:w-[49.4%]">
       <div className="relative mx-auto max-w-[692px] aspect-329/223 md:aspect-692/469">
         <motion.div
           initial="hidden"
@@ -70,6 +70,6 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
           </motion.div>
         )}
       </div>
-    </section>
+    </div>
   );
 }
