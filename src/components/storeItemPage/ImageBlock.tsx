@@ -12,7 +12,7 @@ interface ImageBlockProps {
 
 export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
   return (
-    <section className="relative lg:pt-[147px] lg:w-[49.4%]">
+    <div className="relative lg:pt-[147px] lg:w-[49.4%]">
       <div className="relative mx-auto max-w-[692px] aspect-329/223 md:aspect-692/469">
         <motion.div
           initial="hidden"
@@ -26,6 +26,8 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
             src={image.url}
             alt={image.alt}
             fill
+            sizes="(max-width: 768px) 220px, 463px"
+            priority
             className="object-cover"
           />
         </motion.div>
@@ -42,6 +44,8 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
               src="/images/vinyl.webp"
               alt="Vinyl"
               fill
+              sizes="(max-width: 768px) 218px, 458px"
+              priority
               className="object-cover"
             />
           </motion.div>
@@ -59,11 +63,13 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
               src="/images/cd.webp"
               alt="CD"
               fill
+              sizes="(max-width: 768px) 218px, 458px"
+              priority
               className="object-cover"
             />
           </motion.div>
         )}
       </div>
-    </section>
+    </div>
   );
 }
