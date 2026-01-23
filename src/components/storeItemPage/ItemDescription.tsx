@@ -31,7 +31,7 @@ export default function ItemDescription({
       >
         Release date: {releaseDate}
       </motion.p>
-      <article className="mb-[40px] lg:mb-[50px]">
+      <div className="mb-[40px] lg:mb-[50px]">
         <motion.h2
           initial="hidden"
           whileInView="visible"
@@ -52,8 +52,8 @@ export default function ItemDescription({
         >
           <PortableTextRenderer value={aboutEP} />
         </motion.div>
-      </article>
-      <article className="mb-[30px] lg:mb-[40px]">
+      </div>
+      <div className="mb-[30px] lg:mb-[40px]">
         <motion.h2
           initial="hidden"
           whileInView="visible"
@@ -74,8 +74,8 @@ export default function ItemDescription({
         >
           <PortableTextRenderer value={aboutMedium} />
         </motion.div>
-      </article>
-      <article>
+      </div>
+      <div>
         <motion.h2
           initial="hidden"
           whileInView="visible"
@@ -96,7 +96,7 @@ export default function ItemDescription({
         >
           <PortableTextRenderer value={tracklist} />
         </motion.div>
-      </article>
+      </div>
       {isVinyl && (
         <motion.div
           initial="hidden"
