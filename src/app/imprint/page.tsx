@@ -42,7 +42,13 @@ export default function Imprint() {
             Website owner and responsible for content:
             {"\n"}Mathias Biehle
             {"\n"}Switzerland
-            {"\n"}contact@glenngarbo.com
+            {"\n"}
+            <a
+              href="mailto:contact@glenngarbo.com"
+              className="underline hover:text-white/60 transition duration-300 ease-in-out"
+            >
+              contact@glenngarbo.com
+            </a>
           </p>
         </motion.div>
       </Container>
