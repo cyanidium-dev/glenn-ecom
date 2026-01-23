@@ -22,10 +22,12 @@ export default function MainButton({
   onClick,
 }: MainButtonProps) {
   const variantClasses = {
-    white: "bg-white disabled:bg-white/60 text-red hover:bg-[linear-gradient(273.78deg, rgba(255, 255, 255, 0.2) 3.03%, #FFFFFF 50.66%, rgba(255, 255, 255, 0.2) 96.83%)]",
-    outline: "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[1.5px] border-white text-white hover:bg-white hover:text-red",
+    white:
+      "bg-white disabled:bg-white/60 text-red hover:bg-[linear-gradient(273.78deg, rgba(255, 255, 255, 0.2) 3.03%, #FFFFFF 50.66%, rgba(255, 255, 255, 0.2) 96.83%)]",
+    outline:
+      "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[1.5px] border-white text-white hover:bg-white hover:text-red",
     gradient: "bg-transparent disabled:text-white/60 text-white",
-  }
+  };
   return (
     <button
       type={type}
@@ -41,12 +43,12 @@ export default function MainButton({
     >
       {variant === "gradient" && (
         <div
-          className="absolute -z-10 inset-0 rounded-[8px] pointer-events-none"
+          className="absolute z-10 inset-0 pointer-events-none"
           style={{
             opacity: disabled ? 0.5 : 1,
             background:
               "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 38.94%, rgba(255, 255, 255, 0.2) 62.98%, rgba(255, 255, 255, 0.7) 91.83%)",
-            padding: "2px",
+            padding: "1.5px",
             WebkitMask:
               "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
             WebkitMaskComposite: "xor",

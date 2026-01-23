@@ -101,3 +101,34 @@ export const modalVariants = {
     },
   },
 };
+
+export const vinylAnimation = ({
+  delay = 0.7,
+  duration = 1.5,
+  initialRotation = -90,
+  useLCPOptimization = false,
+} = {}) => ({
+  hidden: {
+    opacity: useLCPOptimization ? 0.001 : 0,
+    x: "-50%",
+    rotate: initialRotation,
+    willChange: "opacity, transform",
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    rotate: 0,
+    transition: {
+      duration,
+      delay,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+      ease: [0.42, 0, 1, 1] as const,
+    },
+  },
+});
