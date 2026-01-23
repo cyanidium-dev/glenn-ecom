@@ -60,7 +60,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
       <Container className="px-[15px] ssm:px-[30px]">
         <article className="flex flex-col lg:flex-row lg:gap-20">
           <ImageBlock image={itemData.image} isVinyl={itemData.isVinyl} />
-          <section className="pt-10 lg:pt-0 lg:w-[44.7%] lg:shrink-0">
+          <div className="pt-10 lg:pt-0 lg:w-[44.7%] lg:shrink-0">
             <ItemHeading title={itemData.title} price={itemData.price} />
             <ItemDescription
               releaseDate={itemData.releaseDate}
@@ -69,7 +69,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
               tracklist={itemData.tracklist}
               isVinyl={itemData.isVinyl}
             />
-          </section>
+          </div>
         </article>
       </Container>
     </div>
