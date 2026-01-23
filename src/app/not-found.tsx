@@ -13,7 +13,7 @@ export default function NotFound() {
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.85, y: -30, delay: 0.1 })}
-          className="mb-[30px] lg:mb-5 font-andes text-[86px] ssm:text-[90px] lg:text-[190px] leading-[95%] tracking-0.01em text-center"
+          className="mb-[30px] lg:mb-5 font-andes text-[86px] ssm:text-[90px] lg:text-[190px] leading-[95%] tracking-0.01em text-center lowercase"
         >
           404
           <br />
