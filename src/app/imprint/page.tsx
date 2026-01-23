@@ -20,7 +20,7 @@ export default function Imprint() {
   return (
     <section className="pt-[131px] lg:pt-[200px] pb-[84px] lg:pb-[150px]">
       <Container className="px-[15px] ssm:px-[20px]">
-        <motion.h2
+        <motion.h1
           initial="hidden"
           whileInView="visible"
           exit="exit"
@@ -29,7 +29,7 @@ export default function Imprint() {
           className="mb-[30px] lg:mb-15 mx-auto font-andes text-[48px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase"
         >
           Imprint
-        </motion.h2>
+        </motion.h1>
         <motion.div
           initial="hidden"
           whileInView="visible"
