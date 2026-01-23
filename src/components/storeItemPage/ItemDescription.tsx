@@ -31,66 +31,72 @@ export default function ItemDescription({
       >
         Release date: {releaseDate}
       </motion.p>
-      <motion.h2
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.7 })}
-        className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mb-[15px]"
-      >
-        About the EP:
-      </motion.h2>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.7 })}
-        className="flex flex-col gap-2 lg:gap-[15px]"
-      >
-        <PortableTextRenderer value={aboutEP} />
-      </motion.div>
-      <motion.h2
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.8 })}
-        className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mt-[40px] lg:mt-[50px] mb-[14px] lg:mb-[15px]"
-      >
-        About the Medium:
-      </motion.h2>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.8 })}
-        className="flex flex-col gap-2 lg:gap-[15px]"
-      >
-        <PortableTextRenderer value={aboutMedium} />
-      </motion.div>
-      <motion.h2
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.9 })}
-        className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mt-[30px] lg:mt-[40px] mb-[14px] lg:mb-[15px]"
-      >
-        Track listing:
-      </motion.h2>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.9 })}
-        className="flex flex-col gap-[6px] lg:gap-[5px]"
-      >
-        <PortableTextRenderer value={tracklist} />
-      </motion.div>
+      <div className="mb-[40px] lg:mb-[50px]">
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ y: 20, delay: 0.7 })}
+          className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mb-[15px]"
+        >
+          About the EP:
+        </motion.h2>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ y: 20, delay: 0.7 })}
+          className="flex flex-col gap-2 lg:gap-[15px]"
+        >
+          <PortableTextRenderer value={aboutEP} />
+        </motion.div>
+      </div>
+      <div className="mb-[30px] lg:mb-[40px]">
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ y: 20, delay: 0.8 })}
+          className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mb-[14px] lg:mb-[15px]"
+        >
+          About the Medium:
+        </motion.h2>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ y: 20, delay: 0.8 })}
+          className="flex flex-col gap-2 lg:gap-[15px]"
+        >
+          <PortableTextRenderer value={aboutMedium} />
+        </motion.div>
+      </div>
+      <div>
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ y: 20, delay: 0.9 })}
+          className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mb-[14px] lg:mb-[15px]"
+        >
+          Track listing:
+        </motion.h2>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={fadeInAnimation({ y: 20, delay: 0.9 })}
+          className="flex flex-col gap-[6px] lg:gap-[5px]"
+        >
+          <PortableTextRenderer value={tracklist} />
+        </motion.div>
+      </div>
       {isVinyl && (
         <motion.div
           initial="hidden"
