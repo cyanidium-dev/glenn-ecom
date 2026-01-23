@@ -35,6 +35,10 @@
     color: inherit;
   }
 
+  a.underline {
+    text-decoration: underline;
+  }
+
   img {
     display: block;
     max-width: 100%;
