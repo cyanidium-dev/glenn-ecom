@@ -37,7 +37,7 @@ export default function CareInstructions() {
     "• After each listening session, we advise returning the record immediately to its inner and outer sleeves, safeguarding it from dust accumulation and surface abrasion.",
   ];
   return (
-    <section className="pt-[124px] ssm:pt[131px] lg:pt-[220px] lg:pb-[150px]">
+    <section className="pt-[124px] ssm:pt-[131px] lg:pt-[220px] lg:pb-[150px]">
       <Container className="px-[15px] ssm:px-[20px]">
         <motion.h1
           initial="hidden"
