@@ -14,7 +14,7 @@ const rubik = Rubik({
   weight: ["400", "500", "600"],
 });
 
-const actay = localFont({
+const andes = localFont({
   src: [
     {
       path: "../../public/fonts/Andes.woff2",
@@ -22,7 +22,7 @@ const actay = localFont({
       style: "normal",
     },
   ],
-  variable: "--font-actay",
+  variable: "--font-andes",
   display: "swap",
   preload: true,
   fallback: ["Arial", "sans-serif"],
@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${rubik.variable} ${actay.variable} antialiased`}
+        className={`${roboto.variable} ${rubik.variable} ${andes.variable} antialiased`}
       >
         <main>{children}</main>
       </body>
