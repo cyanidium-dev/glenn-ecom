@@ -39,7 +39,7 @@ export default function CareInstructions() {
   return (
     <section className="pt-[124px] ssm:pt[131px] lg:pt-[220px] lg:pb-[150px]">
       <Container className="px-[15px] ssm:px-[20px]">
-        <motion.h2
+        <motion.h1
           initial="hidden"
           whileInView="visible"
           exit="exit"
@@ -48,7 +48,7 @@ export default function CareInstructions() {
           className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase"
         >
           Care Instructions for the Distinguished Record Collector
-        </motion.h2>
+        </motion.h1>
         <motion.ul
           initial="hidden"
           whileInView="visible"
