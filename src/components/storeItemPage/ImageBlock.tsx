@@ -26,6 +26,8 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
             src={image.url}
             alt={image.alt}
             fill
+            sizes="(max-width: 768px) 220px, 463px"
+            priority
             className="object-cover"
           />
         </motion.div>
@@ -42,6 +44,8 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
               src="/images/vinyl.webp"
               alt="Vinyl"
               fill
+              sizes="(max-width: 768px) 218px, 458px"
+              priority
               className="object-cover"
             />
           </motion.div>
@@ -59,6 +63,8 @@ export default function ImageBlock({ image, isVinyl }: ImageBlockProps) {
               src="/images/cd.webp"
               alt="CD"
               fill
+              sizes="(max-width: 768px) 218px, 458px"
+              priority
               className="object-cover"
             />
           </motion.div>
