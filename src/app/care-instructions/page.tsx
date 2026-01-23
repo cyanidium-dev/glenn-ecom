@@ -45,7 +45,7 @@ export default function CareInstructions() {
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ scale: 0.85, y: -30, delay: 0.1 })}
-          className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center"
+          className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase"
         >
           Care Instructions for the Distinguished Record Collector
         </motion.h2>
