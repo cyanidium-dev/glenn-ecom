@@ -13,6 +13,14 @@ export const metadata: Metadata = {
     description:
       "Privacy policy for Glenn Garbo. Learn how we collect, process, and protect your personal data.",
     type: "website",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || ""}/opengraph-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Glenn Garbo",
+      },
+    ],
   },
 };
 

@@ -13,6 +13,14 @@ export const metadata: Metadata = {
     description:
       "Terms and conditions for Glenn Garbo. Learn about our policies for products, payments, shipping, and returns.",
     type: "website",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || ""}/opengraph-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Glenn Garbo",
+      },
+    ],
   },
 };
 
