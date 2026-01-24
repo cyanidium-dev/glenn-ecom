@@ -5,7 +5,7 @@ import ItemDescription from "@/components/storeItemPage/ItemDescription";
 import ImageBlock from "@/components/storeItemPage/ImageBlock";
 import { storeItemsData } from "@/utils/storeItemsData";
 import Container from "@/components/shared/container/Container";
-import { extractTextFromBlocks } from "@/utils/utils/portableTextUtils";
+import { extractTextFromBlocks } from "@/utils/portableTextUtils";
 
 interface ItemPageProps {
   params: Promise<{

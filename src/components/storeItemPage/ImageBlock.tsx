@@ -1,9 +1,6 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
-import {
-  fadeInAnimation,
-  vinylAnimation,
-} from "@/utils/utils/animationVariants";
+import { fadeInAnimation, vinylAnimation } from "@/utils/animationVariants";
 
 interface ImageBlockProps {
   image: { url: string; alt: string };
