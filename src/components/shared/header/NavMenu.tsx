@@ -46,22 +46,22 @@ export function NavMenuDesktop({
         <NavMenuItem
           menuItem={navMenuList[0]}
           setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-5px)] left-1/2 -translate-x-1/2 ml-[-285px] lg:ml-[-342px]"
+          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[-285px] xl:ml-[-342px]"
         />
         <NavMenuItem
           menuItem={navMenuList[1]}
           setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-5px)] left-1/2 -translate-x-1/2 ml-[-150px] lg:ml-[-205px]"
+          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[-150px] xl:ml-[-205px]"
         />
         <NavMenuItem
           menuItem={navMenuList[2]}
           setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-5px)] left-1/2 -translate-x-1/2 ml-[150px] lg:ml-[208px]"
+          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[150px] xl:ml-[208px]"
         />
         <NavMenuItem
           menuItem={navMenuList[3]}
           setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-5px)] left-1/2 -translate-x-1/2 ml-[285px] lg:ml-[370px]"
+          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[285px] xl:ml-[370px]"
         />
       </ul>
     </nav>
