@@ -23,7 +23,7 @@ export default function Socials({ className = "" }: SocialsProps) {
   ];
 
   return (
-    <motion.div
+    <motion.ul
       initial="hidden"
       whileInView="visible"
       exit="exit"
@@ -35,22 +35,25 @@ export default function Socials({ className = "" }: SocialsProps) {
       )}
     >
       {socialLinks.map(({ icon: Icon, href, label }) => (
-        <Link
+        <li
           key={label}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={label}
-          className="group relative text-red-bright rounded-[8px] overflow-hidden size-[30px] lg:size-[40px] transition duration-300 ease-in-out"
+          className="group relative rounded-[8px] overflow-hidden size-[30px] lg:size-[40px] transition duration-300 ease-in-out"
           style={{
             background:
               "linear-gradient(321.47deg, rgba(255, 255, 255, 0.2) 1.07%, #ffffff 49.3%, rgba(255, 255, 255, 0.2) 96.06%)",
           }}
         >
-          <div className="absolute inset-0 h-full w-full bg-white group-hover:bg-transparent transition duration-300 ease-in-out" />
-          <Icon className="size-full relative z-10" />
-        </Link>
+          <Link
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+          >
+            <div className="absolute inset-0 size-[30px] lg:size-[40px] rounded-[8px] bg-white group-hover:bg-transparent transition duration-300 ease-in-out" />
+            <Icon className="size-[30px] lg:size-[40px] relative z-10  text-red-bright" />
+          </Link>
+        </li>
       ))}
-    </motion.div>
+    </motion.ul>
   );
 }

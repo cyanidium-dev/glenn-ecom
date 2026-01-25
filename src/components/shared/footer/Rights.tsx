@@ -30,9 +30,9 @@ export default function Rights({ className = "" }: RightsProps) {
       >
         &copy; {year} Glenn Garbo. All rights reserved.
       </motion.p>
-      <div className="flex items-center gap-x-[15px] lg:gap-x-[30px]">
+      <ul className="flex items-center gap-x-[15px] lg:gap-x-[30px]">
         {links.map((link, index) => (
-          <motion.div
+          <motion.li
             key={link.href}
             initial="hidden"
             whileInView="visible"
@@ -47,9 +47,9 @@ export default function Rights({ className = "" }: RightsProps) {
             >
               {link.label}
             </Link>
-          </motion.div>
+          </motion.li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
