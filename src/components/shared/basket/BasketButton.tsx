@@ -2,7 +2,10 @@ import BasketIcon from "../icons/BasketIcon";
 
 export default function BasketButton() {
   return (
-    <button className="relative size-[25px] lg:size-[35px] outline-none ml-auto mb-[10px]">
+    <button 
+      className="relative size-[25px] lg:size-[35px] outline-none ml-auto mb-[10px]"
+      aria-label="Shopping basket"
+    >
       <BasketIcon className="w-full h-full text-white" />
     </button>
   );

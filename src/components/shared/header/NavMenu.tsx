@@ -19,15 +19,17 @@ export function NavMenuMobile({
   className = "",
 }: NavMenuProps) {
   return (
-    <ul className={twMerge(`md:hidden flex flex-col gap-y-5`, className)}>
-      {navMenuList.map((menuItem, idx) => (
-        <NavMenuItem
-          key={idx}
-          menuItem={menuItem}
-          setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-        />
-      ))}
-    </ul>
+    <nav>
+      <ul className={twMerge(`md:hidden flex flex-col gap-y-5`, className)}>
+        {navMenuList.map((menuItem, idx) => (
+          <NavMenuItem
+            key={idx}
+            menuItem={menuItem}
+            setIsHeaderMenuOpened={setIsHeaderMenuOpened}
+          />
+        ))}
+      </ul>
+    </nav>
   );
 }
 
