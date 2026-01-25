@@ -37,29 +37,41 @@ export function NavMenuDesktop({
   setIsHeaderMenuOpened,
   className = "",
 }: NavMenuProps) {
+  // Split menu items into two halves
+  const half = Math.ceil(navMenuList.length / 2);
+  const leftMenu = navMenuList.slice(0, half);
+  const rightMenu = navMenuList.slice(half);
+
   return (
-    <nav className={twMerge("hidden md:block absolute inset-0", className)}>
-      <ul className="relative w-full h-full">
-        <NavMenuItem
-          menuItem={navMenuList[0]}
-          setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[-285px] xl:ml-[-342px]"
-        />
-        <NavMenuItem
-          menuItem={navMenuList[1]}
-          setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[-150px] xl:ml-[-205px]"
-        />
-        <NavMenuItem
-          menuItem={navMenuList[2]}
-          setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[150px] xl:ml-[208px]"
-        />
-        <NavMenuItem
-          menuItem={navMenuList[3]}
-          setIsHeaderMenuOpened={setIsHeaderMenuOpened}
-          itemClassName="absolute pointer-events-auto top-[calc(50%-20px)] left-1/2 -translate-x-1/2 ml-[285px] xl:ml-[370px]"
-        />
+    <nav
+      className={twMerge(
+        "hidden md:flex absolute inset-0 items-center justify-between pointer-events-none",
+        className
+      )}
+    >
+      {/* Left side */}
+      <ul className="flex flex-1 justify-end gap-x-[40px] xl:gap-x-[80px] pr-20 lg:pr-20 xl:pr-[120px] pointer-events-auto">
+        {leftMenu.map((item, idx) => (
+          <NavMenuItem
+            key={`left-${idx}`}
+            menuItem={item}
+            setIsHeaderMenuOpened={setIsHeaderMenuOpened}
+          />
+        ))}
+      </ul>
+
+      {/* Center space for logo (empty block for flex balance) */}
+      <div className="w-[96px] lg:w-[114px] shrink-0" />
+
+      {/* Right side */}
+      <ul className="flex flex-1 justify-start gap-x-[40px] xl:gap-x-[80px] pl-20 lg:pl-20 xl:pl-[120px] pointer-events-auto">
+        {rightMenu.map((item, idx) => (
+          <NavMenuItem
+            key={`right-${idx}`}
+            menuItem={item}
+            setIsHeaderMenuOpened={setIsHeaderMenuOpened}
+          />
+        ))}
       </ul>
     </nav>
   );

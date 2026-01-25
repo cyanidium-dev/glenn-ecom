@@ -46,7 +46,32 @@ export default function Header() {
         }`}
       />
       <Container>
-        <div className="relative flex items-center justify-between h-[79px] lg:h-[95px]">
+        {/* Mobile layout: 3 blocks - burger (left), logo (center), basket (right) */}
+        <div className="relative md:hidden flex items-center justify-between h-[79px]">
+          <BurgerMenuButton toggleHeaderMenuOpen={toggleHeaderMenuOpen} />
+          <Link
+            href="/"
+            className="absolute z-10 left-1/2 -translate-x-1/2 top-0 w-[96px] h-auto aspect-96/79"
+          >
+            <Image
+              src="/images/logo.webp"
+              alt="Logo"
+              width={180}
+              height={150}
+              sizes="192px"
+              priority
+              className="object-contain"
+              quality={100}
+            />
+          </Link>
+          <BasketButton />
+        </div>
+
+        {/* Desktop layout: nav (left half), logo (center), basket (far right) */}
+        <div className="hidden md:flex items-center justify-between h-[79px] lg:h-[95px]">
+          <div className="flex-1 flex items-center">
+            <NavMenuDesktop />
+          </div>
           <Link
             href="/"
             className="absolute z-10 left-1/2 -translate-x-1/2 top-0 w-[96px] h-auto aspect-96/79 lg:w-[114px] lg:aspect-114/95"
@@ -56,15 +81,15 @@ export default function Header() {
               alt="Logo"
               width={180}
               height={150}
-              sizes="(max-width: 768px) 192px, 360px"
+              sizes="360px"
               priority
               className="object-contain"
               quality={100}
             />
           </Link>
-          <BurgerMenuButton toggleHeaderMenuOpen={toggleHeaderMenuOpen} />
-          <NavMenuDesktop />
-          <BasketButton />
+          <div className="flex-1 flex items-center justify-end">
+            <BasketButton />
+          </div>
         </div>
       </Container>
       <BurgerMenu
