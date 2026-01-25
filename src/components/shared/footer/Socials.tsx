@@ -29,14 +29,14 @@ export default function Socials({ className = "" }: SocialsProps) {
         className
       )}
     >
-      {socialLinks.map(({ icon: Icon, href, label }) => (
+      {socialLinks.map(({ icon: Icon, href, label }, index) => (
         <motion.div
           key={label}
           initial="hidden"
           whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ x: 20, delay: 0.4 + index * 0.2 })}
+          variants={fadeInAnimation({ x: 20, delay: 0.4 * index })}
         >
           <Link
             key={label}
