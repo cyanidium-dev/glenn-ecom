@@ -1,25 +1,29 @@
+import { SanityImage } from "@/types/sanity";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface CartItem {
-  id: number;
+  id: string; // Sanity ID зазвичай рядок
   name: string;
   price: number;
-  image: string;
+  image: SanityImage;
   quantity: number;
+  slug: string;
 }
 
 interface CartStore {
   cartItems: CartItem[];
   isDrawerOpen: boolean;
+  totalPrice: number;
 
   // Actions
   toggleDrawer: (open: boolean) => void;
-  addToCart: (product: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, delta: number) => void;
+  addToCart: (product: Omit<CartItem, "quantity">, quantity?: number) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, delta: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
+  calculateTotal: (items: CartItem[]) => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -27,45 +31,60 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       cartItems: [],
       isDrawerOpen: false,
+      totalPrice: 0,
 
       toggleDrawer: (open) => set({ isDrawerOpen: open }),
 
-      addToCart: (product) =>
+      calculateTotal: (items: CartItem[]) =>
+        items.reduce(
+          (acc, item) => acc + Number(item.price) * item.quantity,
+          0,
+        ),
+      addToCart: (product, quantity = 1) =>
         set((state) => {
           const existing = state.cartItems.find(
             (item) => item.id === product.id,
           );
+          let newItems;
 
           if (existing) {
-            return {
-              cartItems: state.cartItems.map((item) =>
-                item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item,
-              ),
-              isDrawerOpen: true,
-            };
+            newItems = state.cartItems.map((item) =>
+              item.id === product.id
+                ? { ...item, quantity: item.quantity + quantity }
+                : item,
+            );
+          } else {
+            newItems = [...state.cartItems, { ...product, quantity }];
           }
 
           return {
-            cartItems: [...state.cartItems, { ...product, quantity: 1 }],
+            cartItems: newItems,
+            totalPrice: get().calculateTotal(newItems),
             isDrawerOpen: true,
           };
         }),
 
       removeFromCart: (id) =>
-        set((state) => ({
-          cartItems: state.cartItems.filter((item) => item.id !== id),
-        })),
+        set((state) => {
+          const newItems = state.cartItems.filter((item) => item.id !== id);
+          return {
+            cartItems: newItems,
+            totalPrice: get().calculateTotal(newItems),
+          };
+        }),
 
       updateQuantity: (id, delta) =>
-        set((state) => ({
-          cartItems: state.cartItems.map((item) =>
+        set((state) => {
+          const newItems = state.cartItems.map((item) =>
             item.id === id
               ? { ...item, quantity: Math.max(1, item.quantity + delta) }
               : item,
-          ),
-        })),
+          );
+          return {
+            cartItems: newItems,
+            totalPrice: get().calculateTotal(newItems),
+          };
+        }),
 
       clearCart: () => set({ cartItems: [] }),
 

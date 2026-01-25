@@ -3,8 +3,42 @@ import MainButton from "../shared/buttons/MainButton";
 import SelectInput from "../shared/selectInput/SelectInput";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { useCartStore } from "@/store/useCartStore";
+import { useState } from "react";
+import { SanityRecord } from "@/types/store";
 
-export default function OrderBlock() {
+interface OrderBlockProps {
+  product: SanityRecord;
+}
+export default function OrderBlock({ product }: OrderBlockProps) {
+  const addToCart = useCartStore((state) => state.addToCart);
+  // const {
+  //   cartItems,
+  //   isDrawerOpen,
+  //   toggleDrawer,
+  //   removeFromCart,
+  //   getTotalPrice,
+  // } = useCartStore();
+
+  // const totalPrice = cartItems.reduce(
+  //   (acc, item) => acc + item.price * item.quantity,
+  //   0,
+  // );
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    addToCart(
+      {
+        id: product._id,
+        name: product.title,
+        price: product.priceCHF,
+        image: product.coverImage,
+        slug: product.slug,
+      },
+      quantity,
+    );
+  };
   const options = [
     { value: "1", label: "1" },
     { value: "2", label: "2" },
@@ -12,10 +46,6 @@ export default function OrderBlock() {
     { value: "4", label: "4" },
     { value: "5", label: "5" },
   ];
-
-  const handleChange = (value: string) => {
-    console.log(value);
-  };
 
   return (
     <div>
@@ -39,7 +69,7 @@ export default function OrderBlock() {
         <SelectInput
           options={options}
           defaultValue="1"
-          onChange={handleChange}
+          onChange={(val) => setQuantity(Number(val))}
           className="mb-5 lg:mb-[17px]"
         />
       </motion.div>
@@ -50,10 +80,49 @@ export default function OrderBlock() {
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInAnimation({ y: 20, delay: 0.5 })}
       >
-        <MainButton variant="outline" className="h-10 md:h-[45px]">
+        <MainButton
+          variant="outline"
+          className="h-10 md:h-[45px]"
+          onClick={handleAddToCart}
+        >
           Add to Basket
         </MainButton>
       </motion.div>
+      {/* 
+      <div className="flex-1 overflow-y-auto">
+        {cartItems.length === 0 ? (
+          <p className="text-center text-gray-500 mt-10">
+            Your basket is empty
+          </p>
+        ) : (
+          <ul className="space-y-6">
+            {cartItems.map((item) => (
+              <li
+                key={item.id}
+                className="flex justify-between items-start border-b pb-4"
+              >
+                <div>
+                  <h3 className="font-medium text-lg">{item.name}</h3>
+                  <p className="text-sm text-gray-600">
+                    Quantity: <span className="font-bold">{item.quantity}</span>
+                  </p>
+                  <p className="text-sm">{item.price}.- CHF</p>
+                </div>
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className="text-xs text-red-500 hover:underline"
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="flex justify-between mb-4">
+          <span className="font-andes text-xl">Total:</span>
+          <span className="font-bold text-xl">{totalPrice}.- CHF</span>
+        </div>
+      </div> */}
     </div>
   );
 }
