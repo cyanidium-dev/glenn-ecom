@@ -58,7 +58,7 @@ export default function ImageBlock({
           <Image
             src={getOptimizedImageUrl(
               discImage,
-              isMobile ? 218 : 458,
+              isMobile ? 436 : 916,
               90,
               "webp"
             )}
