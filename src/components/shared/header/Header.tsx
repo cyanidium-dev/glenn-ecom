@@ -5,7 +5,7 @@ import Link from "next/link";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import BasketButton from "../basket/BasketButton";
 import { NavMenuDesktop } from "./NavMenu";
@@ -19,6 +19,22 @@ export default function Header() {
   useMotionValueEvent(scrollY, "change", latest => {
     setIsScrolled(latest > 20);
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isHeaderMenuOpened) {
+        setIsHeaderMenuOpened(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isHeaderMenuOpened]);
 
   return (
     <header className="fixed top-0 left-0 z-50 py-3 w-dvw">

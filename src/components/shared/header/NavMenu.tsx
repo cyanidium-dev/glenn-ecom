@@ -8,10 +8,10 @@ interface NavMenuProps {
 }
 
 const navMenuList = [
-  { title: "Music", link: "#music" },
-  { title: "Live", link: "#live" },
-  { title: "Store", link: "#store", style: "lowercase" },
-  { title: "Journal", link: "#journal", style: "lowercase" },
+  { title: "Music", link: "/#music" },
+  { title: "Live", link: "/#live" },
+  { title: "Store", link: "/#store", style: "lowercase" },
+  { title: "Journal", link: "/#journal", style: "lowercase" },
 ];
 
 export function NavMenuMobile({
