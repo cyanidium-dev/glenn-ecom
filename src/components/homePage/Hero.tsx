@@ -1,6 +1,6 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 
 export default function Hero() {
   return (
@@ -35,9 +35,9 @@ export default function Hero() {
         exit="exit"
         viewport={{ once: true, amount: 0.1 }}
         variants={fadeInAnimation({ useLCPOptimization: true, y: 100 })}
-        className="relative h-full"
+        className="relative h-full z-20"
       >
-        <div className="absolute z-20 top-0 left-[calc(50%-255px)] lg:left-[calc(50%-428px)] w-[448px] lg:w-[744px] h-auto aspect-744/992">
+        <div className="absolute top-0 left-[calc(50%-255px)] lg:left-[calc(50%-428px)] w-[448px] lg:w-[744px] h-auto aspect-744/992">
           <Image
             src="/images/homePage/hero-mobile.webp"
             alt="Hero"
