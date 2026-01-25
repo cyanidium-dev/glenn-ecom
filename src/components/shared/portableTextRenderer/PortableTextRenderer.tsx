@@ -18,11 +18,21 @@ const components: Partial<PortableTextReactComponents> = {
       if (!text) return null;
 
       return (
-        <p className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%]">
+        <p className="text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] mb-2 lg:mb-[15px] last:mb-0 last:lg:mb-0">
           {children}
         </p>
       );
     },
+    h2: ({ children }) => (
+      <h2 className="mt-[40px] lg:mt-[50px] first:mt-0 text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] font-medium mb-[15px]">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="mt-[30px] lg:mt-[40px] first:mt-0 text-[12px] leading-[116%] lg:text-[14px] lg:leading-[121%] mb-[14px] lg:mb-[15px]">
+        {children}
+      </h3>
+    ),
   },
   marks: {
     strong: ({ children }) => (

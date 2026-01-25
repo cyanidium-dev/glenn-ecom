@@ -7,10 +7,12 @@ import { PortableTextBlock } from "@/types/store";
  */
 export function extractTextFromBlocks(blocks: PortableTextBlock[]): string {
   return blocks
-    .map((block) => {
+    .map(block => {
       if (block.children) {
         return block.children
-          .map((child) => (typeof child === "object" && "text" in child ? child.text : ""))
+          .map(child =>
+            typeof child === "object" && "text" in child ? child.text : ""
+          )
           .join("");
       }
       return "";
