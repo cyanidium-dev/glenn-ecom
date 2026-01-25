@@ -49,7 +49,7 @@ export default function Header() {
         <div className="relative flex items-center justify-between h-[79px] lg:h-[95px]">
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 top-0 w-[96px] h-auto aspect-96/79 lg:w-[114px] lg:aspect-114/95"
+            className="absolute z-10 left-1/2 -translate-x-1/2 top-0 w-[96px] h-auto aspect-96/79 lg:w-[114px] lg:aspect-114/95"
           >
             <Image
               src="/images/logo.webp"
