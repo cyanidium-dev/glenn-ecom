@@ -20,19 +20,12 @@ export default function SeparatorLine({
       viewBox="0 0 350 2"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
       className={className}
       aria-hidden="true"
     >
-      <path
-        d="M0 1H350"
-        stroke={`url(#${gradientId}_0)`}
-        strokeWidth="2"
-      />
-      <path
-        d="M0 1H350"
-        stroke={`url(#${gradientId}_1)`}
-        strokeWidth="2"
-      />
+      <path d="M0 1H350" stroke={`url(#${gradientId}_0)`} strokeWidth="2" />
+      <path d="M0 1H350" stroke={`url(#${gradientId}_1)`} strokeWidth="2" />
       <defs>
         <linearGradient
           id={`${gradientId}_0`}

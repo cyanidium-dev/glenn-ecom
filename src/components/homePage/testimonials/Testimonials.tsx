@@ -1,16 +1,13 @@
 import Container from "@/components/shared/container/Container";
-import TestimonialCard from "./TestimonialCard";
 import { testimonialsData } from "./testimonialsData";
+import TestimonialSwiper from "./TestimonialSwiper";
 
 export default function Testimonials() {
   return (
-    <section>
+    <section className="pt-[45px] lg:pb-[100px]">
       <Container className="px-[20px] ssm:px-[20px]">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[10px]">
-          {testimonialsData.map(testimonial => (
-            <TestimonialCard key={testimonial.id} {...testimonial} />
-          ))}
-        </ul>
+        <h2 className="sr-only">Testimonials</h2>
+        <TestimonialSwiper testimonialsList={testimonialsData} />
       </Container>
     </section>
   );

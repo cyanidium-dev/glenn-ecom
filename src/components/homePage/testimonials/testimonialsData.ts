@@ -1,32 +1,38 @@
-export const testimonialsData = [
+export interface TestimonialCardProps {
+  id: number;
+  name: string;
+  text: string;
+}
+
+export const testimonialsData: TestimonialCardProps[] = [
   {
     id: 1,
-    name: "Bedelia B. Blitzkrieg — Head of Quantified Enjoyment, Ministry of Leisure Optimization (Department of Applied Pleasure, Northern Region), Hamburg",
+    name: "Bedelia B. Blitzkrieg — Head of Quantified Enjoyment, Ministry of Leisure Optimization\n (Department of Applied Pleasure, Northern Region), Hamburg",
     text: "“Glenn’s music added quite the lustre to our cluster.”",
   },
   {
     id: 2,
-    name: "Glenn Garbo — whenever asked if he’ll be releasing new material soon",
+    name: "Glenn Garbo — whenever asked if \nhe’ll be releasing new material soon",
     text: "“Next years hence a dread to some, a bullion to a sage.”",
   },
   {
     id: 3,
-    name: "Martha Spitzwegerich — freelance critic on permanent sabbatical, Buenos Aires / Geneva",
+    name: "Martha Spitzwegerich — freelance critic on permanent sabbatical,\n Buenos Aires / Geneva",
     text: "“…at first I was a little ruffled — he promised us everything — but to my delight he went on, solely and utterly, to give us vast amounts of arpEge…”",
   },
   {
     id: 4,
-    name: "William Eyelash (smells like a man now — like a man-man) — Los Angeles, CA",
+    name: "William Eyelash (smells like a man now\n — like a man-man) — Los Angeles, CA",
     text: "“Glenn’s music made my deodorant fail. I respect that.”",
   },
   {
     id: 5,
-    name: "Henry Hughrenson — Member-at-Large, British Society for Applied Olfactory Standards",
+    name: "Henry Hughrenson — Member-at-Large,\n British Society for Applied Olfactory Standards",
     text: "“Glenn Garbo is to music what Cool Water is to Mitsouko. Kinda’ works though.”",
   },
   {
     id: 6,
-    name: "John Purell — certified sadsack, Hampstead Heath, London",
+    name: "John Purell — certified sadsack,\n Hampstead Heath, London",
     text: "“I found Glenn’s work both harrowing and hydrating. He translates heartbreak into this aloof hybrid — some sort of public service that feels like it owes us closure, only to go on, politely refusing to give us any. Anyway. Enough smoke up his ass.”",
   },
   {
@@ -51,7 +57,7 @@ export const testimonialsData = [
   },
   {
     id: 11,
-    name: "Beauregard P. Thistlewick — President, Institute for Unrestrained Flights of Fancy — Bath, England",
+    name: "Beauregard P. Thistlewick — President,\n Institute for Unrestrained Flights of Fancy — Bath, England",
     text: "“Shockingly average.”",
   },
   {
