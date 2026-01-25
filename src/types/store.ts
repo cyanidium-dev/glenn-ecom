@@ -1,5 +1,6 @@
 // types/store.ts
 import type { PortableTextBlock as SanityPortableTextBlock } from "sanity";
+import { SanityImage } from "./sanity";
 
 export interface Item {
   id: string;
@@ -10,14 +11,31 @@ export interface Item {
   aboutEP: PortableTextBlock[];
   aboutMedium: PortableTextBlock[];
   tracklist: PortableTextBlock[];
-  image: { url: string; alt: string };
+  coverImage: SanityImage;
+  discImage: SanityImage;
+  ogImage: SanityImage;
   isVinyl: boolean;
+}
+
+// Raw data structure from Sanity CMS
+export interface SanityRecord {
+  _id: string;
+  title: string;
+  slug: string;
+  priceCHF: number;
+  releaseDate: string;
+  coverImage: SanityImage;
+  description: PortableTextBlock[];
+  discImage: SanityImage;
+  ogImage: SanityImage;
+  careInstructionLink?: string;
+  isCareInstructions: boolean;
 }
 
 // Type for text block from Sanity (supports normal blocks and list items)
 export type PortableTextBlock = SanityPortableTextBlock & {
   _type: "block";
-  style?: "normal";
+  style?: "normal" | "h2" | "h3";
   listItem?: "bullet" | "number";
   level?: number;
   start?: number; // Starting number for ordered lists
@@ -25,5 +43,6 @@ export type PortableTextBlock = SanityPortableTextBlock & {
     _key: string;
     _type: "span";
     text: string;
+    marks?: string[];
   }[];
 };

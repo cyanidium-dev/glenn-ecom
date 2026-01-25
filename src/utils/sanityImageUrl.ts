@@ -1,8 +1,8 @@
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { client } from "@/lib/sanityClient";
-import { SanityImage } from "@/types/project";
+import { SanityImage } from "@/types/sanity";
 
-const builder = imageUrlBuilder(client);
+const builder = createImageUrlBuilder(client);
 
 /**
  * Оптимізує URL зображення з Sanity для background-image
@@ -23,12 +23,12 @@ export function getOptimizedImageUrl(
   }
 
   const imageBuilder = builder.image(image);
-  
+
   // Використовуємо нативну ширину, якщо width не вказано
   if (width !== undefined && width !== null) {
     imageBuilder.width(typeof width === "number" ? width : parseInt(width));
   }
-  
+
   imageBuilder.quality(quality);
 
   // Використовуємо auto("format") для автоматичного вибору найкращого формату
@@ -42,35 +42,3 @@ export function getOptimizedImageUrl(
 
   return imageBuilder.url();
 }
-
-/**
- * Отримує responsive URL зображення для різних breakpoints
- * @param image - Sanity зображення
- * @param breakpoints - Об'єкт з breakpoints та ширинами
- * @param quality - Якість зображення
- * @returns Об'єкт з URL для кожного breakpoint
- */
-export function getResponsiveImageUrls(
-  image: SanityImage | null | undefined,
-  breakpoints: {
-    mobile?: number;
-    tablet?: number;
-    desktop?: number;
-  } = {
-    mobile: 521,
-    tablet: 740,
-    desktop: 1071,
-  },
-  quality: number = 80
-): {
-  mobile: string;
-  tablet: string;
-  desktop: string;
-} {
-  return {
-    mobile: getOptimizedImageUrl(image, breakpoints.mobile || 521, quality),
-    tablet: getOptimizedImageUrl(image, breakpoints.tablet || 740, quality),
-    desktop: getOptimizedImageUrl(image, breakpoints.desktop || 1071, quality),
-  };
-}
-
