@@ -1,6 +1,7 @@
 import { Roboto, Rubik } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
+import Footer from "@/components/shared/footer/Footer";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -36,9 +37,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${rubik.variable} ${andes.variable} antialiased`}
+        className={`${roboto.variable} ${rubik.variable} ${andes.variable} flex min-h-screen flex-col antialiased overflow-hidden`}
       >
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );
