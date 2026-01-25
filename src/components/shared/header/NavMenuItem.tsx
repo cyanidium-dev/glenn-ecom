@@ -21,7 +21,7 @@ export default function NavMenuItem({
           setIsHeaderMenuOpened ? () => setIsHeaderMenuOpened(false) : undefined
         }
         href={link}
-        className={`block font-andes text-[34px] leading-[95%]  text-white nav-menu-item-gradient-hover ${style}
+        className={`block font-andes text-[34px] leading-[95%] text-white nav-menu-item-gradient-hover ${style}
         transition duration-300 ease-in-out`}
       >
         {title}

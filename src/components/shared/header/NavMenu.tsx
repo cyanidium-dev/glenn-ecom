@@ -36,12 +36,7 @@ export function NavMenuDesktop({
   className = "",
 }: NavMenuProps) {
   return (
-    <nav
-      className={twMerge(
-        "hidden md:block absolute inset-0 pointer-events-none",
-        className
-      )}
-    >
+    <nav className={twMerge("hidden md:block absolute inset-0", className)}>
       <ul className="relative w-full h-full">
         <NavMenuItem
           menuItem={navMenuList[0]}
