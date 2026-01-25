@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import {
@@ -6,13 +7,21 @@ import {
 } from "@/utils/utils/animationVariants";
 import { SanityImage } from "@/types/sanity";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
+import { useScreenWidth } from "@/hooks/useScreenWidth";
 
 interface ImageBlockProps {
   coverImage: SanityImage;
   discImage: SanityImage;
+  title: string;
 }
 
-export default function ImageBlock({ coverImage, discImage }: ImageBlockProps) {
+export default function ImageBlock({
+  coverImage,
+  discImage,
+  title,
+}: ImageBlockProps) {
+  const isMobile = useScreenWidth() < 768;
+
   return (
     <div className="relative lg:pt-[147px] lg:w-[49.4%]">
       <div className="relative mx-auto max-w-[692px] aspect-329/223 md:aspect-692/469">
@@ -25,8 +34,13 @@ export default function ImageBlock({ coverImage, discImage }: ImageBlockProps) {
           className="relative h-full aspect-463/469"
         >
           <Image
-            src={getOptimizedImageUrl(coverImage, undefined, 90, "webp")}
-            alt={getOptimizedImageUrl(coverImage, undefined, 90, "webp")}
+            src={getOptimizedImageUrl(
+              coverImage,
+              isMobile ? 440 : 926,
+              90,
+              "webp"
+            )}
+            alt={title}
             fill
             sizes="(max-width: 768px) 220px, 463px"
             priority
@@ -42,8 +56,13 @@ export default function ImageBlock({ coverImage, discImage }: ImageBlockProps) {
           className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] lg:h-[calc(100%-11px)] aspect-square -z-10"
         >
           <Image
-            src={getOptimizedImageUrl(discImage, undefined, 90, "webp")}
-            alt={getOptimizedImageUrl(discImage, undefined, 90, "webp")}
+            src={getOptimizedImageUrl(
+              discImage,
+              isMobile ? 218 : 458,
+              90,
+              "webp"
+            )}
+            alt={title}
             fill
             sizes="(max-width: 768px) 218px, 458px"
             priority
