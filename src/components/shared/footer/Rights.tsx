@@ -21,7 +21,15 @@ export default function Rights({ className = "" }: RightsProps) {
         className
       )}
     >
-      <p>&copy; {year} Glenn Garbo. All rights reserved.</p>
+      <motion.p
+        initial="hidden"
+        whileInView="visible"
+        exit="exit"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={fadeInAnimation({ x: 20, delay: 0.2 })}
+      >
+        &copy; {year} Glenn Garbo. All rights reserved.
+      </motion.p>
       <div className="flex items-center gap-x-[15px] lg:gap-x-[30px]">
         {links.map((link, index) => (
           <motion.div
