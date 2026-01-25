@@ -1,7 +1,7 @@
 import { allRecordsQuery, eventsQuery } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { Metadata } from "next";
-import Hero from "@/components/homePage/Hero";
+import Hero from "@/components/homePage/hero/Hero";
 
 export const metadata: Metadata = {
   openGraph: {

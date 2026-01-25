@@ -38,22 +38,26 @@ export default function Hero() {
         className="relative h-full z-20"
       >
         <div className="absolute top-0 left-[calc(50%-255px)] lg:left-[calc(50%-428px)] w-[448px] lg:w-[744px] h-auto aspect-744/992">
-          <Image
-            src="/images/homePage/hero-mobile.webp"
-            alt="Hero"
-            fill
-            sizes="886px"
-            priority
-            className="object-contain md:hidden"
-          />
-          <Image
-            src="/images/homePage/hero-desktop.webp"
-            alt="Hero"
-            fill
-            sizes="1488px"
-            priority
-            className="object-contain hidden md:block"
-          />
+          <div className="md:hidden w-full h-full">
+            <Image
+              src="/images/homePage/hero-mobile.webp"
+              alt="Hero"
+              fill
+              sizes="886px"
+              priority
+              className="object-contain "
+            />
+          </div>
+          <div className="hidden md:block w-full h-full">
+            <Image
+              src="/images/homePage/hero-desktop.webp"
+              alt="Hero"
+              fill
+              sizes="1488px"
+              priority
+              className="object-contain "
+            />
+          </div>
         </div>
       </motion.div>
     </section>
