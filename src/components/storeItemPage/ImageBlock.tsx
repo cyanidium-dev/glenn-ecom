@@ -4,10 +4,12 @@ import {
   fadeInAnimation,
   vinylAnimation,
 } from "@/utils/utils/animationVariants";
+import { SanityImage } from "@/types/sanity";
+import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
 
 interface ImageBlockProps {
-  coverImage: { url: string; alt: string };
-  discImage: { url: string; alt: string };
+  coverImage: SanityImage;
+  discImage: SanityImage;
 }
 
 export default function ImageBlock({ coverImage, discImage }: ImageBlockProps) {
@@ -23,8 +25,8 @@ export default function ImageBlock({ coverImage, discImage }: ImageBlockProps) {
           className="relative h-full aspect-463/469"
         >
           <Image
-            src={coverImage.url}
-            alt={coverImage.alt}
+            src={getOptimizedImageUrl(coverImage, undefined, 90, "webp")}
+            alt={getOptimizedImageUrl(coverImage, undefined, 90, "webp")}
             fill
             sizes="(max-width: 768px) 220px, 463px"
             priority
@@ -40,8 +42,8 @@ export default function ImageBlock({ coverImage, discImage }: ImageBlockProps) {
           className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] lg:h-[calc(100%-11px)] aspect-square -z-10"
         >
           <Image
-            src={discImage.url}
-            alt={discImage.alt}
+            src={getOptimizedImageUrl(discImage, undefined, 90, "webp")}
+            alt={getOptimizedImageUrl(discImage, undefined, 90, "webp")}
             fill
             sizes="(max-width: 768px) 218px, 458px"
             priority

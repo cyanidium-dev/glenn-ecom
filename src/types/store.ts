@@ -1,5 +1,6 @@
 // types/store.ts
 import type { PortableTextBlock as SanityPortableTextBlock } from "sanity";
+import { SanityImage } from "./sanity";
 
 export interface Item {
   id: string;
@@ -10,7 +11,9 @@ export interface Item {
   aboutEP: PortableTextBlock[];
   aboutMedium: PortableTextBlock[];
   tracklist: PortableTextBlock[];
-  image: { url: string; alt: string };
+  coverImage: SanityImage;
+  discImage: SanityImage;
+  ogImage: SanityImage;
   isVinyl: boolean;
 }
 
@@ -21,10 +24,10 @@ export interface SanityRecord {
   slug: string;
   priceCHF: number;
   releaseDate: string;
-  coverImage: string;
+  coverImage: SanityImage;
   description: PortableTextBlock[];
-  discImage: string;
-  ogImage: string;
+  discImage: SanityImage;
+  ogImage: SanityImage;
   careInstructionLink?: string;
   isCareInstructions: boolean;
 }

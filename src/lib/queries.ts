@@ -1,8 +1,20 @@
 export const allRecordsQuery = `
   *[_type == "record"] | order(order asc) {
     title,
-    "coverImage": coverImage.asset->url,
-    "discImage": discImage.asset->url,
+    "coverImage": coverImage{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot},
+    "discImage": discImage{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot},
     "slug": slug.current,
     order
   }
@@ -15,10 +27,28 @@ export const recordQuery = `
     "slug": slug.current,
     priceCHF,
     releaseDate,
-    "coverImage": coverImage.asset->url,
+    "coverImage": coverImage{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot},
     description,
-    "discImage": discImage.asset->url,
-    "ogImage": ogImage.asset->url,
+    "discImage": discImage{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot},
+    "ogImage": ogImage{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot},
     careInstructionLink,
     "isCareInstructions": defined(careInstructionLink)
   }

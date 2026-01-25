@@ -44,7 +44,7 @@ export async function generateMetadata({
         shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
       images: [
         {
-          url: itemData.ogImage,
+          url: itemData.ogImage.asset.url,
           width: 1200,
           height: 630,
           alt: itemData.title,
@@ -72,8 +72,8 @@ export default async function ItemPage({ params }: ItemPageProps) {
       <Container className="px-[15px] ssm:px-[30px]">
         <article className="flex flex-col lg:flex-row lg:gap-20">
           <ImageBlock
-            coverImage={{ url: itemData.coverImage, alt: itemData.title }}
-            discImage={{ url: itemData.discImage, alt: itemData.title }}
+            coverImage={itemData.coverImage}
+            discImage={itemData.discImage}
           />
           <div className="pt-10 lg:pt-0 lg:w-[44.7%] lg:shrink-0">
             <ItemHeading title={itemData.title} price={itemData.priceCHF} />
