@@ -1,4 +1,4 @@
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import OrderBlock from "./OrderBlock";
 import * as motion from "motion/react-client";
 

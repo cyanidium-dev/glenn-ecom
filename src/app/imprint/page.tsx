@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 
 export const metadata: Metadata = {
@@ -13,6 +13,14 @@ export const metadata: Metadata = {
     description:
       "Imprint information for Glenn Garbo. Contact details and website owner information.",
     type: "website",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || ""}/opengraph-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Glenn Garbo",
+      },
+    ],
   },
 };
 

@@ -4,7 +4,7 @@ import {
   fadeInAnimation,
   listItemVariants,
   listVariants,
-} from "@/utils/utils/animationVariants";
+} from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 
 export const metadata: Metadata = {
@@ -24,6 +24,14 @@ export const metadata: Metadata = {
     description:
       "Essential care instructions for maintaining your vinyl record collection. Learn proper cleaning, storage, and handling techniques.",
     type: "website",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || ""}/opengraph-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Glenn Garbo",
+      },
+    ],
   },
 };
 
