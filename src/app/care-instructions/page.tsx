@@ -4,7 +4,7 @@ import {
   fadeInAnimation,
   listItemVariants,
   listVariants,
-} from "@/utils/utils/animationVariants";
+} from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 
 export const metadata: Metadata = {

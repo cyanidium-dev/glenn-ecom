@@ -1,5 +1,5 @@
 import { allRecordsQuery, eventsQuery } from "@/lib/queries";
-import { fetchSanityData } from "@/utils/utils/fetchSanityData";
+import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

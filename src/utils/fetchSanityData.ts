@@ -1,5 +1,5 @@
 import axios from "axios";
-import { client } from "../../lib/sanityClient";
+import { client } from "@/lib/sanityClient";
 
 export const fetchSanityData = async (
   query: string,

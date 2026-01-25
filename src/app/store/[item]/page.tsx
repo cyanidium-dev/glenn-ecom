@@ -4,10 +4,10 @@ import ItemHeading from "@/components/storeItemPage/ItemHeading";
 import ItemDescriptionRaw from "@/components/storeItemPage/ItemDescriptionRaw";
 import ImageBlock from "@/components/storeItemPage/ImageBlock";
 import Container from "@/components/shared/container/Container";
-import { extractTextFromBlocks } from "@/utils/utils/portableTextUtils";
-import { formatReleaseDate } from "@/utils/utils/dateUtils";
+import { extractTextFromBlocks } from "@/utils/portableTextUtils";
+import { formatReleaseDate } from "@/utils/dateUtils";
 import { recordQuery } from "@/lib/queries";
-import { fetchSanityData } from "@/utils/utils/fetchSanityData";
+import { fetchSanityData } from "@/utils/fetchSanityData";
 import { SanityRecord } from "@/types/store";
 
 interface ItemPageProps {

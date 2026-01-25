@@ -1,10 +1,7 @@
 "use client";
 import Image from "next/image";
 import * as motion from "motion/react-client";
-import {
-  fadeInAnimation,
-  vinylAnimation,
-} from "@/utils/utils/animationVariants";
+import { fadeInAnimation, vinylAnimation } from "@/utils/animationVariants";
 import { SanityImage } from "@/types/sanity";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
 import { useScreenWidth } from "@/hooks/useScreenWidth";

@@ -1,6 +1,7 @@
 import { Roboto, Rubik } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
+import Header from "@/components/shared/header/Header";
 import type { Metadata } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
@@ -54,6 +55,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${rubik.variable} ${andes.variable} antialiased`}
       >
+        <Header />
         <main>{children}</main>
       </body>
     </html>

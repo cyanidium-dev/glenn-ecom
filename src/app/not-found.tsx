@@ -1,6 +1,6 @@
 import Container from "@/components/shared/container/Container";
 import Link from "next/link";
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 
 export default function NotFound() {
