@@ -1,6 +1,6 @@
 import PortableTextRenderer from "../shared/portableTextRenderer/PortableTextRenderer";
 import { PortableTextBlock } from "@/types/store";
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 import Link from "next/link";
 
