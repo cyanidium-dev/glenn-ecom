@@ -37,9 +37,9 @@ export default function Header() {
   }, [isHeaderMenuOpened]);
 
   return (
-    <header className="fixed top-0 left-0 z-50 py-3 w-dvw">
+    <header className="fixed top-0 left-0 z-50 py-4 w-dvw">
       <div
-        className={`absolute top-3 left-0 right-0 h-[79px] lg:h-[95px] rounded-full -z-20 transition duration-500 ease-in-out ${
+        className={`absolute top-3 left-0 right-0 h-[90px] lg:h-[105px] rounded-full -z-20 transition duration-500 ease-in-out ${
           isScrolled
             ? "bg-black/20 backdrop-blur-md shadow-[inset_0px_2px_16px_rgba(255,255,255,0.25)]"
             : "bg-transparent"
@@ -74,7 +74,7 @@ export default function Header() {
           </div>
           <Link
             href="/"
-            className="absolute z-10 left-1/2 -translate-x-1/2 top-0 w-[96px] h-auto aspect-96/79 lg:w-[114px] lg:aspect-114/95"
+            className="absolute z-10 left-1/2 -translate-x-1/2 top-4 w-[96px] h-auto aspect-96/79 lg:w-[114px] lg:aspect-114/95"
           >
             <Image
               src="/images/logo.webp"
