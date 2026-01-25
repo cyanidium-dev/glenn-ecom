@@ -58,6 +58,21 @@
   }
 }
 
+@layer utilities {
+  .nav-menu-item-gradient-hover:hover {
+    background: linear-gradient(
+      273.78deg,
+      rgba(255, 255, 255, 0.2) 3.03%,
+      #ffffff 50.66%,
+      rgba(255, 255, 255, 0.2) 96.83%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);

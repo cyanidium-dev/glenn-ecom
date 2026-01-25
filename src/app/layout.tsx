@@ -2,6 +2,7 @@ import { Roboto, Rubik } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import Footer from "@/components/shared/footer/Footer";
+import Header from "@/components/shared/header/Header";
 import type { Metadata } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
@@ -55,6 +56,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${rubik.variable} ${andes.variable} flex min-h-screen flex-col antialiased overflow-hidden`}
       >
+        <Header />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
