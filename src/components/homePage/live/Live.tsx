@@ -11,7 +11,7 @@ interface LiveProps {
 }
 export default function Live({ events }: LiveProps) {
   return (
-    <section className="pt-[100px] pb-[131px]">
+    <section className="py-[75px] lg:pt-[125px] lg:pb-[150px]">
       <Container className="px-[20px]">
         <motion.h2
           variants={fadeInAnimation({ y: 30, delay: 0.1 })}
