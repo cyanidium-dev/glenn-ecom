@@ -10,7 +10,10 @@ interface StoreProps {
 
 export default function Store({ records }: StoreProps) {
   return (
-    <section className="relative py-[75px] lg:pt-[125px] lg:pb-[150px]">
+    <section
+      id="store"
+      className="relative py-[75px] lg:pt-[125px] lg:pb-[150px]"
+    >
       <Container>
         <motion.h2
           variants={fadeInAnimation({ y: 30, delay: 0.1 })}
