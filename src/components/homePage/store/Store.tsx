@@ -12,7 +12,7 @@ export default function Store({ records }: StoreProps) {
   return (
     <section
       id="store"
-      className="relative py-[75px] lg:pt-[125px] lg:pb-[150px]"
+      className="relative pt-[75px] pb-[60px] lg:pt-[150px] lg:pb-[175px]"
     >
       <Container>
         <motion.h2
