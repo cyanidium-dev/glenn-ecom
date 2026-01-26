@@ -6,7 +6,7 @@ import MusicCard from "./MusicCard";
 
 export default function Music() {
   return (
-    <section className="pt-[100px] pb-[150px] lg:py-[125px]">
+    <section className="pt-[100px] pb-[75px] lg:py-[125px]">
       <Container>
         <motion.h2
           initial="hidden"
