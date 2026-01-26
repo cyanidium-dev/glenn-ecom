@@ -18,9 +18,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const eventsData = await fetchSanityData(eventsQuery, {});
-  console.log(eventsData);
   const recordsData = await fetchSanityData(allRecordsQuery, {});
-  console.log(recordsData);
   return (
     <>
       Home page
