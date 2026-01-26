@@ -6,72 +6,112 @@ import Image from "next/image";
 import { MainPageStoreItem } from "@/types/store";
 import Link from "next/link";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
-import { useScreenWidth } from "@/hooks/useScreenWidth";
-
 interface ItemCardProps {
   item: MainPageStoreItem;
 }
 export default function ItemCard({ item }: ItemCardProps) {
-  const isMobile = useScreenWidth() < 768;
-
   return (
-    <li className="flex flex-col items-center justify-center w-full">
-      <div className="relative mb-[25px] lg:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({
-            delay: 0.2 * item.order,
-            y: 10,
-            useLCPOptimization: true,
-          })}
-          className="relative h-full aspect-463/469"
-        >
-          <Image
-            src={getOptimizedImageUrl(
-              item.coverImage,
-              isMobile ? 440 : 926,
-              90,
-              "webp"
-            )}
-            alt={item.title}
-            fill
-            sizes="(max-width: 768px) 220px, 463px"
-            priority
-            className="object-cover"
-          />
-        </motion.div>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={vinylAnimation({ useLCPOptimization: true })}
-          className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] lg:h-[calc(100%-11px)] aspect-square -z-10"
-        >
-          <Image
-            src={getOptimizedImageUrl(
-              item.discImage,
-              isMobile ? 436 : 916,
-              90,
-              "webp"
-            )}
-            alt={item.title}
-            fill
-            sizes="(max-width: 768px) 218px, 458px"
-            priority
-            className="object-cover"
-          />
-        </motion.div>
+    <li
+      className="group flex flex-col items-center justify-center w-full"
+      key={item.slug}
+    >
+      <div className="relative w-full mb-[23px] lg:mb-[20px]">
+        <div className="relative mx-auto max-w-[685px] aspect-329/223 md:aspect-685/465">
+          {/* Mobile: Cover Image */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({ x: -20, delay: 0.2 * item.order })}
+            className="relative h-full aspect-460/465 lg:hidden"
+          >
+            <Image
+              src={getOptimizedImageUrl(item.coverImage, 440, 90, "webp")}
+              alt={item.title}
+              fill
+              sizes="220px"
+              priority
+              className="object-cover"
+            />
+          </motion.div>
+
+          {/* Desktop: Cover Image */}
+          <div className="hidden lg:block absolute left-1/2 transition-all duration-700 ease-in-out -translate-x-1/2 group-hover:left-0 group-hover:translate-x-0 h-full aspect-460/465">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={fadeInAnimation({
+                x: 0,
+                y: 0,
+                delay: 0.2 * item.order,
+              })}
+              className="relative h-full w-full"
+            >
+              <Image
+                src={getOptimizedImageUrl(item.coverImage, 920, 90, "webp")}
+                alt={item.title}
+                fill
+                sizes="460px"
+                priority
+                className="object-cover"
+              />
+            </motion.div>
+          </div>
+
+          {/* Mobile: Disk Image */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={vinylAnimation({ delay: 0.3 * item.order })}
+            className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] aspect-square -z-10 lg:hidden"
+          >
+            <Image
+              src={getOptimizedImageUrl(item.discImage, 424, 90, "webp")}
+              alt={item.title}
+              fill
+              sizes="212px"
+              priority
+              className="object-cover"
+            />
+          </motion.div>
+
+          {/* Desktop: Disk Image */}
+          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square -z-10 transition-all duration-700 ease-in-out translate-x-1/2 rotate-0 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-360">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              exit="exit"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={fadeInAnimation({
+                x: 0,
+                y: 0,
+                delay: 0.3 * item.order,
+              })}
+              className="relative h-full w-full"
+            >
+              <Image
+                src={getOptimizedImageUrl(item.discImage, 900, 90, "webp")}
+                alt={item.title}
+                fill
+                sizes="450px"
+                priority
+                className="object-cover"
+              />
+            </motion.div>
+          </div>
+        </div>
       </div>
       <motion.h3
         variants={fadeInAnimation({ delay: 0.3 * item.order, y: 10 })}
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="lg:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
+        className="font-andes text-center text-[28px] lg:text-[42px] font-medium leading-[95%] lowercase mb-[15px]"
       >
         {item.title}
       </motion.h3>
@@ -80,12 +120,12 @@ export default function ItemCard({ item }: ItemCardProps) {
         initial="hidden"
         animate="visible"
         exit="exit"
-        className="lg:hidden"
+        className=""
       >
         <Link href={`/store/${item.slug}`}>
           <MainButton
             variant="outline"
-            className="w-[127px] h-[37px] text-[14px] leading-none"
+            className="w-[131px] lg:w-[126px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none lg:border-[3px]"
           >
             Listen
           </MainButton>
