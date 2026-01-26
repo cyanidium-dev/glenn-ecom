@@ -12,9 +12,16 @@ interface ValuesSubscribeFormType {
   email: string;
 }
 
-export default function JournalForm() {
+interface JournalFormProps {
+  isSuccess: boolean;
+  setIsSuccess: (value: boolean) => void;
+}
+
+export default function JournalForm({
+  isSuccess,
+  setIsSuccess,
+}: JournalFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const validationSchema = SubscribeValidation();
 
   const initialValues: ValuesSubscribeFormType = {
