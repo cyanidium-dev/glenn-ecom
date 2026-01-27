@@ -3,6 +3,7 @@ import { allRecordsQuery, eventsQuery } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { Metadata } from "next";
 import Journal from "@/components/homePage/journal/Journal";
+import Store from "@/components/homePage/store/Store";
 import Hero from "@/components/homePage/hero/Hero";
 import Music from "@/components/homePage/music/Music";
 
@@ -22,12 +23,13 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const eventsData = await fetchSanityData(eventsQuery, {});
   const recordsData = await fetchSanityData(allRecordsQuery, {});
+
   return (
     <>
       <Hero />
       <Music />
-
       <Live events={eventsData} />
+      <Store records={recordsData} />
       <Journal />
     </>
   );
