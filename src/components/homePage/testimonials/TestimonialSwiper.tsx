@@ -34,8 +34,25 @@ const SwiperWrapper = dynamic(
       const [isNextHovered, setIsNextHovered] = React.useState(false);
       const screenWidth = useScreenWidth();
       const isLg = screenWidth >= 1024;
-
-      const arrowTopPosition = isLg ? "384.5px" : "115px";
+      const isSm = screenWidth >= 640;
+      // Card positioning calculations:
+      // Mobile (< 640px): 280px tall with 20px top padding
+      // AutoFillText height: ~192px (240px - 48px)
+      // Center of AutoFillText: 20px + 96px = ~115px
+      //
+      // Tablet (640px - 1023px): aspect-390/280, h-full with 20px top padding
+      // For typical tablet width ~600px: height = 600 * (280/390) ≈ 431px
+      // Content area: 431px - 40px (padding) = 391px
+      // Separator/name section: ~48px
+      // AutoFillText height: ~343px (391px - 48px)
+      // Center of AutoFillText: 20px + 171.5px = ~191.5px
+      //
+      // Desktop (lg+): 817px tall with 60px top padding
+      // Content area: 817px - 120px (padding) = 697px
+      // Separator/name section: ~48px
+      // AutoFillText height: ~649px (697px - 48px)
+      // Center of AutoFillText: 60px + 324.5px = ~384.5px
+      const arrowTopPosition = isLg ? "384.5px" : isSm ? "191.5px" : "115px";
 
       const gradientId = `arrow-gradient-${variant}`;
       const defaultFill = "white";
