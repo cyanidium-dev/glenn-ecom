@@ -49,7 +49,10 @@ export default function JournalForm({
       resetForm();
       setIsSuccess(true);
     } catch (error) {
-      return error;
+      const message =
+        (axios.isAxiosError(error) && error.response?.data?.message) ||
+        "Failed to subscribe. Please try again later.";
+      formikHelpers.setFieldError("email", message);
     } finally {
       setIsLoading(false);
     }
