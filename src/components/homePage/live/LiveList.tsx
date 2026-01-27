@@ -1,7 +1,6 @@
 import { event } from "@/types/events";
 import SeparatorLine from "@/components/shared/icons/SeparatorLine";
-import Link from "next/link";
-import MainButton from "@/components/shared/buttons/MainButton";
+import LinkButton from "@/components/shared/buttons/LinkButton";
 import * as motion from "motion/react-client";
 import {
   fadeInAnimation,
@@ -33,11 +32,13 @@ export default function LiveList({ events }: LiveListProps) {
               area.
             </p>
           </div>
-          <Link href="#journal">
-            <MainButton className="w-[132px] h-[39px] text-[14px] leading-none">
-              Join
-            </MainButton>
-          </Link>
+          <LinkButton
+            href="#journal"
+            variant="outline"
+            className="w-[132px] h-[39px] text-[14px] leading-none"
+          >
+            Join
+          </LinkButton>
         </div>
         <SeparatorLine className="w-full -my-px h-[2px] hidden md:block" />
       </motion.div>
@@ -57,7 +58,7 @@ export default function LiveList({ events }: LiveListProps) {
             <p className="text-[11px] lg:text-[18px] leading-[120%] hidden md:block">
               {event.date}
             </p>
-            <div className="md:grid md:grid-cols-[47%_40%_auto] items-center">
+            <div className="md:grid md:grid-cols-[40%_35%_auto] xl:grid-cols-[47%_40%_auto] items-center">
               <h3 className="text-[18px] lg:text-[26px] leading-[120%] font-semibold mb-2 md:mb-0">
                 {event.title}
               </h3>
@@ -69,16 +70,14 @@ export default function LiveList({ events }: LiveListProps) {
                   {event.location}
                 </p>
               </div>
-              <a
+              <LinkButton
                 href={event.ticketLink}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="justify-self-end"
+                isExternal={true}
+                className="justify-self-end w-[132px] lg:w-[111px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none"
               >
-                <MainButton className="w-[132px] lg:w-[111px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none">
-                  Tickets
-                </MainButton>
-              </a>
+                Tickets
+              </LinkButton>
             </div>
           </div>
         </motion.li>

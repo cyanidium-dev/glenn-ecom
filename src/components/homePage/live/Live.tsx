@@ -1,8 +1,7 @@
 import Container from "@/components/shared/container/Container";
 import LiveList from "./LiveList";
 import { event } from "@/types/events";
-import MainButton from "@/components/shared/buttons/MainButton";
-import Link from "next/link";
+import LinkButton from "@/components/shared/buttons/LinkButton";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
 
@@ -59,14 +58,13 @@ export default function Live({ events }: LiveProps) {
               animate="visible"
               exit="exit"
             >
-              <Link href="#journal">
-                <MainButton
-                  variant="outline"
-                  className="w-[132px] lg:w-[180px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] border-[3px] leading-none"
-                >
-                  Subscribe
-                </MainButton>
-              </Link>
+              <LinkButton
+                href="#journal"
+                variant="outline"
+                className="w-[132px] lg:w-[180px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] border-[3px] leading-none"
+              >
+                Subscribe
+              </LinkButton>
             </motion.div>
           </div>
         )}
