@@ -23,7 +23,11 @@ export default function TestimonialCard({ name, text }: TestimonialCardProps) {
         {text}
       </AutoFillText>
       <div className="w-full text-right">
-        <p className="min-h-[3lh] lg:min-h-[2lh] lg:whitespace-pre-line text-[10px] lg:text-[22px] leading-[120%] font-roboto tracking-[0.01em] mt-[10px] lg:mt-0 text-right uppercase">
+        <SeparatorLine width="100%" height={2} className="-my-px" />
+        <p className="lg:hidden min-h-[3lh] text-[10px] leading-[120%] font-roboto tracking-[0.01em] mt-[10px] text-right uppercase">
+          {name}
+        </p>
+        <p className="hidden lg:block lg:min-h-[2lh] lg:whitespace-pre-line lg:text-[22px] leading-[120%] font-roboto tracking-[0.01em] lg:mt-0 text-right uppercase">
           <span className="lg:inline-flex lg:items-center lg:w-full lg:justify-end lg:gap-2">
             <SeparatorLine
               width="100%"
