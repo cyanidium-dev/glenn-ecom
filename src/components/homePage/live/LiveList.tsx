@@ -63,10 +63,10 @@ export default function LiveList({ events }: LiveListProps) {
                 {event.title}
               </h3>
               <div className="flex justify-between items-center mb-2 md:mb-0">
-                <p className="text-[11px]lg:text-[18px] leading-[120%] md:hidden">
+                <p className="text-[11px] lg:text-[18px] leading-[120%] md:hidden">
                   {event.date}
                 </p>
-                <p className="text-[12px]lg:text-[22px] leading-[120%]">
+                <p className="text-[12px] lg:text-[22px] leading-[120%]">
                   {event.location}
                 </p>
               </div>
