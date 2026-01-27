@@ -2,6 +2,7 @@ import { allRecordsQuery, eventsQuery } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { Metadata } from "next";
 import Store from "@/components/homePage/store/Store";
+import Music from "@/components/homePage/music/Music";
 
 export const metadata: Metadata = {
   openGraph: {
@@ -19,9 +20,10 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const eventsData = await fetchSanityData(eventsQuery, {});
   const recordsData = await fetchSanityData(allRecordsQuery, {});
+
   return (
     <>
-      Home page
+      <Music />
       <Store records={recordsData} />
     </>
   );
