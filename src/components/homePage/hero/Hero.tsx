@@ -40,22 +40,12 @@ export default function Hero() {
         <div className="absolute top-0 left-[calc(50%-255px)] lg:left-[calc(50%-428px)] w-[448px] lg:w-[744px] h-auto aspect-744/992">
           <div className="md:hidden w-full h-full">
             <Image
-              src="/images/homePage/hero-mobile.webp"
+              src="/images/homePage/hero.webp"
               alt="Hero"
               fill
-              sizes="886px"
+              sizes="(max-width: 768px) 886px, 1488px"
               priority
-              className="object-contain "
-            />
-          </div>
-          <div className="hidden md:block w-full h-full">
-            <Image
-              src="/images/homePage/hero-desktop.webp"
-              alt="Hero"
-              fill
-              sizes="1488px"
-              priority
-              className="object-contain "
+              className="object-contain"
             />
           </div>
         </div>
