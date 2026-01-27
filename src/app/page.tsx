@@ -1,3 +1,4 @@
+import Live from "@/components/homePage/live/Live";
 import { allRecordsQuery, eventsQuery } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { Metadata } from "next";
@@ -19,13 +20,12 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const eventsData = await fetchSanityData(eventsQuery, {});
-  console.log(eventsData);
   const recordsData = await fetchSanityData(allRecordsQuery, {});
-  console.log(recordsData);
   return (
     <>
       <Testimonials />
       <Music />
+      <Live events={eventsData} />
     </>
   );
 }
