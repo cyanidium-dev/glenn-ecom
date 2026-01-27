@@ -49,7 +49,7 @@ export type PortableTextBlock = SanityPortableTextBlock & {
 
 export interface BasketItem {
   id: string;
-  name: string;
+  title: string;
   priceCHF: number;
   quantity: number;
   coverImage: SanityImage;

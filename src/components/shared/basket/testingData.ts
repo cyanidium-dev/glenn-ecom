@@ -19,6 +19,7 @@ export const testingData = [
     },
     priceCHF: 35,
     title: "Resilience Avenue VINYL",
+    quantity: 1,
   },
   {
     _id: "a93d9447-9d34-4897-b74b-41a4047878a6",
@@ -41,5 +42,6 @@ export const testingData = [
 
     priceCHF: 19,
     title: "Resilience Avenue CD",
+    quantity: 1,
   },
 ];
