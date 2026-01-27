@@ -9,6 +9,7 @@ interface LiveProps {
   events: event[];
 }
 export default function Live({ events }: LiveProps) {
+  const eventsCount = events?.length || 0;
   return (
     <section id="live" className="py-[75px] lg:pt-[125px] lg:pb-[150px]">
       <Container className="px-[20px]">
@@ -23,12 +24,12 @@ export default function Live({ events }: LiveProps) {
           Live
         </motion.h2>
         <LiveList events={events} />
-        {events && (
+        {eventsCount > 0 && (
           <div className="flex flex-col items-center justify-center mt-[40px] lg:mt-[80px] xl:mt-[120px]">
             <motion.p
               variants={fadeInAnimation({
                 x: -20,
-                delay: 0.1 * events.length,
+                delay: 0.1 * eventsCount,
               })}
               viewport={{ once: true, amount: 0.1 }}
               initial="hidden"
@@ -41,7 +42,7 @@ export default function Live({ events }: LiveProps) {
             <motion.p
               variants={fadeInAnimation({
                 x: 20,
-                delay: 0.1 * events.length,
+                delay: 0.1 * eventsCount,
               })}
               viewport={{ once: true, amount: 0.1 }}
               initial="hidden"
@@ -54,7 +55,7 @@ export default function Live({ events }: LiveProps) {
             <motion.div
               variants={fadeInAnimation({
                 x: -20,
-                delay: 0.1 * events.length + 0.2,
+                delay: 0.1 * eventsCount + 0.2,
               })}
               viewport={{ once: true, amount: 0.1 }}
               initial="hidden"
