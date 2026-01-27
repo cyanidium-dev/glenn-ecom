@@ -2,6 +2,7 @@ import Live from "@/components/homePage/live/Live";
 import { allRecordsQuery, eventsQuery } from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import type { Metadata } from "next";
+import Journal from "@/components/homePage/journal/Journal";
 import Testimonials from "@/components/homePage/testimonials/Testimonials";
 import Store from "@/components/homePage/store/Store";
 import Hero from "@/components/homePage/hero/Hero";
@@ -31,6 +32,7 @@ export default async function HomePage() {
       <Music />
       <Live events={eventsData} />
       <Store records={recordsData} />
+      <Journal />
     </>
   );
 }

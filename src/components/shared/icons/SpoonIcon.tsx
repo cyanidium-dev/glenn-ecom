@@ -11,8 +11,17 @@ export default function SpoonIcon({ className = "" }: SpoonIconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-hidden="true"
+      preserveAspectRatio="none"
     >
-      <mask id="mask0_95_342" maskUnits="userSpaceOnUse" x="0" y="0" width="661" height="149">
+      <mask
+        id="mask0_95_342"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="661"
+        height="149"
+      >
         <path
           d="M1.30073e-05 148.787L660.45 148.787L660.45 6.10352e-05L0 0.000118774L1.30073e-05 148.787Z"
           fill="white"
@@ -27,4 +36,3 @@ export default function SpoonIcon({ className = "" }: SpoonIconProps) {
     </svg>
   );
 }
-
