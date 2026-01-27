@@ -5,6 +5,8 @@ import Footer from "@/components/shared/footer/Footer";
 import Header from "@/components/shared/header/Header";
 import type { Metadata } from "next";
 
+export const revalidate = 60;
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 export const metadata: Metadata = {
