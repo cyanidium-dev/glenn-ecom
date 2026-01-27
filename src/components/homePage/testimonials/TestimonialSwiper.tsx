@@ -35,16 +35,6 @@ const SwiperWrapper = dynamic(
       const screenWidth = useScreenWidth();
       const isLg = screenWidth >= 1024;
 
-      // Card positioning calculations:
-      // Mobile/Tablet: 280px tall with 20px top padding
-      // AutoFillText height: ~192px (240px - 48px)
-      // Center of AutoFillText: 20px + 96px = ~115px
-      //
-      // lg+: 817px tall with 60px top padding
-      // Content area: 817px - 120px (padding) = 697px
-      // Separator/name section: ~48px
-      // AutoFillText height: ~649px (697px - 48px)
-      // Center of AutoFillText: 60px + 324.5px = ~384.5px
       const arrowTopPosition = isLg ? "384.5px" : "115px";
 
       const gradientId = `arrow-gradient-${variant}`;
@@ -102,7 +92,7 @@ const SwiperWrapper = dynamic(
           >
             <ArrowIcon
               className="rotate-180 w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-              fill={isPrevHovered ? hoverFill : defaultFill}
+              fill={isPrevHovered ? defaultFill : hoverFill}
             />
           </button>
           <button
@@ -116,7 +106,7 @@ const SwiperWrapper = dynamic(
           >
             <ArrowIcon
               className="w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-              fill={isNextHovered ? hoverFill : defaultFill}
+              fill={isNextHovered ? defaultFill : hoverFill}
             />
           </button>
         </div>
