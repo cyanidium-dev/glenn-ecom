@@ -9,6 +9,10 @@ interface StoreProps {
 }
 
 export default function Store({ records }: StoreProps) {
+  if (!records || !records.length) {
+    return null;
+  }
+
   return (
     <section
       id="store"
