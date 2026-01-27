@@ -9,7 +9,6 @@ interface LiveProps {
   events: event[];
 }
 export default function Live({ events }: LiveProps) {
-  const isEvents = events && events.length;
   return (
     <section id="live" className="py-[75px] lg:pt-[125px] lg:pb-[150px]">
       <Container className="px-[20px]">
@@ -24,7 +23,7 @@ export default function Live({ events }: LiveProps) {
           Live
         </motion.h2>
         <LiveList events={events} />
-        {isEvents && (
+        {events && (
           <div className="flex flex-col items-center justify-center mt-[40px] lg:mt-[80px] xl:mt-[120px]">
             <motion.p
               variants={fadeInAnimation({
