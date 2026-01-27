@@ -1,13 +1,14 @@
-"use client";
 import { fadeInAnimation, vinylAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import { MainPageStoreItem } from "@/types/store";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
 import LinkButton from "@/components/shared/buttons/LinkButton";
+
 interface ItemCardProps {
   item: MainPageStoreItem;
 }
+
 export default function ItemCard({ item }: ItemCardProps) {
   return (
     <li
