@@ -23,7 +23,7 @@ export default function Live({ events }: LiveProps) {
           Live
         </motion.h2>
         <LiveList events={events} />
-        {events && events.length && events.length > 0 && (
+        {events && events.length && (
           <div className="flex flex-col items-center justify-center mt-[40px] lg:mt-[80px] xl:mt-[120px]">
             <motion.p
               variants={fadeInAnimation({ x: -20, delay: 0.1 * events.length })}
