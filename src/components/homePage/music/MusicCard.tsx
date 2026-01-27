@@ -1,4 +1,4 @@
-import MainButton from "@/components/shared/buttons/MainButton";
+import LinkButton from "@/components/shared/buttons/LinkButton";
 import MusicFrameIcon from "@/components/shared/icons/MusicFrameIcon";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
@@ -45,7 +45,7 @@ export default function MusicCard({
           />
         </div>
         <div
-          className="hidden md:flex md:flex-col md:items-center md:justify-center absolute inset-0 z-20 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+          className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center absolute inset-0 z-20 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
           style={{
             background: "#92001D99",
           }}
@@ -53,14 +53,15 @@ export default function MusicCard({
           <h3 className="font-andes text-center text-[56px] font-medium leading-[95%] lowercase mb-[25px]">
             {title}
           </h3>
-          <a href={link} target="_blank" rel="noopener noreferrer" className="">
-            <MainButton
-              variant="outline"
-              className="w-[180px] h-[45px] text-[18px] leading-none"
-            >
-              Listen
-            </MainButton>
-          </a>
+          <LinkButton
+            href={link}
+            target="_blank"
+            variant="outline"
+            className="w-[180px] h-[45px] text-[18px] leading-none"
+            isExternal={true}
+          >
+            Listen
+          </LinkButton>
         </div>
       </motion.div>
       <motion.h3
@@ -72,23 +73,23 @@ export default function MusicCard({
       >
         {title}
       </motion.h3>
-      <motion.a
+      <motion.div
         variants={fadeInAnimation({ delay: 0.5 * index, y: 10 })}
         initial="hidden"
         animate="visible"
         exit="exit"
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
         className="lg:hidden"
       >
-        <MainButton
+        <LinkButton
+          href={link}
+          target="_blank"
           variant="outline"
+          isExternal={true}
           className="w-[127px] h-[37px] text-[14px] leading-none"
         >
           Listen
-        </MainButton>
-      </motion.a>
+        </LinkButton>
+      </motion.div>
     </li>
   );
 }
