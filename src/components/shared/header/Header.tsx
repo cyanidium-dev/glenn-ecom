@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import BasketButton from "../basket/BasketButton";
 import { NavMenuDesktop } from "./NavMenu";
+import BasketMenu from "../basket/BasketMenu";
 
 export default function Header() {
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
@@ -17,6 +18,8 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const { scrollY } = useScroll();
   const toggleHeaderMenuOpen = () => setIsHeaderMenuOpened(!isHeaderMenuOpened);
+  const [isBasketMenuOpened, setIsBasketMenuOpened] = useState(false);
+  const toggleBasketMenuOpen = () => setIsBasketMenuOpened(!isBasketMenuOpened);
 
   useMotionValueEvent(scrollY, "change", latest => {
     setIsScrolled(latest > 20);
@@ -81,7 +84,7 @@ export default function Header() {
               quality={100}
             />
           </Link>
-          <BasketButton />
+          <BasketButton toggleBasketMenuOpen={toggleBasketMenuOpen} />
         </div>
 
         {/* Desktop layout: nav (left half), logo (center), basket (far right) */}
@@ -113,7 +116,7 @@ export default function Header() {
             />
           </Link>
           <div className="flex-1 flex items-center justify-end">
-            <BasketButton />
+            <BasketButton toggleBasketMenuOpen={toggleBasketMenuOpen} />
           </div>
         </div>
       </Container>
@@ -121,9 +124,16 @@ export default function Header() {
         isHeaderMenuOpened={isHeaderMenuOpened}
         setIsHeaderMenuOpened={setIsHeaderMenuOpened}
       />
+      <BasketMenu
+        isBasketMenuOpened={isBasketMenuOpened}
+        setIsBasketMenuOpened={setIsBasketMenuOpened}
+      />
       <Backdrop
-        isVisible={isHeaderMenuOpened}
-        onClick={() => setIsHeaderMenuOpened(false)}
+        isVisible={isHeaderMenuOpened || isBasketMenuOpened}
+        onClick={() => {
+          setIsHeaderMenuOpened(false);
+          setIsBasketMenuOpened(false);
+        }}
       />
     </header>
   );

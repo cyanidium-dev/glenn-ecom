@@ -38,6 +38,20 @@ export const burgerMenuVariants = {
   },
 };
 
+export const basketMenuVariants = {
+  hidden: { x: "100%", opacity: 0 },
+  visible: {
+    x: "0%",
+    opacity: 1,
+    transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+  exit: {
+    x: "100%",
+    opacity: 0,
+    transition: { duration: 0.3, ease: [0.42, 0, 1, 1] as const },
+  },
+};
+
 export const listVariants = ({
   staggerChildren = 0.3,
   delayChildren = 0,

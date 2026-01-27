@@ -23,7 +23,7 @@ export async function generateMetadata({
   const itemData = (await fetchSanityData(recordQuery, {
     slug: item,
   })) as SanityRecord | null;
-
+  console.log(itemData);
   if (!itemData) {
     notFound();
   }
