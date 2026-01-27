@@ -52,7 +52,7 @@ export default function LiveList({ events }: LiveListProps) {
       viewport={{ once: true, amount: 0.1 }}
     >
       {events.map((event, index) => (
-        <motion.li key={event.id} variants={listItemVariants}>
+        <motion.li key={event._id} variants={listItemVariants}>
           {index !== 0 && <SeparatorLine className="w-full -my-px h-[2px]" />}
           <div className="pt-5 pb-[27px]">
             <p className="text-[11px] lg:text-[18px] leading-[120%] hidden md:block">
