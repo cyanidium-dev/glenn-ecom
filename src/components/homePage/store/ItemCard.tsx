@@ -1,11 +1,10 @@
 "use client";
-import MainButton from "@/components/shared/buttons/MainButton";
 import { fadeInAnimation, vinylAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import { MainPageStoreItem } from "@/types/store";
-import Link from "next/link";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
+import LinkButton from "@/components/shared/buttons/LinkButton";
 interface ItemCardProps {
   item: MainPageStoreItem;
 }
@@ -122,14 +121,13 @@ export default function ItemCard({ item }: ItemCardProps) {
         exit="exit"
         className=""
       >
-        <Link href={`/store/${item.slug}`}>
-          <MainButton
-            variant="outline"
-            className="w-[131px] lg:w-[126px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none lg:border-[3px]"
-          >
-            Listen
-          </MainButton>
-        </Link>
+        <LinkButton
+          href={`/store/${item.slug}`}
+          variant="outline"
+          className="w-[131px] lg:w-[126px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none lg:border-[3px]"
+        >
+          Shop
+        </LinkButton>
       </motion.div>
     </li>
   );
