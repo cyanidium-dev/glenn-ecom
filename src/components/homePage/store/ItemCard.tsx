@@ -66,7 +66,7 @@ export default function ItemCard({ item }: ItemCardProps) {
             whileInView="visible"
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
-            variants={vinylAnimation({ delay: 0.3 * item.order })}
+            variants={vinylAnimation({ delay: 0.3 * item.order || 0 })}
             className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] aspect-square -z-10 lg:hidden"
           >
             <Image
@@ -106,7 +106,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         </div>
       </div>
       <motion.h3
-        variants={fadeInAnimation({ delay: 0.3 * item.order, y: 10 })}
+        variants={fadeInAnimation({ delay: 0.3 * item.order || 0, y: 10 })}
         initial="hidden"
         animate="visible"
         exit="exit"
@@ -115,7 +115,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         {item.title}
       </motion.h3>
       <motion.div
-        variants={fadeInAnimation({ delay: 0.5 * item.order, y: 10 })}
+        variants={fadeInAnimation({ delay: 0.5 * item.order || 0, y: 10 })}
         initial="hidden"
         animate="visible"
         exit="exit"
