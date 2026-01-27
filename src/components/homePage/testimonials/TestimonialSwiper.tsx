@@ -39,7 +39,7 @@ const SwiperWrapper = dynamic(
       // Mobile/Tablet: 280px tall with 20px top padding
       // AutoFillText height: ~192px (240px - 48px)
       // Center of AutoFillText: 20px + 96px = ~115px
-      // 
+      //
       // lg+: 817px tall with 60px top padding
       // Content area: 817px - 120px (padding) = 697px
       // Separator/name section: ~48px
@@ -84,15 +84,9 @@ const SwiperWrapper = dynamic(
                 x2="0%"
                 y2="100%"
               >
-                <stop
-                  offset="2.77%"
-                  stopColor="rgba(255, 255, 255, 0.2)"
-                />
+                <stop offset="2.77%" stopColor="rgba(255, 255, 255, 0.2)" />
                 <stop offset="53.12%" stopColor="#FFFFFF" />
-                <stop
-                  offset="92.05%"
-                  stopColor="rgba(255, 255, 255, 0.2)"
-                />
+                <stop offset="92.05%" stopColor="rgba(255, 255, 255, 0.2)" />
               </linearGradient>
             </defs>
           </svg>
@@ -101,7 +95,7 @@ const SwiperWrapper = dynamic(
             type="button"
             aria-label="Previous testimonial"
             onClick={() => swiperRef.current?.swiper?.slidePrev()}
-            className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-300"
+            className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-300 cursor-pointer"
             style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
             onMouseEnter={() => setIsPrevHovered(true)}
             onMouseLeave={() => setIsPrevHovered(false)}
@@ -115,7 +109,7 @@ const SwiperWrapper = dynamic(
             type="button"
             aria-label="Next testimonial"
             onClick={() => swiperRef.current?.swiper?.slideNext()}
-            className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-300"
+            className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-300 cursor-pointer"
             style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
             onMouseEnter={() => setIsNextHovered(true)}
             onMouseLeave={() => setIsNextHovered(false)}
