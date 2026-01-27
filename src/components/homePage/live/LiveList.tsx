@@ -12,7 +12,7 @@ interface LiveListProps {
   events: event[];
 }
 export default function LiveList({ events }: LiveListProps) {
-  if (!events || !events.length)
+  if (!events || !events.length) {
     return (
       <motion.div
         variants={fadeInAnimation({ x: -30, delay: 0.2 })}
@@ -43,6 +43,7 @@ export default function LiveList({ events }: LiveListProps) {
         <SeparatorLine className="w-full -my-px h-[2px] hidden md:block" />
       </motion.div>
     );
+  }
 
   return (
     <motion.ul
