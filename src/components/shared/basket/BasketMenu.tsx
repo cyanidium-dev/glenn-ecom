@@ -79,16 +79,16 @@ export default function BasketMenu({
           } fixed z-50 top-0 right-0 min-w-[330px] w-[85vw] max-w-[658px] h-dvh bg-linear-to-l from-[#92001D] to-[#000000] overflow-hidden opacity-100`}
         >
           <div className="relative w-full h-full flex flex-col">
+            <button
+              type="button"
+              aria-label="close basket menu button"
+              onClick={() => setIsBasketMenuOpened(false)}
+              className="absolute top-10 lg:top-[45px] right-[30px] w-4 h-4 lg:w-[23px] lg:h-[23px] text-white outline-none z-10 cursor-pointer hover:opacity-70 transition-opacity duration-300 ease-in-out"
+            >
+              <CloseIcon className="w-full h-full" />
+            </button>
             <div className="flex-1 overflow-y-auto overflow-x-hidden">
               <Container className="relative w-full lg:pl-[25px] lg:pr-[27px] xl:pl-[25px] xl:pr-[27px] pt-[34px] lg:pt-[45px] pb-[30px]">
-                <button
-                  type="button"
-                  aria-label="close basket menu button"
-                  onClick={() => setIsBasketMenuOpened(false)}
-                  className="absolute top-10 lg:top-[45px] right-[30px] w-4 h-4 lg:w-[23px] lg:h-[23px] text-white outline-none z-10 cursor-pointer"
-                >
-                  <CloseIcon className="w-full h-full" />
-                </button>
                 {/* Empty Basket Message */}
                 {getItems().length === 0 && (
                   <motion.div
