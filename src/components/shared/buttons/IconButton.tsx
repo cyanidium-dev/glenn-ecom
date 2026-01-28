@@ -4,17 +4,19 @@ interface IconButtonProps {
   handleClick?: () => void;
   children: ReactNode;
   className?: string;
+  label?: string;
 }
 
 export default function IconButton({
   handleClick,
   children,
   className = "",
+  label = "icon button",
 }: IconButtonProps) {
   return (
     <button
       type="button"
-      aria-label="icon button"
+      aria-label={label}
       onClick={handleClick}
       className={`cursor-pointer outline-none before:content-[''] before:absolute before:-z-10 before:top-0 before:left-0 before:rounded-full before:size-full 
                         before:bg-blue before:blur-[4px] supports-[backdrop-filter]:before:blur-[4px] will-change-transform before:opacity-0
