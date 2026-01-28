@@ -104,7 +104,7 @@ export default function BasketMenu({
                     </h3>
                     <LinkButton
                       href="/#store"
-                      className="block w-full"
+                      className="w-full"
                       variant="gradient"
                     >
                       Continue Shopping
