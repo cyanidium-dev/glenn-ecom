@@ -5,6 +5,8 @@ import Footer from "@/components/shared/footer/Footer";
 import Header from "@/components/shared/header/Header";
 import type { Metadata } from "next";
 
+export const revalidate = 60;
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 export const metadata: Metadata = {
@@ -54,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${rubik.variable} ${andes.variable} flex min-h-screen flex-col antialiased overflow-hidden`}
+        className={`${roboto.variable} ${rubik.variable} ${andes.variable} flex min-h-screen flex-col antialiased`}
       >
         <Header />
         <main className="flex-1">{children}</main>

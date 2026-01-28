@@ -39,7 +39,7 @@ export default function LinkButton({
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
           className={twMerge(
             `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center w-full h-[45px] px-3
-         text-[14px] leading-none lg:text-[18px]
+         text-[14px] leading-none lg:text-[18px] text-center
       enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out
        ${variantClasses[variant]}`,
             className
@@ -72,7 +72,7 @@ export default function LinkButton({
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
           className={twMerge(
             `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center w-full h-[45px] px-3
-         text-[14px] leading-none lg:text-[18px]
+         text-[14px] leading-none lg:text-[18px] text-center
       enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out
        ${variantClasses[variant]}`,
             className

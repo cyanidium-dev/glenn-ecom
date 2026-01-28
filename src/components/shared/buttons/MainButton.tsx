@@ -25,7 +25,7 @@ export default function MainButton({
     white:
       "bg-white disabled:bg-white/60 text-red hover:bg-[linear-gradient(273.78deg, rgba(255, 255, 255, 0.2) 3.03%, #FFFFFF 50.66%, rgba(255, 255, 255, 0.2) 96.83%)]",
     outline:
-      "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[1.5px] border-white text-white hover:bg-white hover:text-red",
+      "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[1.5px] border-white text-white hover:bg-white hover:text-red disabled:pointer-events-none",
     gradient:
       "bg-transparent disabled:text-white/60 text-white hover:bg-white hover:text-red",
   };
@@ -57,9 +57,24 @@ export default function MainButton({
           }}
         />
       )}
-      <span className="relative inline-block w-full">
-        {children}
-        {isLoading ? <LoaderIcon variant={variant} /> : null}
+      <span className="relative inline-flex items-center justify-center gap-2 w-full min-h-[1em]">
+        <span
+          className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-300 ease-in-out ${
+            isLoading ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          {children}
+        </span>
+        <span
+          className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-300 ease-in-out ${
+            isLoading ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <span className="text-[14px] leading-none lg:text-[18px]">
+            Loading...
+          </span>
+          <LoaderIcon variant={variant} />
+        </span>
       </span>
     </button>
   );
