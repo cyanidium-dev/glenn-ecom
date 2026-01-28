@@ -1,9 +1,10 @@
 import { Roboto, Rubik } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import Footer from "@/components/shared/footer/Footer";
-import Header from "@/components/shared/header/Header";
 import type { Metadata } from "next";
+import Header from "@/components/shared/header/Header";
+import Footer from "@/components/shared/footer/Footer";
+import SplashGate from "@/components/shared/splashScreen/SplashGate";
 
 export const revalidate = 60;
 
@@ -58,9 +59,11 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${rubik.variable} ${andes.variable} flex min-h-screen flex-col antialiased overflow-hidden`}
       >
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <SplashGate>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </SplashGate>
       </body>
     </html>
   );
