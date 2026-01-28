@@ -18,7 +18,7 @@ export default function TestimonialCard({ name, text }: TestimonialCardProps) {
         as="p"
         min={isLg ? 92 : 22}
         max={isLg ? 260 : 78}
-        className="font-andes px-[10px] lg:px-0 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] h-full text-center lowercase"
+        className="font-andes px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] h-full text-center lowercase"
       >
         {text}
       </AutoFillText>
