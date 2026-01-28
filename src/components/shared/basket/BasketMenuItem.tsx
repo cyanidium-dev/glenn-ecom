@@ -3,6 +3,7 @@ import SelectInput from "../selectInput/SelectInput";
 import TrashcanIcon from "../icons/TrashcanIcon";
 import Image from "next/image";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
+import IconButton from "../buttons/IconButton";
 
 interface BasketMenuItemProps {
   item: BasketItem;
@@ -21,7 +22,7 @@ export default function BasketMenuItem({ item }: BasketMenuItemProps) {
     { value: "5", label: "5" },
   ];
   return (
-    <div className="flex gap-[15px] lg:gap-[13px]">
+    <li className="flex gap-[15px] lg:gap-[13px]">
       <div className="relative w-[99px] md:w-[126px] h-[68px] lg:h-[86px] shrink-0">
         <div className="relative w-[68px] lg:w-[86px] h-[68px] lg:h-[86px]">
           <Image
@@ -60,9 +61,11 @@ export default function BasketMenuItem({ item }: BasketMenuItemProps) {
             onChange={handleChange}
             className="flex items-center w-[64px] h-[26px] lg:w-[92px] lg:h-[40px] leading-none text-[14px] lg:text-[18px]"
           />
-          <TrashcanIcon className="size-6 lg:size-[30px]" />
+          <IconButton className="relative size-6 lg:size-[30px] flex items-center justify-center">
+            <TrashcanIcon className="size-full" />
+          </IconButton>
         </div>
       </div>
-    </div>
+    </li>
   );
 }

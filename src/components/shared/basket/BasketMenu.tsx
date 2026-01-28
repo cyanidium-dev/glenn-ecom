@@ -116,7 +116,7 @@ export default function BasketMenu({
                     <h3 className="font-andes lowercase text-[34px] lg:text-[38px] leading-[95%] mb-5 lg:mb-[30px]">
                       Your Cart
                     </h3>
-                    <motion.div
+                    <motion.ul
                       initial="hidden"
                       whileInView="visible"
                       exit="exit"
@@ -127,7 +127,7 @@ export default function BasketMenu({
                       {getItems().map(item => (
                         <BasketMenuItem key={item.id} item={item} />
                       ))}
-                    </motion.div>
+                    </motion.ul>
                   </>
                 )}
               </Container>
