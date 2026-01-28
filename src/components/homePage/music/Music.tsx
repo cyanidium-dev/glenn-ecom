@@ -18,7 +18,7 @@ export default function Music() {
         >
           Music
         </motion.h2>
-        <ul className="flex flex-col md:flex-row items-center justify-center md:justify-around gap-[50px]">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-[50px] md:gap-x-10 lg:gap-x-0 items-center justify-center w-full">
           {musicData.map((item, index) => (
             <MusicCard key={item.title} {...item} index={index} />
           ))}
