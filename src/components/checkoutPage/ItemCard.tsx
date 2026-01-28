@@ -32,7 +32,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   ];
 
   return (
-    <div className="flex gap-[15px] lg:gap-[13px] w-full">
+    <li className="flex gap-[15px] lg:gap-[13px] w-full">
       <div className="relative w-[147px] md:w-[126px] h-[100px] lg:h-[86px] shrink-0">
         <div className="relative w-[99px] lg:w-[85px] h-[100px] lg:h-[86px]">
           <Image
@@ -74,6 +74,6 @@ export default function ItemCard({ item }: ItemCardProps) {
           <TrashcanIcon className="size-6 lg:size-[30px]" />
         </div>
       </div>
-    </div>
+    </li>
   );
 }
