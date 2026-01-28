@@ -93,7 +93,7 @@ export default function LinkButton({
               }}
             />
           )}
-          <span className="relative inline-block w-full">
+          <span className="relative inline-block w-full text-center">
             {children}
             {isLoading ? <LoaderIcon variant={variant} /> : null}
           </span>
