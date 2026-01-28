@@ -112,7 +112,7 @@ export default function ItemCard({ item }: ItemCardProps) {
       <motion.h3
         variants={fadeInAnimation({ delay: 0.3 * (item.order || 0), y: 10 })}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         exit="exit"
         className="font-andes text-center text-[28px] lg:text-[42px] font-medium leading-[95%] lowercase mb-[15px]"
       >
@@ -121,7 +121,7 @@ export default function ItemCard({ item }: ItemCardProps) {
       <motion.div
         variants={fadeInAnimation({ delay: 0.5 * (item.order || 0), y: 10 })}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         exit="exit"
         className=""
       >

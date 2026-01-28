@@ -18,7 +18,7 @@ export default function LiveList({ events }: LiveListProps) {
         variants={fadeInAnimation({ x: -30, delay: 0.2 })}
         viewport={{ once: true, amount: 0.1 }}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         exit="exit"
       >
         <SeparatorLine className="w-full -my-px h-[2px]" />
@@ -49,7 +49,7 @@ export default function LiveList({ events }: LiveListProps) {
     <motion.ul
       variants={listVariants({ staggerChildren: 0.2, delayChildren: 0.3 })}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >
       {events.map((event, index) => (

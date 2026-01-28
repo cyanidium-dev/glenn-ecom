@@ -13,12 +13,12 @@ export default function TestimonialCard({ name, text }: TestimonialCardProps) {
   const isLg = screenWidth >= 1024;
 
   return (
-    <li className="flex flex-col items-center w-full sm:aspect-390/280 lg:aspect-none h-[280px] sm:h-full md:h-[431px] lg:h-[817px] py-[20px] lg:py-[60px]">
+    <div className="flex flex-col items-center w-full sm:aspect-390/280 lg:aspect-none h-[280px] sm:h-full md:h-[431px] lg:h-[817px] py-[20px] lg:py-[60px]">
       <AutoFillText
         as="p"
         min={isLg ? 92 : 22}
         max={isLg ? 260 : 78}
-        className="font-andes px-[10px] lg:px-0 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] h-full text-center lowercase"
+        className="font-andes px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] h-full text-center lowercase"
       >
         {text}
       </AutoFillText>
@@ -43,6 +43,6 @@ export default function TestimonialCard({ name, text }: TestimonialCardProps) {
           )}
         </p>
       </div>
-    </li>
+    </div>
   );
 }

@@ -18,7 +18,7 @@ export default function Journal() {
       <Container>
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ delay: 0.1, x: -20 })}
@@ -27,7 +27,7 @@ export default function Journal() {
         </motion.div>
         <motion.h2
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ delay: 0.2, x: -20 })}
@@ -39,7 +39,7 @@ export default function Journal() {
           {!isSuccess && (
             <motion.p
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
               exit="exit"
               viewport={{ once: true, amount: 0.1 }}
               variants={fadeInAnimation({ delay: 0.2, x: -20 })}
@@ -53,7 +53,7 @@ export default function Journal() {
         </AnimatePresence>
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ delay: 0.3, x: -20 })}

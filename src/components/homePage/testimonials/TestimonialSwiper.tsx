@@ -52,11 +52,9 @@ const SwiperWrapper = dynamic(
       // Separator/name section: ~48px
       // AutoFillText height: ~649px (697px - 48px)
       // Center of AutoFillText: 60px + 324.5px = ~384.5px
-      const arrowTopPosition = isLg ? "384.5px" : isSm ? "191.5px" : "115px";
+      const arrowTopPosition = isLg ? "334.5px" : isSm ? "191.5px" : "115px";
 
-      const gradientId = `arrow-gradient-${variant}`;
-      const defaultFill = "white";
-      const hoverFill = `url(#${gradientId})`;
+      const solidFill = "white";
 
       return (
         <div className="relative">
@@ -80,23 +78,6 @@ const SwiperWrapper = dynamic(
               </SwiperSlide>
             ))}
           </Swiper>
-          {/* SVG Gradient Definition */}
-          <svg width="0" height="0" style={{ position: "absolute" }}>
-            <defs>
-              <linearGradient
-                id={gradientId}
-                gradientUnits="userSpaceOnUse"
-                x1="0%"
-                y1="0%"
-                x2="0%"
-                y2="100%"
-              >
-                <stop offset="2.77%" stopColor="rgba(255, 255, 255, 0.2)" />
-                <stop offset="53.12%" stopColor="#FFFFFF" />
-                <stop offset="92.05%" stopColor="rgba(255, 255, 255, 0.2)" />
-              </linearGradient>
-            </defs>
-          </svg>
           {/* Custom Navigation Buttons */}
           <button
             type="button"
@@ -109,7 +90,7 @@ const SwiperWrapper = dynamic(
           >
             <ArrowIcon
               className="rotate-180 w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-              fill={isPrevHovered ? defaultFill : hoverFill}
+              fill={isPrevHovered ? solidFill : "gradient"}
             />
           </button>
           <button
@@ -123,7 +104,7 @@ const SwiperWrapper = dynamic(
           >
             <ArrowIcon
               className="w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-              fill={isNextHovered ? defaultFill : hoverFill}
+              fill={isNextHovered ? solidFill : "gradient"}
             />
           </button>
         </div>

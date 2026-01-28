@@ -17,7 +17,7 @@ export default function Live({ events }: LiveProps) {
           variants={fadeInAnimation({ y: 30, delay: 0.1 })}
           viewport={{ once: true, amount: 0.1 }}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           exit="exit"
           className="font-andes text-[46px] lg:text-[110px] leading-[95%] mb-5 lg:mb-10"
         >
@@ -33,7 +33,7 @@ export default function Live({ events }: LiveProps) {
               })}
               viewport={{ once: true, amount: 0.1 }}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
               exit="exit"
               className="text-[12px] lg:text-[18px] leading-[120%] mb-[5px]"
             >
@@ -46,7 +46,7 @@ export default function Live({ events }: LiveProps) {
               })}
               viewport={{ once: true, amount: 0.1 }}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
               exit="exit"
               className="text-[12px] lg:text-[18px] leading-[120%] mb-[15px] lg:mb-[30px]"
             >
@@ -59,7 +59,7 @@ export default function Live({ events }: LiveProps) {
               })}
               viewport={{ once: true, amount: 0.1 }}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
               exit="exit"
             >
               <LinkButton

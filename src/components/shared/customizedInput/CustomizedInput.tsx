@@ -87,7 +87,9 @@ export default function CustomizedInput({
               className={twMerge(
                 fieldStyles,
                 fieldClassName,
-                hasError ? "border-white/60" : "border-transparent"
+                // Fancy variant uses `JournalInputDecoration` as the frame.
+                // Avoid adding an extra border on error (double-frame effect).
+                "border-transparent"
               )}
             />
             {isLoading && (
@@ -101,7 +103,7 @@ export default function CustomizedInput({
                 component="p"
                 className={twMerge(
                   errorStylesBase,
-                  "absolute top-[4px] right-[8px] text-right"
+                  "absolute top-[10px] right-[8px] text-right"
                 )}
               />
             )}
@@ -201,7 +203,7 @@ export default function CustomizedInput({
       )}
 
       {/* For labeled variants we render the error inside the field; for unlabeled ones use the default below-field position */}
-      {!labelText && hasError && (
+      {variant !== "fancy" && !labelText && hasError && (
         <ErrorMessage
           name={fieldName}
           component="p"

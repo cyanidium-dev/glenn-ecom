@@ -12,7 +12,7 @@ export default function Testimonials() {
         <motion.div
           variants={fadeInAnimation({ y: 50, duration: 1, scale: 0.9 })}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           exit="exit"
         >
           <TestimonialSwiper testimonialsList={testimonialsData} />
