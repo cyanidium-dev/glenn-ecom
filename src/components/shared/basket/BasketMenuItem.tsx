@@ -61,7 +61,10 @@ export default function BasketMenuItem({ item }: BasketMenuItemProps) {
             onChange={handleChange}
             className="flex items-center w-[64px] h-[26px] lg:w-[92px] lg:h-[40px] leading-none text-[14px] lg:text-[18px]"
           />
-          <IconButton className="relative size-6 lg:size-[30px] flex items-center justify-center">
+          <IconButton
+            label="Remove item from cart"
+            className="relative size-6 lg:size-[30px] flex items-center justify-center"
+          >
             <TrashcanIcon className="size-full" />
           </IconButton>
         </div>
