@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface NavMenuItemProps {
   menuItem: { title: string; link: string; style?: string };
@@ -13,6 +14,10 @@ export default function NavMenuItem({
   itemClassName = "",
 }: NavMenuItemProps) {
   const { title, link, style } = menuItem;
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  const href = isHomePage ? link.replace("/#", "#") : link;
 
   return (
     <li className={itemClassName}>
@@ -20,7 +25,7 @@ export default function NavMenuItem({
         onClick={
           setIsHeaderMenuOpened ? () => setIsHeaderMenuOpened(false) : undefined
         }
-        href={link}
+        href={href}
         className={`block font-andes text-[34px] leading-[95%] text-white nav-menu-item-gradient-hover ${style}
         transition duration-300 ease-in-out`}
       >
