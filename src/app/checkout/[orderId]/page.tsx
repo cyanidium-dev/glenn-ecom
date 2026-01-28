@@ -2,10 +2,22 @@ import Container from "@/components/shared/container/Container";
 import Link from "next/link";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
+import type { Metadata } from "next";
 
 interface SuccessProps {
   params: {
     orderId: string;
+  };
+}
+
+export async function generateMetadata({
+  params,
+}: SuccessProps): Promise<Metadata> {
+  const orderId = params.orderId;
+  return {
+    title: `Order ${orderId}`,
+    description: "Order confirmation.",
+    robots: { index: false, follow: false },
   };
 }
 
