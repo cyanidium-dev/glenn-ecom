@@ -34,22 +34,37 @@ export async function generateMetadata({
       ? description.substring(0, 157) + "..."
       : description;
 
+  const canonicalPath = `/store/${item}`;
+  const ogImageUrl = itemData.ogImage?.asset?.url;
+
   return {
     title: `${itemData.title} | Store`,
     description:
       shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
+    alternates: { canonical: canonicalPath },
     openGraph: {
       title: itemData.title,
       description:
         shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
-      images: [
-        {
-          url: itemData.ogImage.asset.url,
-          width: 1200,
-          height: 630,
-          alt: itemData.title,
-        },
-      ],
+      url: canonicalPath,
+      type: "website",
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: itemData.title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: itemData.title,
+      description:
+        shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
   };
 }

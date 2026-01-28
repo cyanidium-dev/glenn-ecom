@@ -1,27 +1,16 @@
 import { Roboto, Rubik } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import type { Metadata } from "next";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
 import SplashGate from "@/components/shared/splashScreen/SplashGate";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 
 export const revalidate = 60;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
-
-export const metadata: Metadata = {
-  openGraph: {
-    images: [
-      {
-        url: `${SITE_URL}/opengraph-image.png`,
-        width: 1200,
-        height: 630,
-        alt: "Glenn Garbo",
-      },
-    ],
-  },
-};
+export async function generateMetadata() {
+  return await getDefaultMetadata();
+}
 
 const roboto = Roboto({
   variable: "--font-roboto",
