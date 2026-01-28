@@ -21,7 +21,7 @@ export default function MusicCard({
       <motion.div
         variants={fadeInAnimation({ delay: 0.2 * index, y: 10 })}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         exit="exit"
         className="group relative mb-[25px] lg:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520"
       >
@@ -40,7 +40,7 @@ export default function MusicCard({
             src={image}
             alt={title}
             fill
-            sizes="(max-width: 768px) 640px, 800px"
+            sizes="(max-width: 768px) 320px, 400px"
             className="object-cover"
           />
         </div>
@@ -67,7 +67,7 @@ export default function MusicCard({
       <motion.h3
         variants={fadeInAnimation({ delay: 0.3 * index, y: 10 })}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         exit="exit"
         className="lg:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
       >
@@ -76,7 +76,7 @@ export default function MusicCard({
       <motion.div
         variants={fadeInAnimation({ delay: 0.5 * index, y: 10 })}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         exit="exit"
         className="lg:hidden"
       >

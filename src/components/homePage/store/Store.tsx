@@ -25,7 +25,7 @@ export default function Store({ records }: StoreProps) {
           variants={fadeInAnimation({ y: 30, delay: 0.1 })}
           viewport={{ once: true, amount: 0.1 }}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
           exit="exit"
           className="font-andes text-[46px] lg:text-[110px] leading-[95%] text-center mb-5 lg:mb-10"
         >

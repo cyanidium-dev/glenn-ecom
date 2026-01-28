@@ -75,7 +75,7 @@ export default function Header() {
               alt="Logo"
               width={180}
               height={150}
-              sizes="192px"
+              sizes="96px"
               priority
               className="object-contain"
               quality={100}
@@ -106,7 +106,7 @@ export default function Header() {
               alt="Logo"
               width={180}
               height={150}
-              sizes="360px"
+              sizes="180px"
               priority
               className="object-contain"
               quality={100}
