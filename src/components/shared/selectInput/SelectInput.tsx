@@ -77,20 +77,25 @@ export default function SelectInput({
   // Custom styles to match the original design
   const customStyles: StylesConfig<{ value: string; label: string }, false> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    container: (provided: any) => ({
+      ...provided,
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
+      width: "100%",
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     control: (provided: any, state: any) => ({
       ...provided,
       width: "100%",
-      minHeight: "32px",
-      height: "32px",
-      "@media (min-width: 1024px)": {
-        minHeight: "40px",
-        height: "40px",
-      },
+      minHeight: "unset",
+      height: "100%",
       backgroundColor: "transparent",
       border: "none",
       boxShadow: "none",
       cursor: "pointer",
       padding: 0,
+      position: "relative",
       opacity: state.isFocused ? 0.8 : 1,
       transform: state.isFocused ? "scale(0.98)" : "scale(1)",
       transition: "opacity 300ms ease-in-out, transform 300ms ease-in-out",
@@ -108,6 +113,9 @@ export default function SelectInput({
       padding: 0,
       paddingLeft: "9px",
       paddingRight: "35px",
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     singleValue: (provided: any) => ({
@@ -136,6 +144,13 @@ export default function SelectInput({
       ...provided,
       padding: 0,
       paddingRight: "11px",
+      position: "absolute",
+      right: 0,
+      top: "50%",
+      transform: "translateY(-50%)",
+      height: "100%",
+      display: "flex",
+      alignItems: "center",
     }),
     indicatorSeparator: () => ({
       display: "none",
@@ -154,10 +169,15 @@ export default function SelectInput({
       border: "1.5px solid #ffffff",
       borderRadius: 0,
       marginTop: "4px",
-      zIndex: 9999,
+      zIndex: 10000,
       overflow: "hidden",
       boxShadow: "none",
       position: "absolute",
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    menuPortal: (provided: any) => ({
+      ...provided,
+      zIndex: 10000,
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     menuList: (provided: any) => ({
@@ -169,12 +189,11 @@ export default function SelectInput({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     option: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor:
-        state.isSelected
-          ? "#ffffff !important"
-          : state.isFocused
-            ? "rgba(255, 255, 255, 0.1) !important"
-            : "#93001c !important",
+      backgroundColor: state.isSelected
+        ? "#ffffff !important"
+        : state.isFocused
+          ? "rgba(255, 255, 255, 0.1) !important"
+          : "#93001c !important",
       color: state.isSelected ? "#93001c" : "#ffffff",
       padding: "8px 9px",
       cursor: "pointer",
@@ -217,8 +236,10 @@ export default function SelectInput({
         styles={customStyles}
         components={{ DropdownIndicator, Menu }}
         isSearchable={false}
-        menuPosition="absolute"
-        menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
+        menuPosition="fixed"
+        menuPortalTarget={
+          typeof document !== "undefined" ? document.body : undefined
+        }
         menuShouldScrollIntoView={false}
         className="react-select-container"
         classNamePrefix="react-select"
