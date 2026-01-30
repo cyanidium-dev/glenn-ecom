@@ -19,6 +19,8 @@ interface CustomizedInputProps {
   placeholder?: string;
   errors: FormikErrors<Values>;
   touched: FormikTouched<Values>;
+  /** When set, show error after submit attempt even if field wasn't blurred (fixes phone etc. on mobile) */
+  submitCount?: number;
   isRequired?: boolean;
   as?: string;
   labelClassName?: string;
@@ -39,6 +41,7 @@ export default function CustomizedInput({
   placeholder = "",
   errors,
   touched,
+  submitCount,
   as,
   labelClassName = "",
   fieldClassName = "",
@@ -124,7 +127,7 @@ export default function CustomizedInput({
                   style={{
                     background:
                       "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 38.94%, rgba(255, 255, 255, 0.2) 62.98%, rgba(255, 255, 255, 0.7) 91.83%)",
-                    padding: "1.5px",
+                    padding: "2px",
                     WebkitMask:
                       "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                     WebkitMaskComposite: "xor",

@@ -43,6 +43,7 @@ export default function CheckoutForm() {
     const data = {
       ...values,
       email: values.email.trim(),
+      phone: values.phone?.trim() ?? "",
     };
 
     try {
@@ -72,7 +73,7 @@ export default function CheckoutForm() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, dirty, isValid }) => (
+        {({ errors, touched, dirty, isValid, submitCount }) => (
           <Form className="flex flex-col">
             <div className="flex flex-col gap-[10px] lg:gap-4">
               <CustomizedInput
@@ -80,6 +81,7 @@ export default function CheckoutForm() {
                 isRequired
                 errors={errors}
                 touched={touched}
+                submitCount={submitCount}
                 variant="gradient"
                 labelText="Country"
                 fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
@@ -90,6 +92,7 @@ export default function CheckoutForm() {
                   isRequired
                   errors={errors}
                   touched={touched}
+                  submitCount={submitCount}
                   variant="gradient"
                   labelText="Name"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
@@ -99,6 +102,7 @@ export default function CheckoutForm() {
                   isRequired
                   errors={errors}
                   touched={touched}
+                  submitCount={submitCount}
                   variant="gradient"
                   labelText="Last name"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
@@ -110,6 +114,7 @@ export default function CheckoutForm() {
                 isRequired
                 errors={errors}
                 touched={touched}
+                submitCount={submitCount}
                 variant="gradient"
                 fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
               />
@@ -118,6 +123,7 @@ export default function CheckoutForm() {
                 labelText="Apartment, suite, etc. (optional)"
                 errors={errors}
                 touched={touched}
+                submitCount={submitCount}
                 variant="gradient"
                 fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
               />
@@ -128,6 +134,7 @@ export default function CheckoutForm() {
                   isRequired
                   errors={errors}
                   touched={touched}
+                  submitCount={submitCount}
                   variant="gradient"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />
@@ -137,6 +144,7 @@ export default function CheckoutForm() {
                   isRequired
                   errors={errors}
                   touched={touched}
+                  submitCount={submitCount}
                   variant="gradient"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />
@@ -147,6 +155,7 @@ export default function CheckoutForm() {
                 isRequired
                 errors={errors}
                 touched={touched}
+                submitCount={submitCount}
                 variant="gradient"
                 inputType="email"
                 fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
@@ -156,6 +165,7 @@ export default function CheckoutForm() {
                 labelText="Phone (optional)"
                 errors={errors}
                 touched={touched}
+                submitCount={submitCount}
                 variant="gradient"
                 fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
               />

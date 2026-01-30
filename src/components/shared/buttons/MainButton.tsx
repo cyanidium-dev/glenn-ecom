@@ -25,7 +25,7 @@ export default function MainButton({
     white:
       "bg-white disabled:bg-white/60 text-red hover:bg-[linear-gradient(273.78deg, rgba(255, 255, 255, 0.2) 3.03%, #FFFFFF 50.66%, rgba(255, 255, 255, 0.2) 96.83%)]",
     outline:
-      "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[1.5px] border-white text-white hover:bg-white hover:text-red disabled:pointer-events-none",
+      "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[2px] border-white text-white hover:bg-white hover:text-red disabled:pointer-events-none",
     gradient:
       "bg-transparent disabled:text-white/60 text-white hover:bg-white hover:text-red",
   };
@@ -49,7 +49,7 @@ export default function MainButton({
             opacity: disabled ? 0.5 : 1,
             background:
               "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 38.94%, rgba(255, 255, 255, 0.2) 62.98%, rgba(255, 255, 255, 0.7) 91.83%)",
-            padding: "1.5px",
+            padding: "2px",
             WebkitMask:
               "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
             WebkitMaskComposite: "xor",

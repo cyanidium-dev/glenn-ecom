@@ -59,7 +59,7 @@ export default function SelectInput({
             style={{
               background:
                 "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 89.31%, rgba(255, 255, 255, 0.2) 144.45%, rgba(255, 255, 255, 0.7) 210.6%)",
-              padding: "1.5px",
+              padding: "2px",
               WebkitMask:
                 "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
               WebkitMaskComposite: "xor",
@@ -166,7 +166,7 @@ export default function SelectInput({
     menu: (provided: any) => ({
       ...provided,
       backgroundColor: "#93001c !important",
-      border: "1.5px solid #ffffff",
+      border: "2px solid #ffffff",
       borderRadius: 0,
       marginTop: "4px",
       zIndex: 10000,
@@ -221,7 +221,7 @@ export default function SelectInput({
         style={{
           background:
             "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 89.31%, rgba(255, 255, 255, 0.2) 144.45%, rgba(255, 255, 255, 0.7) 210.6%)",
-          padding: "1.5px",
+          padding: "2px",
           WebkitMask:
             "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           WebkitMaskComposite: "xor",
