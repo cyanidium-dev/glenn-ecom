@@ -11,33 +11,29 @@ interface OrderBlockProps {
   product: SanityRecord;
 }
 export default function OrderBlock({ product }: OrderBlockProps) {
-  const addToCart = useCartStore((state) => state.addToCart);
-  // const {
-  //   cartItems,
-  //   isDrawerOpen,
-  //   toggleDrawer,
-  //   removeFromCart,
-  //   getTotalPrice,
-  // } = useCartStore();
-
-  // const totalPrice = cartItems.reduce(
-  //   (acc, item) => acc + item.price * item.quantity,
-  //   0,
-  // );
+  const { addToCart, toggleDrawer, cartItems } = useCartStore();
 
   const [quantity, setQuantity] = useState(1);
+  const isInCart = cartItems.some((item) => item.id === product._id);
 
   const handleAddToCart = () => {
+    if (isInCart) {
+      toggleDrawer(true);
+      return;
+    }
     addToCart(
       {
         id: product._id,
         name: product.title,
         price: product.priceCHF,
-        image: product.coverImage,
+        coverImage: product.coverImage,
+        discImage: product.discImage,
         slug: product.slug,
       },
       quantity,
     );
+
+    toggleDrawer(true);
   };
   const options = [
     { value: "1", label: "1" },
@@ -81,48 +77,13 @@ export default function OrderBlock({ product }: OrderBlockProps) {
         variants={fadeInAnimation({ y: 20, delay: 0.5 })}
       >
         <MainButton
-          variant="outline"
+          variant={isInCart ? "white" : "outline"}
           className="h-10 md:h-[45px]"
           onClick={handleAddToCart}
         >
-          Add to Basket
+          {isInCart ? "Already in Basket" : "Add to Basket"}
         </MainButton>
       </motion.div>
-      {/* 
-      <div className="flex-1 overflow-y-auto">
-        {cartItems.length === 0 ? (
-          <p className="text-center text-gray-500 mt-10">
-            Your basket is empty
-          </p>
-        ) : (
-          <ul className="space-y-6">
-            {cartItems.map((item) => (
-              <li
-                key={item.id}
-                className="flex justify-between items-start border-b pb-4"
-              >
-                <div>
-                  <h3 className="font-medium text-lg">{item.name}</h3>
-                  <p className="text-sm text-gray-600">
-                    Quantity: <span className="font-bold">{item.quantity}</span>
-                  </p>
-                  <p className="text-sm">{item.price}.- CHF</p>
-                </div>
-                <button
-                  onClick={() => removeFromCart(item.id)}
-                  className="text-xs text-red-500 hover:underline"
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-        <div className="flex justify-between mb-4">
-          <span className="font-andes text-xl">Total:</span>
-          <span className="font-bold text-xl">{totalPrice}.- CHF</span>
-        </div>
-      </div> */}
     </div>
   );
 }

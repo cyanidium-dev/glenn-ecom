@@ -3,10 +3,11 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface CartItem {
-  id: string; // Sanity ID зазвичай рядок
+  id: string;
   name: string;
   price: number;
-  image: SanityImage;
+  coverImage: SanityImage;
+  discImage: SanityImage;
   quantity: number;
   slug: string;
 }
@@ -86,8 +87,7 @@ export const useCartStore = create<CartStore>()(
           };
         }),
 
-      clearCart: () => set({ cartItems: [] }),
-
+      clearCart: () => set({ cartItems: [], totalPrice: 0 }),
       getTotalPrice: () => {
         const { cartItems } = get();
         return cartItems.reduce(
