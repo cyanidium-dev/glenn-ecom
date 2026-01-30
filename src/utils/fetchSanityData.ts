@@ -3,11 +3,15 @@ import { client } from "@/lib/sanityClient";
 
 export const fetchSanityData = async (
   query: string,
-  params: Record<string, unknown> = {}
+  params: Record<string, unknown> = {},
+  options: { useCdn?: boolean; revalidate?: number } = {},
 ) => {
   if (typeof window === "undefined") {
     try {
-      const data = await client.fetch(query, params);
+      const data = await client.fetch(query, params, {
+        useCdn: options.useCdn,
+        next: { revalidate: options.revalidate },
+      });
       return data;
     } catch (error) {
       const errorMessage =
@@ -28,7 +32,7 @@ export const fetchSanityData = async (
       },
       {
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
 
     return response.data;
@@ -36,11 +40,11 @@ export const fetchSanityData = async (
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.error || error.message;
       throw new Error(
-        `Failed to fetch Sanity data: ${errorMessage} (Status: ${error.response?.status || "unknown"})`
+        `Failed to fetch Sanity data: ${errorMessage} (Status: ${error.response?.status || "unknown"})`,
       );
     }
     throw new Error(
-      `Failed to fetch Sanity data: ${error instanceof Error ? error.message : "Unknown error"}`
+      `Failed to fetch Sanity data: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 };

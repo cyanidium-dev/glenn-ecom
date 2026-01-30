@@ -7,6 +7,7 @@ import CustomizedInput from "../shared/customizedInput/CustomizedInput";
 import MainButton from "../shared/buttons/MainButton";
 import { CheckoutValidation } from "@/schemas/CheckoutValidation";
 import Link from "next/link";
+import { useCartStore } from "@/store/useCartStore";
 
 interface CheckoutValues {
   country: string;
@@ -35,30 +36,33 @@ const initialValues: CheckoutValues = {
 export default function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const validationSchema = CheckoutValidation();
-
+  const { cartItems, totalPrice } = useCartStore.getState();
   const handleSubmit = async (
     values: CheckoutValues,
-    { resetForm }: FormikHelpers<CheckoutValues>
+    { resetForm }: FormikHelpers<CheckoutValues>,
   ) => {
-    const data = {
-      ...values,
-      email: values.email.trim(),
-    };
-
     try {
       setIsLoading(true);
-      // Placeholder API similar to journal form; replace with real endpoint later
-      await axios({
-        method: "post",
-        url: "/api/submit-checkout",
-        data,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      resetForm();
+
+      const payload = {
+        customer: { ...values, email: values.email.trim() },
+        items: cartItems.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+          name: item.name,
+          price: item.price,
+        })),
+        totalAmount: totalPrice,
+      };
+
+      const response = await axios.post("/api/submit-checkout", payload);
+
+      // Stripe поверне URL для оплати
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      }
     } catch (error) {
-      console.error("Checkout submit failed", error);
+      console.error("Checkout failed", error);
     } finally {
       setIsLoading(false);
     }
