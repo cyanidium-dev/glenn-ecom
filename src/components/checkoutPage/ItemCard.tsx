@@ -3,24 +3,20 @@ import SelectInput from "../shared/selectInput/SelectInput";
 import TrashcanIcon from "../shared/icons/TrashcanIcon";
 import Image from "next/image";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
-import { SanityImage } from "@/types/sanity";
-
-export interface ItemCardType {
-  id: string;
-  title: string;
-  priceCHF: number;
-  quantity: number;
-  coverImage: SanityImage;
-  discImage: SanityImage;
-}
+import { CartItem, useCartStore } from "@/store/useCartStore";
 
 interface ItemCardProps {
-  item: ItemCardType;
+  item: CartItem;
 }
 
 export default function ItemCard({ item }: ItemCardProps) {
-  const handleChange = (value: string) => {
-    console.log(value);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+
+  const handleQuantityChange = (value: string) => {
+    const newQuantity = Number(value);
+    const delta = newQuantity - item.quantity;
+    updateQuantity(item.id, delta);
   };
 
   const options = [
@@ -34,44 +30,53 @@ export default function ItemCard({ item }: ItemCardProps) {
   return (
     <li className="flex gap-[15px] lg:gap-[13px] w-full">
       <div className="relative w-[147px] md:w-[126px] h-[100px] lg:h-[86px] shrink-0">
-        <div className="relative w-[99px] lg:w-[85px] h-[100px] lg:h-[86px]">
+        <div className="relative w-[99px] lg:w-[85px] h-[100px] lg:h-[86px] z-10">
           <Image
-            src={getOptimizedImageUrl(item.coverImage, 170, 90, "webp")}
-            alt={item.title}
+            src={getOptimizedImageUrl(item.coverImage, 200, 200, "webp")}
+            alt={item.name}
             fill
             sizes="(max-width: 768px) 200px, 170px"
             priority
-            className="object-cover"
+            className="object-cover shadow-md"
           />
         </div>
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[98px] md:w-[84px] h-auto aspect-square -z-10">
           <Image
-            src={getOptimizedImageUrl(item.discImage, 170, 90, "webp")}
-            alt={item.title}
+            src={getOptimizedImageUrl(item.discImage, 200, 200, "webp")}
+            alt="disc"
             fill
             sizes="(max-width: 768px) 200px, 170px"
             priority
-            className="object-cover"
+            className="object-cover rounded-full"
           />
         </div>
       </div>
+
       <div className="w-full">
         <div className="flex flex-col gap-[5px] sm:flex-row sm:justify-between mb-[15px]">
           <p className="text-[16px] font-medium leading-[120%] ssm:text-[18px]">
-            {item.title}
+            {item.name}
           </p>
           <p className="text-[14px] leading-[120%] lg:text-[18px]">
-            {item.priceCHF}.- CHF
+            {item.price}.- CHF
           </p>
         </div>
+
         <div className="flex items-center gap-4 lg:gap-[34px]">
           <SelectInput
             options={options}
             defaultValue={item.quantity.toString()}
-            onChange={handleChange}
+            onChange={handleQuantityChange}
             className="flex items-center w-[62px] h-[26px] lg:w-[92px] lg:h-[40px] leading-none text-[14px] lg:text-[18px]"
           />
-          <TrashcanIcon className="size-6 lg:size-[30px]" />
+
+          <button
+            onClick={() => removeFromCart(item.id)}
+            className="hover:text-red-500 transition-colors duration-300"
+            aria-label="Remove item"
+          >
+            <TrashcanIcon className="size-6 lg:size-[30px]" />
+          </button>
         </div>
       </div>
     </li>

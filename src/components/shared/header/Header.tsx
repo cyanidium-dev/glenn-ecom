@@ -10,6 +10,7 @@ import { useScroll, useMotionValueEvent } from "motion/react";
 import BasketButton from "../basket/BasketButton";
 import { NavMenuDesktop } from "./NavMenu";
 import BasketMenu from "../basket/BasketMenu";
+import { useCartStore } from "@/store/useCartStore";
 
 export default function Header() {
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
@@ -18,10 +19,11 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const { scrollY } = useScroll();
   const toggleHeaderMenuOpen = () => setIsHeaderMenuOpened(!isHeaderMenuOpened);
-  const [isBasketMenuOpened, setIsBasketMenuOpened] = useState(false);
-  const toggleBasketMenuOpen = () => setIsBasketMenuOpened(!isBasketMenuOpened);
 
-  useMotionValueEvent(scrollY, "change", latest => {
+  const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
+  const toggleDrawer = useCartStore((state) => state.toggleDrawer);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 20);
     // Show header at the top of the page
     if (latest < 10) {
@@ -84,7 +86,7 @@ export default function Header() {
               quality={100}
             />
           </Link>
-          <BasketButton toggleBasketMenuOpen={toggleBasketMenuOpen} />
+          <BasketButton />
         </div>
 
         {/* Desktop layout: nav (left half), logo (center), basket (far right) */}
@@ -116,7 +118,7 @@ export default function Header() {
             />
           </Link>
           <div className="flex-1 flex items-center justify-end">
-            <BasketButton toggleBasketMenuOpen={toggleBasketMenuOpen} />
+            <BasketButton />
           </div>
         </div>
       </Container>
@@ -124,15 +126,12 @@ export default function Header() {
         isHeaderMenuOpened={isHeaderMenuOpened}
         setIsHeaderMenuOpened={setIsHeaderMenuOpened}
       />
-      <BasketMenu
-        isBasketMenuOpened={isBasketMenuOpened}
-        setIsBasketMenuOpened={setIsBasketMenuOpened}
-      />
+      <BasketMenu />
       <Backdrop
-        isVisible={isHeaderMenuOpened || isBasketMenuOpened}
+        isVisible={isHeaderMenuOpened || isDrawerOpen}
         onClick={() => {
           setIsHeaderMenuOpened(false);
-          setIsBasketMenuOpened(false);
+          toggleDrawer(false);
         }}
       />
     </header>
