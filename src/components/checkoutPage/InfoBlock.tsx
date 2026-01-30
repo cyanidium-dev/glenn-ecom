@@ -3,14 +3,38 @@
 import ItemCard from "./ItemCard";
 import SeparatorLine from "../shared/icons/SeparatorLine";
 import { useCartStore } from "@/store/useCartStore";
+import { settings } from "@/types/settings";
+import { useEffect } from "react";
+import Link from "next/link";
 
-export default function InfoBlock() {
-  const cartItems = useCartStore((state) => state.cartItems);
-  const subtotal = useCartStore((state) => state.totalPrice);
+interface SettingsProps {
+  settings: settings;
+}
+export default function InfoBlock({ settings }: SettingsProps) {
+  const { cartItems, totalPrice, setShippingCost } = useCartStore();
 
-  const shipping = 0;
-  const taxes = 0;
-  const total = subtotal + shipping + taxes;
+  const shipping = settings.shippingCost;
+  const subtotal = totalPrice - shipping;
+
+  useEffect(() => {
+    setShippingCost(shipping);
+  }, [shipping, setShippingCost]);
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="w-full max-w-[502px] mx-auto md:mx-0 mb-15 md:mb-0 md:flex-1 flex flex-col items-center justify-center min-h-[300px] ">
+        <p className="text-[18px] lg:text-[22px] mb-6 opacity-60">
+          Your cart is empty
+        </p>
+        <Link
+          href="/#store"
+          className="text-[16px] lg:text-[18px] underline hover:text-white/60 transition-colors"
+        >
+          Back to store
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-[502px] mx-auto md:mx-0 mb-15 md:mb-0 md:flex-1">
@@ -32,11 +56,11 @@ export default function InfoBlock() {
         <SeparatorLine className="-mb-px w-full h-[2px]" />
         <div className="flex justify-between mt-[10px] mb-[5px] text-[16px] font-medium lg:text-[20px] lg:pr-[53px]">
           <span>Total</span>
-          <span>{total}.- CHF</span>
+          <span>{totalPrice}.- CHF</span>
         </div>
-        <p className="text-[10px] lg:text-[14px]">
+        {/* <p className="text-[10px] lg:text-[14px]">
           Including {taxes.toFixed(2)}.- CHF in taxes
-        </p>
+        </p> */}
       </div>
     </div>
   );

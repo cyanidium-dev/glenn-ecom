@@ -11,9 +11,10 @@ import { useCartStore } from "@/store/useCartStore";
 export default function BasketMenu() {
   const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
   const toggleDrawer = useCartStore((state) => state.toggleDrawer);
-  const cartItems = useCartStore((state) => state.cartItems);
-  const totalPrice = useCartStore((state) => state.totalPrice);
 
+  const { cartItems, totalPrice, shippingCost } = useCartStore();
+
+  const subtotal = totalPrice - shippingCost;
   return (
     <AnimatePresence>
       {isDrawerOpen && (
@@ -90,7 +91,7 @@ export default function BasketMenu() {
                       Subtotal:
                     </p>
                     <p className="text-[16px] lg:text-[18px] leading-[120%]">
-                      {totalPrice}.- CHF
+                      {subtotal}.- CHF
                     </p>
                   </div>
                   <p className="text-[12px] lg:text-[14px] leading-[120%] mb-5 lg:mb-[15px]">

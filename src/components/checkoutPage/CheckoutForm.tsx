@@ -36,11 +36,9 @@ const initialValues: CheckoutValues = {
 export default function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const validationSchema = CheckoutValidation();
-  const { cartItems, totalPrice } = useCartStore.getState();
-  const handleSubmit = async (
-    values: CheckoutValues,
-    { resetForm }: FormikHelpers<CheckoutValues>,
-  ) => {
+  const { cartItems, totalPrice, shippingCost } = useCartStore.getState();
+  const handleSubmit = async (values: CheckoutValues) => {
+    if (cartItems.length === 0) return;
     try {
       setIsLoading(true);
 
@@ -53,6 +51,7 @@ export default function CheckoutForm() {
           price: item.price,
         })),
         totalAmount: totalPrice,
+        shippingCost: shippingCost,
       };
 
       const response = await axios.post("/api/submit-checkout", payload);
@@ -182,7 +181,9 @@ export default function CheckoutForm() {
                 type="submit"
                 variant="white"
                 isLoading={isLoading}
-                disabled={!(dirty && isValid) || isLoading}
+                disabled={
+                  !(dirty && isValid) || isLoading || cartItems.length === 0
+                }
                 className="w-full h-[45px] lg:h-[50px] text-[14px] lg:text-[18px] leading-none"
               >
                 Continue to payment
