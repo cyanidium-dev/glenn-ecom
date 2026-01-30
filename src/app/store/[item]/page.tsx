@@ -4,10 +4,10 @@ import ItemHeading from "@/components/storeItemPage/ItemHeading";
 import ItemDescriptionRaw from "@/components/storeItemPage/ItemDescriptionRaw";
 import ImageBlock from "@/components/storeItemPage/ImageBlock";
 import Container from "@/components/shared/container/Container";
-import { extractTextFromBlocks } from "@/utils/utils/portableTextUtils";
-import { formatReleaseDate } from "@/utils/utils/dateUtils";
+import { extractTextFromBlocks } from "@/utils/portableTextUtils";
+import { formatReleaseDate } from "@/utils/dateUtils";
 import { recordQuery } from "@/lib/queries";
-import { fetchSanityData } from "@/utils/utils/fetchSanityData";
+import { fetchSanityData } from "@/utils/fetchSanityData";
 import { SanityRecord } from "@/types/store";
 
 interface ItemPageProps {
@@ -34,22 +34,37 @@ export async function generateMetadata({
       ? description.substring(0, 157) + "..."
       : description;
 
+  const canonicalPath = `/store/${item}`;
+  const ogImageUrl = itemData.ogImage?.asset?.url;
+
   return {
     title: `${itemData.title} | Store`,
     description:
       shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
+    alternates: { canonical: canonicalPath },
     openGraph: {
       title: itemData.title,
       description:
         shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
-      images: [
-        {
-          url: itemData.ogImage.asset.url,
-          width: 1200,
-          height: 630,
-          alt: itemData.title,
-        },
-      ],
+      url: canonicalPath,
+      type: "website",
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: itemData.title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: itemData.title,
+      description:
+        shortDescription || `${itemData.title} - ${itemData.releaseDate}`,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
   };
 }

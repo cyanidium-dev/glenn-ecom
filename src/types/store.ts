@@ -17,6 +17,15 @@ export interface Item {
   isVinyl: boolean;
 }
 
+export interface MainPageStoreItem {
+  _id: string;
+  title: string;
+  slug: string;
+  coverImage: SanityImage;
+  discImage: SanityImage;
+  order: number;
+}
+
 // Raw data structure from Sanity CMS
 export interface SanityRecord {
   _id: string;
@@ -46,3 +55,12 @@ export type PortableTextBlock = SanityPortableTextBlock & {
     marks?: string[];
   }[];
 };
+
+export interface BasketItem {
+  id: string;
+  title: string;
+  priceCHF: number;
+  quantity: number;
+  coverImage: SanityImage;
+  discImage: SanityImage;
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 
 export const metadata: Metadata = {

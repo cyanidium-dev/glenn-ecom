@@ -3,11 +3,12 @@ interface LoaderIconProps {
 }
 
 export default function LoaderIcon({ variant = "outline" }: LoaderIconProps) {
-  const variantClass = variant === "white" ? "fill-red text-red/50" : "fill-white text-white/50";
+  const variantClass =
+    variant === "white" ? "fill-red text-red/50" : "fill-white text-white/50";
   return (
     <svg
       aria-hidden="true"
-      className={`absolute top-1/2 right-8 w-5 h-5 -translate-y-1/2 rotation ${variantClass}`}
+      className={`w-5 h-5 rotation ${variantClass}`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

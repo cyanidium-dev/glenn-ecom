@@ -2,7 +2,7 @@
 import MainButton from "../shared/buttons/MainButton";
 import SelectInput from "../shared/selectInput/SelectInput";
 import * as motion from "motion/react-client";
-import { fadeInAnimation } from "@/utils/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants";
 import { useCartStore } from "@/store/useCartStore";
 import { useState } from "react";
 import { SanityRecord } from "@/types/store";
