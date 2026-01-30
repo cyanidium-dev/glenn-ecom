@@ -23,6 +23,7 @@ export default function MusicCard({
         initial="hidden"
         whileInView="visible"
         exit="exit"
+        viewport={{ once: true, amount: 0.1 }}
         className="group relative mb-[25px] lg:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520"
       >
         <div className="absolute inset-0 z-30 pointer-events-none">

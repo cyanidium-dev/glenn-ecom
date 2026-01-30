@@ -1,6 +1,6 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
-import { fadeInAnimation } from "@/utils/animationVariants";
+import { fadeInAnimation } from "@/utils/animationVariants"; // used by background motion.div
 
 export default function Hero() {
   return (
@@ -29,14 +29,8 @@ export default function Hero() {
             "linear-gradient(0.47deg, rgba(146, 0, 29, 0) 47.68%, #92001D 99.6%)",
         }}
       />
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ useLCPOptimization: true, y: 100 })}
-        className="relative h-full z-20"
-      >
+      {/* LCP element: no entrance animation so Hero image paints immediately and isn't delayed by motion */}
+      <div className="relative h-full z-20">
         <div className="absolute top-0 left-[calc(50%-255px)] lg:left-[calc(50%-428px)] w-[448px] lg:w-[744px] h-auto aspect-744/992">
           <Image
             src="/images/homePage/hero.webp"
@@ -44,10 +38,12 @@ export default function Hero() {
             fill
             sizes="(max-width: 768px) 443px, 744px"
             priority
+            fetchPriority="high"
+            loading="eager"
             className="object-contain"
           />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

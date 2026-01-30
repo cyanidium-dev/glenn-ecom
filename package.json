@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lighthouse": "lighthouse --view",
+    "lighthouse:perf": "lighthouse --only-categories=performance --view"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.2",
@@ -24,6 +26,7 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
+    "lighthouse": "^13.0.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

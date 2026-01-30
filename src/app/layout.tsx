@@ -22,6 +22,7 @@ const rubik = Rubik({
   variable: "--font-rubik",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  preload: true,
 });
 
 const andes = localFont({

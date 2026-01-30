@@ -3,7 +3,8 @@
 import { useEffect, useState, createContext } from "react";
 import SplashScreen from "./SplashScreen";
 
-const MIN_DURATION = 1500; // ms
+// Keep short to avoid blocking LCP (Hero image) paint; 800ms is enough for splash feel
+const MIN_DURATION = 800; // ms
 
 export const SplashContext = createContext<{
   isSplashVisible: boolean;
