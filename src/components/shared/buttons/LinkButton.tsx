@@ -29,7 +29,8 @@ export default function LinkButton({
       "bg-white disabled:bg-white/60 text-red hover:bg-[linear-gradient(273.78deg, rgba(255, 255, 255, 0.2) 3.03%, #FFFFFF 50.66%, rgba(255, 255, 255, 0.2) 96.83%)]",
     outline:
       "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[1.5px] border-white text-white hover:bg-white hover:text-red",
-    gradient: "bg-transparent disabled:text-white/60 text-white",
+    gradient:
+      "bg-transparent disabled:text-white/60 text-white hover:bg-white hover:text-red",
   };
 
   return (
