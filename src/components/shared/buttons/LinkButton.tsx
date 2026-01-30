@@ -11,6 +11,7 @@ interface LinkButtonProps {
   target?: "_self" | "_blank";
   isExternal?: boolean;
   isLoading?: boolean;
+  onClick?: () => void;
 }
 
 export default function LinkButton({
@@ -21,6 +22,7 @@ export default function LinkButton({
   target = "_self",
   isExternal = false,
   isLoading = false,
+  onClick,
 }: LinkButtonProps) {
   const variantClasses = {
     white:
@@ -36,13 +38,14 @@ export default function LinkButton({
         <a
           href={href}
           target={target}
+          onClick={onClick}
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
           className={twMerge(
             `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center w-full h-[45px] px-3
          text-[14px] leading-none lg:text-[18px] text-center
       enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out
        ${variantClasses[variant]}`,
-            className
+            className,
           )}
         >
           {variant === "gradient" && (
@@ -69,13 +72,14 @@ export default function LinkButton({
         <Link
           href={href}
           target={target}
+          onClick={onClick}
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
           className={twMerge(
             `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center w-full h-[45px] px-3
          text-[14px] leading-none lg:text-[18px] text-center
       enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out
        ${variantClasses[variant]}`,
-            className
+            className,
           )}
         >
           {variant === "gradient" && (

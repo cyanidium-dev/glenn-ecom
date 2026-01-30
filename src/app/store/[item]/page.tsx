@@ -92,7 +92,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
             title={itemData.title}
           />
           <div className="pt-10 lg:pt-0 lg:w-[44.7%] lg:shrink-0">
-            <ItemHeading title={itemData.title} price={itemData.priceCHF} />
+            <ItemHeading product={itemData} />
             <ItemDescriptionRaw
               releaseDate={formattedReleaseDate}
               description={itemData.description}
