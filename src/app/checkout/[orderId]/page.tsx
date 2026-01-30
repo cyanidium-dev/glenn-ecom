@@ -6,6 +6,7 @@ import Link from "next/link";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import { BasketItem } from "@/types/store";
 import { fetchSanityData } from "@/utils/fetchSanityData";
+import ClearCart from "@/components/checkoutPage/ClearCart";
 
 interface SuccessProps {
   params: Promise<{
@@ -41,11 +42,12 @@ export default async function Success({ params, searchParams }: SuccessProps) {
   if (!order) {
     return notFound();
   }
-  console.log;
+
   const isPaid = order.status === "paid";
 
   return (
     <section className="pt-[231px] lg:pt-[218px] lg:pb-[128px] pb-[167px]">
+      <ClearCart />
       <Container className="px-[15px] ssm:px-[20px]">
         <motion.h1
           initial="hidden"
@@ -84,9 +86,9 @@ export default async function Success({ params, searchParams }: SuccessProps) {
         </motion.p>
 
         <div className="flex flex-col items-center gap-4">
-          <div className="px-4 py-1 rounded-full border border-white/20 text-sm uppercase tracking-widest">
+          <div className="px-4 py-1 rounded-full border border-white/20 text-sm  tracking-widest">
             Status:{" "}
-            <span className={isPaid ? "text-green-500" : "text-yellow-500"}>
+            <span className={isPaid ? "text-white" : "text-yellow-500"}>
               {order.status}
             </span>
           </div>

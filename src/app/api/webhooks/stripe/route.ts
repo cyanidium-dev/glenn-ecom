@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { writeClient } from "@/lib/sanityClient";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-01-28.clover", // переконайся, що версія збігається з іншими файлами
+  apiVersion: "2026-01-28.clover",
 });
 
 export async function POST(req: Request) {
@@ -14,7 +14,6 @@ export async function POST(req: Request) {
   let event: Stripe.Event;
 
   try {
-    // Перевіряємо, що запит дійсно прийшов від Stripe
     event = stripe.webhooks.constructEvent(
       body,
       signature,
@@ -26,7 +25,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Webhook Error" }, { status: 400 });
   }
 
-  // Якщо оплата успішна
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const sanityOrderId = session.metadata?.sanityOrderId;
@@ -41,9 +39,9 @@ export async function POST(req: Request) {
           })
           .commit();
 
-        console.log(`✅ Order ${sanityOrderId} marked as PAID`);
+        console.log(` Order ${sanityOrderId} marked as PAID`);
       } catch (err) {
-        console.error("❌ Sanity update error:", err);
+        console.error(" Sanity update error:", err);
         return NextResponse.json({ error: "Update failed" }, { status: 500 });
       }
     }
