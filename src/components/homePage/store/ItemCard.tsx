@@ -4,6 +4,7 @@ import Image from "next/image";
 import { MainPageStoreItem } from "@/types/store";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
 import LinkButton from "@/components/shared/buttons/LinkButton";
+import Link from "next/link";
 
 interface ItemCardProps {
   item: MainPageStoreItem;
@@ -16,7 +17,10 @@ export default function ItemCard({ item }: ItemCardProps) {
       key={item.slug}
     >
       <div className="relative w-full mb-[23px] lg:mb-[20px]">
-        <div className="relative mx-auto max-w-[685px] aspect-329/223 md:aspect-685/465">
+        <Link
+          href={`/store/${item.slug}`}
+          className="relative mx-auto max-w-[685px] h-auto aspect-329/223 md:aspect-685/465 block"
+        >
           {/* Mobile: Cover Image */}
           <motion.div
             initial="hidden"
@@ -107,7 +111,7 @@ export default function ItemCard({ item }: ItemCardProps) {
               />
             </motion.div>
           </div>
-        </div>
+        </Link>
       </div>
       <motion.h3
         variants={fadeInAnimation({ delay: 0.3 * (item.order || 0), y: 10 })}

@@ -1,10 +1,14 @@
+import dynamic from "next/dynamic";
 import { Roboto, Rubik } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import Header from "@/components/shared/header/Header";
-import Footer from "@/components/shared/footer/Footer";
 import SplashGate from "@/components/shared/splashScreen/SplashGate";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
+
+const Footer = dynamic(() => import("@/components/shared/footer/Footer"), {
+  ssr: true,
+});
 
 export const revalidate = 60;
 

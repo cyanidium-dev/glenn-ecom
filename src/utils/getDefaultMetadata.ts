@@ -2,15 +2,18 @@ import { Metadata } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
-function getSiteUrl(): URL {
-  // Metadata APIs expect an absolute base URL for canonical/OG URLs.
-  // Fall back to localhost for local/dev builds if env is missing.
+/** Absolute base URL for canonical, sitemap, robots, and OG. */
+export function getBaseUrl(): URL {
   try {
     if (SITE_URL) return new URL(SITE_URL);
   } catch {
     // ignore invalid env value
   }
   return new URL("https://glenn-ochre.vercel.app/");
+}
+
+function getSiteUrl(): URL {
+  return getBaseUrl();
 }
 
 export async function getDefaultMetadata(): Promise<Metadata> {
