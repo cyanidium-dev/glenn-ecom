@@ -86,3 +86,18 @@ Lighthouse may mark the **main stylesheet** chunk (e.g. `9131b230e92d6aec.css`) 
   - **Production:** Use a CDN and a fast network; latency will drop.  
   - **Preload (optional):** Next.js doesn’t expose the CSS chunk URL in app code (the hash changes every build). To preload it you’d need a post-build step that injects `<link rel="preload" href="/_next/static/chunks/<current-css-chunk>.css" as="style">` early in the head (e.g. by reading the build manifest and patching the HTML).  
   - **Preconnect:** The report says no extra origins are good preconnect candidates (everything is same-origin on localhost), so preconnect doesn’t help here.
+
+### Legacy JavaScript (~14 KiB polyfills)
+
+Lighthouse may report **Legacy JavaScript** (Array.at, Object.hasOwn, String.trimStart, etc.) as wasted bytes. This project **does not use those APIs** in source; polyfills come from the build or dependencies.
+
+- **What we did:** Added a **browserslist** in `package.json` so the build targets only modern browsers (Chrome 111+, Edge 111+, Firefox 111+, Safari 16.4+). Next.js and tools that respect Browserslist will then avoid injecting legacy polyfills for those targets.
+- **If savings persist:** Some of the ~14 KiB may come from **dependencies** (e.g. react-select, formik, motion) that ship their own transpiled bundles. To support older browsers, remove or relax the `browserslist` entry; otherwise leave it as-is for modern-only.
+
+### Reduce unused JavaScript (~117 KiB)
+
+Lighthouse may report **Reduce unused JavaScript** for several chunks (e.g. e5b6cf8a…, e6098bb34f3d9626…, 0549e18f…, 3c0bfa43…). One of these (`e6098bb34f3d9626.js`) is in the **root main files** (core framework) and cannot be deferred.
+
+- **What we did:** All below-the-fold sections (Testimonials, Music, Live, Store, Journal) are now **dynamic imports** (each in its own chunk) and wrapped in **LazyInView**. Their chunks load only when the user scrolls near each section, so less JS is loaded and executed on initial load.
+- **Trade-off:** Those sections no longer render on the server (SSR). They appear after scroll; Journal content is not in the initial HTML for SEO (consider keeping Journal with `ssr: true` and no LazyInView if SEO for that block matters).
+- **Further savings:** Remaining “unused” bytes are often framework/runtime or code that runs after first paint; bundle analysis (`@next/bundle-analyzer`) can show exactly what is in each chunk.
