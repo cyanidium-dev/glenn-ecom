@@ -14,6 +14,7 @@ export default function Testimonials() {
           initial="hidden"
           whileInView="visible"
           exit="exit"
+          viewport={{ once: true, amount: 0.1 }}
         >
           <TestimonialSwiper testimonialsList={testimonialsData} />
         </motion.div>
