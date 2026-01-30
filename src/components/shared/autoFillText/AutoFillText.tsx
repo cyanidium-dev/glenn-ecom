@@ -43,7 +43,9 @@ function adjustFontSizeAsync(
       el.scrollWidth <= width && el.scrollHeight <= height;
 
     if (fits || size <= min) {
-      el.style.fontSize = `${size}px`;
+      // Round down so we're not on the exact boundary; avoids jitter from subpixel variance
+      const stable = Math.max(min, Math.floor(size / 4) * 4);
+      el.style.fontSize = `${stable}px`;
       return;
     }
     size -= 1;
@@ -85,6 +87,11 @@ export default function AutoFitText({
 
     runAdjust();
 
+    // Observe the parent, not the element we're resizing. Otherwise changing fontSize
+    // changes our size → ResizeObserver fires → we re-run → jitter on short text.
+    const parent = el.parentElement;
+    if (!parent) return () => { cancelAsync?.(); el.style.fontSize = original; };
+
     let resizeRafId: number | null = null;
     const resizeObserver = new ResizeObserver(() => {
       if (resizeRafId !== null) return;
@@ -94,7 +101,7 @@ export default function AutoFitText({
       });
     });
 
-    resizeObserver.observe(el);
+    resizeObserver.observe(parent);
 
     return () => {
       resizeObserver.disconnect();
