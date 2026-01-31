@@ -58,22 +58,29 @@
     margin: 0;
     padding: 0;
   }
+
+  /* Override Chrome autofill styles so inputs keep our design (red bg, white text) */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus,
+  select:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  textarea:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 100vmax var(--color-red) inset;
+    box-shadow: 0 0 0 100vmax var(--color-red) inset;
+    -webkit-text-fill-color: var(--color-white);
+    caret-color: var(--color-white);
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }
 
 @layer utilities {
-  .nav-menu-item-gradient-hover:hover {
-    background: linear-gradient(
-      273.78deg,
-      rgba(255, 255, 255, 0.2) 3.03%,
-      #ffffff 50.66%,
-      rgba(255, 255, 255, 0.2) 96.83%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-  }
-
   .loader {
     display: block;
     width: 24px;

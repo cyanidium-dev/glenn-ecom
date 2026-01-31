@@ -19,6 +19,8 @@ interface CustomizedInputProps {
   placeholder?: string;
   errors: FormikErrors<Values>;
   touched: FormikTouched<Values>;
+  /** When set, show error after submit attempt even if field wasn't blurred (fixes phone etc. on mobile) */
+  submitCount?: number;
   isRequired?: boolean;
   as?: string;
   labelClassName?: string;
@@ -39,6 +41,7 @@ export default function CustomizedInput({
   placeholder = "",
   errors,
   touched,
+  submitCount,
   as,
   labelClassName = "",
   fieldClassName = "",
@@ -63,7 +66,10 @@ export default function CustomizedInput({
   const errorStylesBase =
     "text-[9px] lg:text-[12px] font-normal leading-none text-white/70";
 
-  const hasError = Boolean(isError && isTouched);
+  // Show errors after submit even if field wasn't touched (fixes autofill: browser doesn't fire blur)
+  const hasError = Boolean(
+    isError && (isTouched || (typeof submitCount === "number" && submitCount > 0))
+  );
 
   return (
     <label className={twMerge(labelStyles, labelClassName)}>
@@ -103,7 +109,7 @@ export default function CustomizedInput({
                 component="p"
                 className={twMerge(
                   errorStylesBase,
-                  "absolute top-[10px] right-[8px] text-right"
+                  "absolute top-[10px] right-[32px] md:right-[50px] text-right"
                 )}
               />
             )}
@@ -124,7 +130,7 @@ export default function CustomizedInput({
                   style={{
                     background:
                       "linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 38.94%, rgba(255, 255, 255, 0.2) 62.98%, rgba(255, 255, 255, 0.7) 91.83%)",
-                    padding: "1.5px",
+                    padding: "2px",
                     WebkitMask:
                       "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                     WebkitMaskComposite: "xor",

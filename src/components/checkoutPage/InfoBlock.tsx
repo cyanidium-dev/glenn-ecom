@@ -5,17 +5,16 @@ import SeparatorLine from "../shared/icons/SeparatorLine";
 import { useCartStore } from "@/store/useCartStore";
 
 export default function InfoBlock() {
-  const cartItems = useCartStore((state) => state.cartItems);
-  const subtotal = useCartStore((state) => state.totalPrice);
+  const cartItems = useCartStore(state => state.cartItems);
+  const subtotal = useCartStore(state => state.totalPrice);
 
   const shipping = 0;
-  const taxes = 0;
-  const total = subtotal + shipping + taxes;
+  const total = subtotal + shipping;
 
   return (
     <div className="w-full max-w-[502px] mx-auto md:mx-0 mb-15 md:mb-0 md:flex-1">
       <ul className="w-full flex flex-col gap-5 mb-[55px] lg:mb-[85px] lg:pr-[53px]">
-        {cartItems.map((item) => (
+        {cartItems.map(item => (
           <ItemCard key={item.id} item={item} />
         ))}
       </ul>
@@ -34,9 +33,6 @@ export default function InfoBlock() {
           <span>Total</span>
           <span>{total}.- CHF</span>
         </div>
-        <p className="text-[10px] lg:text-[14px]">
-          Including {taxes.toFixed(2)}.- CHF in taxes
-        </p>
       </div>
     </div>
   );

@@ -36,6 +36,12 @@ export const CheckoutValidation = () => {
     email: yup.string().email("Invalid email").required("Email is required"),
     phone: yup
       .string()
+      .trim()
+      .transform((value) => {
+        if (!value || typeof value !== "string") return value;
+        const digits = value.replace(/\D/g, "");
+        return digits ? `+${digits.slice(0, 13)}` : value;
+      })
       .matches(/^\+\d{7,13}$/, {
         message: "Phone must start with + and have 7–13 digits",
         excludeEmptyString: true,

@@ -69,7 +69,7 @@ export default function TestimonialSwiper({
         type="button"
         aria-label="Previous testimonial"
         onClick={goPrev}
-        className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-300 cursor-pointer"
+        className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-500 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
         onMouseEnter={() => setIsPrevHovered(true)}
         onMouseLeave={() => setIsPrevHovered(false)}
@@ -83,7 +83,7 @@ export default function TestimonialSwiper({
         type="button"
         aria-label="Next testimonial"
         onClick={goNext}
-        className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-300 cursor-pointer"
+        className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-500 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
         onMouseEnter={() => setIsNextHovered(true)}
         onMouseLeave={() => setIsNextHovered(false)}
