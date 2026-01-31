@@ -2,6 +2,7 @@
 import { useId, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Select, { StylesConfig, components } from "react-select";
+import { motion } from "framer-motion";
 import SelectArrowIcon from "../icons/SelectArrowIcon";
 
 interface SelectInputProps {
@@ -52,7 +53,14 @@ export default function SelectInput({
   const Menu = (props: any) => {
     return (
       <components.Menu {...props}>
-        <div className="relative" style={{ backgroundColor: "#93001c" }}>
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="relative overflow-hidden"
+          style={{ backgroundColor: "#93001c" }}
+        >
           {/* Gradient border effect */}
           <div
             className="absolute z-20 inset-0 pointer-events-none"
@@ -69,7 +77,7 @@ export default function SelectInput({
           <div className="relative z-10" style={{ backgroundColor: "#93001c" }}>
             {props.children}
           </div>
-        </div>
+        </motion.div>
       </components.Menu>
     );
   };
@@ -165,12 +173,12 @@ export default function SelectInput({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     menu: (provided: any) => ({
       ...provided,
-      backgroundColor: "#93001c !important",
-      border: "2px solid #ffffff",
+      backgroundColor: "transparent",
+      border: "none",
       borderRadius: 0,
       marginTop: "4px",
       zIndex: 10000,
-      overflow: "hidden",
+      overflow: "visible",
       boxShadow: "none",
       position: "absolute",
     }),
