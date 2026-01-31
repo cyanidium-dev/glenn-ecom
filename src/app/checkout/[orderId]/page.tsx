@@ -1,19 +1,24 @@
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Container from "@/components/shared/container/Container";
+import * as motion from "framer-motion/client";
 import Link from "next/link";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import * as motion from "motion/react-client";
-import type { Metadata } from "next";
+import { BasketItem } from "@/types/store";
+import { fetchSanityData } from "@/utils/fetchSanityData";
+import ClearCart from "@/components/checkoutPage/ClearCart";
 
 interface SuccessProps {
-  params: {
+  params: Promise<{
     orderId: string;
-  };
+  }>;
+  searchParams: Promise<{ session_id?: string }>;
 }
 
 export async function generateMetadata({
   params,
 }: SuccessProps): Promise<Metadata> {
-  const orderId = params.orderId;
+  const { orderId } = await params;
   return {
     title: `Order ${orderId}`,
     description: "Order confirmation.",
@@ -21,11 +26,28 @@ export async function generateMetadata({
   };
 }
 
-export default async function Success({ params }: SuccessProps) {
-  const orderId = (await params).orderId;
+export default async function Success({ params, searchParams }: SuccessProps) {
+  const { orderId } = await params;
+  const { session_id } = await searchParams;
+  const orderQuery = `*[_type == "order" && (_id == $orderId || stripeSessionId == $sessionId)][0]`;
+
+  const order = (await fetchSanityData(
+    orderQuery,
+    {
+      orderId: orderId,
+      sessionId: session_id || "",
+    },
+    { useCdn: false },
+  )) as BasketItem | null;
+  if (!order) {
+    return notFound();
+  }
+
+  const isPaid = order.status === "paid";
 
   return (
     <section className="pt-[231px] lg:pt-[218px] lg:pb-[128px] pb-[167px]">
+      <ClearCart />
       <Container className="px-[15px] ssm:px-[20px]">
         <motion.h1
           initial="hidden"
@@ -35,8 +57,9 @@ export default async function Success({ params }: SuccessProps) {
           variants={fadeInAnimation({ scale: 0.85, y: -30, delay: 0.1 })}
           className="mb-[30px] lg:mb-5 font-andes text-[90px] lg:text-[190px] leading-[95%] tracking-0.01em text-center lowercase"
         >
-          Thank you for your order
+          {isPaid ? "Thank you for your order" : "Order is being processed"}
         </motion.h1>
+
         <motion.p
           initial="hidden"
           whileInView="visible"
@@ -45,8 +68,11 @@ export default async function Success({ params }: SuccessProps) {
           variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.3 })}
           className="mb-2 lg:mb-[10px] text-[16px] lg:text-[20px] lg:leading-[120%] text-center"
         >
-          Your order has been successfully placed.
+          {isPaid
+            ? "Your order has been successfully placed and paid."
+            : "We are waiting for payment confirmation from Stripe."}
         </motion.p>
+
         <motion.p
           initial="hidden"
           whileInView="visible"
@@ -55,23 +81,34 @@ export default async function Success({ params }: SuccessProps) {
           variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.3 })}
           className="mb-6 lg:mb-10 text-[16px] lg:text-[20px] font-medium leading-[120%] text-center"
         >
-          Order number: #{orderId}
+          {/* Використовуємо реальний orderNumber з бази, або ID як фолбек */}
+          Order number: #{order.orderNumber || order._id}
         </motion.p>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.4 })}
-        >
-          <Link
-            href="/"
-            className="w-fit mx-auto block text-[16px] lg:text-[20px] leading-[119%] lg:leading-[120%] text-center underline
-          hover:text-white/60 transition duration-300 ease-in-out"
+
+        <div className="flex flex-col items-center gap-4">
+          <div className="px-4 py-1 rounded-full border border-white/20 text-sm  tracking-widest">
+            Status:{" "}
+            <span className={isPaid ? "text-white" : "text-yellow-500"}>
+              {order.status}
+            </span>
+          </div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            exit="exit"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.4 })}
           >
-            Back to Glenn Garbo
-          </Link>
-        </motion.div>
+            <Link
+              href="/"
+              className="w-fit mx-auto block text-[16px] lg:text-[20px] leading-[119%] lg:leading-[120%] text-center underline
+              hover:text-white/60 transition duration-300 ease-in-out"
+            >
+              Back to Glenn Garbo
+            </Link>
+          </motion.div>
+        </div>
       </Container>
     </section>
   );
