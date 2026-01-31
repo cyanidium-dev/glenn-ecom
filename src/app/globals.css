@@ -81,17 +81,28 @@
 }
 
 @layer utilities {
+  /* Base state uses same clip so unhover doesn't flash; no opacity on parent = no inherited fade */
+  .nav-menu-item-gradient-hover {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-image: linear-gradient(
+      273.78deg,
+      #ffffff 0%,
+      #ffffff 50.66%,
+      #ffffff 100%
+    );
+    transition: background-image 0.3s ease-in-out;
+  }
+
   .nav-menu-item-gradient-hover:hover {
-    background: linear-gradient(
+    background-image: linear-gradient(
       273.78deg,
       rgba(255, 255, 255, 0.2) 3.03%,
       #ffffff 50.66%,
       rgba(255, 255, 255, 0.2) 96.83%
     );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
   }
 
   .loader {
