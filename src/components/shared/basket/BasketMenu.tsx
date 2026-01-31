@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
@@ -11,10 +12,17 @@ import LinkButton from "../buttons/LinkButton";
 import { useCartStore } from "@/store/useCartStore";
 
 export default function BasketMenu() {
+  const [mounted, setMounted] = useState(false);
   const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
   const toggleDrawer = useCartStore((state) => state.toggleDrawer);
   const cartItems = useCartStore((state) => state.cartItems);
   const totalPrice = useCartStore((state) => state.totalPrice);
+
+  useEffect(() => {
+    // Defer so server and client first paint both return null (avoids hydration error with portal)
+    const id = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(id);
+  }, []);
 
   const drawer = (
     <AnimatePresence>
@@ -115,9 +123,10 @@ export default function BasketMenu() {
     </AnimatePresence>
   );
 
-  // Portal to body so the drawer isn't affected by the header's transform (e.g. when header is hidden on scroll)
-  if (typeof document !== "undefined") {
-    return createPortal(drawer, document.body);
+  // Return null until mounted so server and client first paint match (avoids hydration error)
+  // Then portal to body so the drawer isn't affected by the header's transform (e.g. when header is hidden on scroll)
+  if (!mounted || typeof document === "undefined") {
+    return null;
   }
-  return null;
+  return createPortal(drawer, document.body);
 }
