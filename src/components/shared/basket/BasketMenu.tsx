@@ -16,9 +16,12 @@ export default function BasketMenu() {
   const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
   const toggleDrawer = useCartStore((state) => state.toggleDrawer);
 
-  const { cartItems, totalPrice, shippingCost } = useCartStore();
+  const { cartItems } = useCartStore();
 
-  const subtotal = totalPrice - shippingCost;
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + Number(item.price) * item.quantity,
+    0,
+  );
   useEffect(() => {
     // Defer so server and client first paint both return null (avoids hydration error with portal)
     const id = setTimeout(() => setMounted(true), 0);
@@ -102,7 +105,7 @@ export default function BasketMenu() {
                       Subtotal:
                     </p>
                     <p className="text-[16px] lg:text-[18px] leading-[120%]">
-                      {subtotal}.- CHF
+                      {subtotal.toFixed(2)}.- CHF
                     </p>
                   </div>
                   <p className="text-[12px] lg:text-[14px] leading-[120%] mb-5 lg:mb-[15px]">
