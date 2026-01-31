@@ -82,3 +82,9 @@ export const musicQuery = `
     }
   }
 `;
+
+export const settingsQuery = `
+  *[_id == "settings"][0] {
+    shippingCost,
+  }
+`;

@@ -46,17 +46,6 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     });
 
-    // const line_items = items.map((item: CartItem) => ({
-    //   price_data: {
-    //     currency: "chf",
-    //     product_data: {
-    //       name: item.name,
-    //     },
-    //     unit_amount: Math.round(item.price * 100),
-    //   },
-    //   quantity: item.quantity,
-    // }));
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: items.map((item: CartItem) => ({
@@ -70,14 +59,13 @@ export async function POST(request: Request) {
         quantity: item.quantity,
       })),
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/${sanityOrder._id}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/${sanityOrder._id}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout`,
       metadata: {
-        sanityOrderId: sanityOrder._id, // Зв'язуємо Stripe з документом Sanity
+        sanityOrderId: sanityOrder._id,
       },
     });
 
-    // 3. Повертаємо URL сесії фронтенду
     return NextResponse.json({ url: session.url });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

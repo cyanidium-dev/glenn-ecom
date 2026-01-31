@@ -66,6 +66,7 @@ export default function BasketMenu() {
                       href="/#store"
                       className="w-full"
                       variant="gradient"
+                      onClick={() => toggleDrawer(false)}
                     >
                       Continue Shopping
                     </LinkButton>
