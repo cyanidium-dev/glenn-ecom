@@ -4,21 +4,54 @@ import ItemCard from "./ItemCard";
 import SeparatorLine from "../shared/icons/SeparatorLine";
 import { useCartStore } from "@/store/useCartStore";
 import { settings } from "@/types/settings";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { BasketItem } from "@/types/store";
 
-interface SettingsProps {
+interface InfoBlockProps {
   settings: settings;
+  records: BasketItem[];
 }
-export default function InfoBlock({ settings }: SettingsProps) {
-  const { cartItems, totalPrice, setShippingCost } = useCartStore();
+export default function InfoBlock({ settings, records }: InfoBlockProps) {
+  const { cartItems, totalPrice, setShippingCost, syncCartWithSanity } =
+    useCartStore();
+  const [notice, setNotice] = useState("");
 
+  const [mounted, setMounted] = useState(false);
   const shipping = settings.shippingCost;
-  const subtotal = totalPrice - shipping;
+
+  useEffect(() => {
+    if (!records || records.length === 0) return;
+
+    const timeoutId = setTimeout(() => {
+      const { hasPriceChanges, hasShippingChanges } = syncCartWithSanity(
+        records,
+        settings.shippingCost,
+      );
+
+      if (hasPriceChanges && hasShippingChanges) {
+        setNotice("Prices and shipping costs have been updated.");
+      } else if (hasPriceChanges) {
+        setNotice("Some product prices have changed.");
+      } else if (hasShippingChanges) {
+        setNotice("Shipping costs have been updated.");
+      }
+      setMounted(true);
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [records, settings.shippingCost, syncCartWithSanity]);
+
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
 
   useEffect(() => {
     setShippingCost(shipping);
   }, [shipping, setShippingCost]);
+
+  if (!mounted) return null;
 
   if (cartItems.length === 0) {
     return (
@@ -38,6 +71,11 @@ export default function InfoBlock({ settings }: SettingsProps) {
 
   return (
     <div className="w-full max-w-[502px] mx-auto md:mx-0 mb-15 md:mb-0 md:flex-1">
+      {notice && (
+        <div className="mb-6 p-3 bg-amber-900/20 border border-amber-600/50 text-amber-200 text-sm rounded-lg">
+          {notice}
+        </div>
+      )}
       <ul className="w-full flex flex-col gap-5 mb-[55px] lg:mb-[85px] lg:pr-[53px]">
         {cartItems.map((item) => (
           <ItemCard key={item.id} item={item} />
