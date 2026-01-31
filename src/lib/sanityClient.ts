@@ -1,5 +1,5 @@
 import { createClient } from "next-sanity";
-console.log("Token exists:", !!process.env.SANITY_API_WRITE_TOKEN);
+
 export const client = createClient({
   projectId: "6j5qleuo",
   dataset: "production",
