@@ -64,6 +64,18 @@ export async function POST(request: Request) {
       metadata: {
         sanityOrderId: sanityOrder._id,
       },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: Math.round(shippingCost * 100),
+              currency: "chf",
+            },
+            display_name: "Standard Shipping",
+          },
+        },
+      ],
     });
 
     return NextResponse.json({ url: session.url });
