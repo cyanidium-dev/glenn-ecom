@@ -53,7 +53,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform,padding] duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 z-50 w-dvw transition duration-300 ease-in-out ${
         isHeaderVisible ? "translate-y-0" : "-translate-y-full"
       } ${isScrolled ? "py-0" : "py-3"}`}
     >
