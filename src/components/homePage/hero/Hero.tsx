@@ -30,10 +30,10 @@ export default function Hero() {
         }}
       />
       <div
-        className="absolute lg:hidden inset-0 w-full h-full z-30"
+        className="absolute inset-0 w-full h-full z-30"
         style={{
           background:
-            "linear-gradient(180deg, rgba(146, 0, 29, 0) 50%, #92001D 100%)",
+            "linear-gradient(180deg, rgba(146, 0, 29, 0) 70%, #92001D 100%)",
         }}
       />
       <h1 className="sr-only">
