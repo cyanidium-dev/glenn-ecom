@@ -64,18 +64,19 @@ export const eventsQuery = `
   }
 `;
 
-export const settingsQuery = `
-  *[_id == "settings"][0] {
-    shippingCost,
-  }
-`;
-
 export const musicQuery = `
-  *[_type == "music"] | order(_createdAt desc) {
+  *[_type == "music"] | order(_createdAt asc) {
     _id,
     title,
-    "imageUrl": image.asset->url,
-    streamingLinks[] {
+    "image": image{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot
+    },
+    "streamingLinks": streamingLinks[]{
       service,
       url
     }

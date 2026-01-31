@@ -82,7 +82,7 @@ export default function JournalForm({
                     errors={errors}
                     touched={touched}
                     variant="fancy"
-                    fieldClassName="w-full h-[48px] px-[32px] md:px-[50px] max-w-[650px] lg:h-[88px] text-[16px] font-normal leading-none text-white"
+                    fieldClassName="w-full h-[48px] px-[32px] md:px-[50px] max-w-[650px] lg:h-[88px] font-andes text-[22px] font-normal leading-[95] lowercase text-white"
                     labelClassName="mb-5 lg:mb-15 max-w-[650px]"
                   />
                   <MainButton

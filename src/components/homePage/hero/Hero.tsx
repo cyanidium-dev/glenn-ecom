@@ -29,7 +29,16 @@ export default function Hero() {
             "linear-gradient(0.47deg, rgba(146, 0, 29, 0) 47.68%, #92001D 99.6%)",
         }}
       />
-      <h1 className="sr-only">Glenn Garbo — Official site. Music, live dates, store, and journal.</h1>
+      <div
+        className="absolute inset-0 w-full h-full z-30"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(146, 0, 29, 0) 70%, #92001D 100%)",
+        }}
+      />
+      <h1 className="sr-only">
+        Glenn Garbo — Official site. Music, live dates, store, and journal.
+      </h1>
       {/* LCP element: no entrance animation so Hero image paints immediately and isn't delayed by motion */}
       <div className="relative h-full z-20">
         <div className="absolute top-0 left-[calc(50%-255px)] lg:left-[calc(50%-428px)] w-[448px] lg:w-[744px] h-auto aspect-744/992">
