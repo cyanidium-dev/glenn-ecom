@@ -36,8 +36,7 @@ const initialValues: CheckoutValues = {
 export default function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const validationSchema = CheckoutValidation();
-  const { cartItems, totalPrice, shippingCost } = useCartStore.getState();
-
+  const { cartItems, totalPrice, shippingCost } = useCartStore();
   const handleSubmit = async (values: CheckoutValues) => {
     if (cartItems.length === 0) return;
     const rawPhone = values.phone?.trim() ?? "";

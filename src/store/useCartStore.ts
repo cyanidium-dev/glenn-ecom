@@ -24,7 +24,7 @@ interface CartStore {
   updateQuantity: (id: string, delta: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
-  setShippingCost: (cost: number) => void; // Новий метод
+  setShippingCost: (cost: number) => void;
   calculateTotal: (items: CartItem[], shipping?: number) => number;
 }
 
