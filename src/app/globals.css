@@ -93,7 +93,7 @@
       #ffffff 50.66%,
       #ffffff 100%
     );
-    transition: background-image 0.3s ease-in-out;
+    transition: background-image 300ms ease-in-out;
   }
 
   .nav-menu-item-gradient-hover:hover {
