@@ -78,6 +78,13 @@
     caret-color: var(--color-white);
     transition: background-color 5000s ease-in-out 0s;
   }
+
+  /* Remove iOS/Safari default input border and inner shadow (fancy input and others) */
+  input,
+  textarea {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 }
 
 @layer utilities {
