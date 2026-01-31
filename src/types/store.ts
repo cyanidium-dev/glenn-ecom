@@ -57,10 +57,13 @@ export type PortableTextBlock = SanityPortableTextBlock & {
 };
 
 export interface BasketItem {
-  id: string;
+  _id: string;
   title: string;
   priceCHF: number;
   quantity: number;
   coverImage: SanityImage;
   discImage: SanityImage;
+  slug: string;
+  status: string;
+  orderNumber: string;
 }
