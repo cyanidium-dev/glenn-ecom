@@ -1,3 +1,5 @@
+"use client";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
 import CloseIcon from "../icons/CloseIcon";
@@ -14,7 +16,7 @@ export default function BasketMenu() {
   const cartItems = useCartStore((state) => state.cartItems);
   const totalPrice = useCartStore((state) => state.totalPrice);
 
-  return (
+  const drawer = (
     <AnimatePresence>
       {isDrawerOpen && (
         <motion.div
@@ -112,4 +114,10 @@ export default function BasketMenu() {
       )}
     </AnimatePresence>
   );
+
+  // Portal to body so the drawer isn't affected by the header's transform (e.g. when header is hidden on scroll)
+  if (typeof document !== "undefined") {
+    return createPortal(drawer, document.body);
+  }
+  return null;
 }
