@@ -68,8 +68,7 @@ export default function CustomizedInput({
 
   // Show errors after submit even if field wasn't touched (fixes autofill: browser doesn't fire blur)
   const hasError = Boolean(
-    isError &&
-    (isTouched || (typeof submitCount === "number" && submitCount > 0))
+    isError && (isTouched || (typeof submitCount === "number" && submitCount > 0))
   );
 
   return (
@@ -96,9 +95,7 @@ export default function CustomizedInput({
                 fieldClassName,
                 // Fancy variant uses `JournalInputDecoration` as the frame.
                 // Avoid adding an extra border on error (double-frame effect).
-                "border-transparent",
-                // Remove iOS/Safari default input styling (extra border, rounded corners, inner shadow)
-                "appearance-none rounded-none shadow-none focus:shadow-none outline-none"
+                "border-transparent"
               )}
             />
             {isLoading && (
