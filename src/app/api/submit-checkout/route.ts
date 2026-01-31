@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 const nanoid = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
 export async function POST(request: Request) {
   try {
-    const { customer, items, totalAmount } = await request.json();
+    const { customer, items, totalAmount, shippingCost } = await request.json();
 
     const sanityOrder = await writeClient.create({
       _type: "order",
@@ -42,10 +42,10 @@ export async function POST(request: Request) {
       })),
 
       totalPrice: totalAmount,
+      shippingCost: shippingCost,
       createdAt: new Date().toISOString(),
     });
 
-    console.log("sanityOrder", sanityOrder);
     // const line_items = items.map((item: CartItem) => ({
     //   price_data: {
     //     currency: "chf",

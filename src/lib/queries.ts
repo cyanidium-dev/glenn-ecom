@@ -63,3 +63,21 @@ export const eventsQuery = `
     ticketLink
   }
 `;
+
+export const settingsQuery = `
+  *[_id == "settings"][0] {
+    shippingCost,
+  }
+`;
+
+export const musicQuery = `
+  *[_type == "music"] | order(_createdAt desc) {
+    _id,
+    title,
+    "imageUrl": image.asset->url,
+    streamingLinks[] {
+      service,
+      url
+    }
+  }
+`;

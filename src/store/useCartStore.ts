@@ -16,7 +16,7 @@ interface CartStore {
   cartItems: CartItem[];
   isDrawerOpen: boolean;
   totalPrice: number;
-
+  shippingCost: number;
   // Actions
   toggleDrawer: (open: boolean) => void;
   addToCart: (product: Omit<CartItem, "quantity">, quantity?: number) => void;
@@ -24,7 +24,8 @@ interface CartStore {
   updateQuantity: (id: string, delta: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
-  calculateTotal: (items: CartItem[]) => number;
+  setShippingCost: (cost: number) => void; // Новий метод
+  calculateTotal: (items: CartItem[], shipping?: number) => number;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -33,14 +34,22 @@ export const useCartStore = create<CartStore>()(
       cartItems: [],
       isDrawerOpen: false,
       totalPrice: 0,
+      shippingCost: 0,
 
       toggleDrawer: (open) => set({ isDrawerOpen: open }),
-
-      calculateTotal: (items: CartItem[]) =>
-        items.reduce(
+      setShippingCost: (cost) => {
+        set((state) => ({
+          shippingCost: cost,
+          totalPrice: get().calculateTotal(state.cartItems, cost),
+        }));
+      },
+      calculateTotal: (items, shipping = get().shippingCost) => {
+        const subtotal = items.reduce(
           (acc, item) => acc + Number(item.price) * item.quantity,
           0,
-        ),
+        );
+        return subtotal + shipping;
+      },
       addToCart: (product, quantity = 1) =>
         set((state) => {
           const existing = state.cartItems.find(
@@ -98,6 +107,7 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: "cart-storage",
+      partialize: (state) => ({ cartItems: state.cartItems }),
     },
   ),
 );
