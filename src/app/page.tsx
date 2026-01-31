@@ -1,5 +1,9 @@
 import dynamic from "next/dynamic";
-import { allRecordsQuery, eventsQuery } from "@/lib/queries";
+import {
+  allRecordsQuery,
+  eventsQuery,
+  musicQuery,
+} from "@/lib/queries";
 import { fetchSanityData } from "@/utils/fetchSanityData";
 import Hero from "@/components/homePage/hero/Hero";
 
@@ -31,12 +35,13 @@ export const metadata = {
 export default async function HomePage() {
   const eventsData = await fetchSanityData(eventsQuery, {});
   const recordsData = await fetchSanityData(allRecordsQuery, {});
+  const musicData = await fetchSanityData(musicQuery, {});
 
   return (
     <>
       <Hero />
       <Testimonials />
-      <Music />
+      <Music music={musicData} />
       <Live events={eventsData} />
       <Store records={recordsData} />
       <Journal />

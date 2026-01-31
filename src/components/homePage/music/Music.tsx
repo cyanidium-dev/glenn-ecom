@@ -1,10 +1,18 @@
 import Container from "@/components/shared/container/Container";
 import * as motion from "motion/react-client";
 import { fadeInAnimation } from "@/utils/animationVariants";
-import { musicData } from "./musicData";
+import { MainPageMusicItem } from "@/types/music";
 import MusicCard from "./MusicCard";
 
-export default function Music() {
+interface MusicProps {
+  music: MainPageMusicItem[];
+}
+
+export default function Music({ music }: MusicProps) {
+  if (!music || !music.length) {
+    return null;
+  }
+
   return (
     <section id="music" className="pt-[100px] pb-[75px] lg:py-[125px]">
       <Container>
@@ -19,8 +27,8 @@ export default function Music() {
           Music
         </motion.h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-[50px] md:gap-x-10 lg:gap-x-0 items-center justify-center w-full">
-          {musicData.map((item, index) => (
-            <MusicCard key={item.title} {...item} index={index} />
+          {music.map((item, index) => (
+            <MusicCard key={item._id} item={item} index={index} />
           ))}
         </ul>
       </Container>

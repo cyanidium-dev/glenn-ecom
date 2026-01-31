@@ -63,3 +63,22 @@ export const eventsQuery = `
     ticketLink
   }
 `;
+
+export const musicQuery = `
+  *[_type == "music"] | order(_createdAt asc) {
+    _id,
+    title,
+    "image": image{
+      asset->{
+        _id,
+        url
+      },
+      crop,
+      hotspot
+    },
+    "streamingLinks": streamingLinks[]{
+      service,
+      url
+    }
+  }
+`;

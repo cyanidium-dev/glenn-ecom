@@ -3,19 +3,19 @@ import MusicFrameIcon from "@/components/shared/icons/MusicFrameIcon";
 import { fadeInAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 import Image from "next/image";
+import { MainPageMusicItem } from "@/types/music";
+import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
 
 interface MusicCardProps {
-  title: string;
-  image: string;
-  link: string;
+  item: MainPageMusicItem;
   index: number;
 }
-export default function MusicCard({
-  title,
-  image,
-  link,
-  index,
-}: MusicCardProps) {
+
+export default function MusicCard({ item, index }: MusicCardProps) {
+  const { title, image, streamingLinks } = item;
+  const link = streamingLinks?.[0]?.url ?? "#";
+  const imageUrl = image ? getOptimizedImageUrl(image, 800, 90, "webp") : "";
+
   return (
     <li className="flex flex-col items-center justify-center w-full">
       <motion.div
@@ -37,13 +37,15 @@ export default function MusicCard({
                 "radial-gradient(68.89% 68.89% at 50% 50%, rgba(0, 0, 0, 0) 75.11%, rgba(147, 0, 28, 0.5) 95.67%)",
             }}
           />
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 320px, 400px"
-            className="object-cover"
-          />
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 320px, 400px"
+              className="object-cover"
+            />
+          ) : null}
         </div>
         <div
           className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center absolute inset-0 z-20 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
