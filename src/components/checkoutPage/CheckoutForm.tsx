@@ -40,10 +40,14 @@ export default function CheckoutForm() {
     values: CheckoutValues,
     { resetForm }: FormikHelpers<CheckoutValues>
   ) => {
+    const rawPhone = values.phone?.trim() ?? "";
+    const phoneDigits = rawPhone.replace(/\D/g, "");
+    const phone = phoneDigits ? `+${phoneDigits}` : "";
+
     const data = {
       ...values,
       email: values.email.trim(),
-      phone: values.phone?.trim() ?? "",
+      phone,
     };
 
     try {
@@ -73,7 +77,15 @@ export default function CheckoutForm() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, dirty, isValid, submitCount }) => (
+        {({ errors, touched, dirty, isValid, submitCount, setFieldValue }) => {
+          const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const raw = e.target.value;
+            const digits = raw.replace(/\D/g, "");
+            const withPlus = digits ? `+${digits}` : "";
+            const normalized = withPlus.slice(0, 14);
+            setFieldValue("phone", normalized);
+          };
+          return (
           <Form className="flex flex-col">
             <div className="flex flex-col gap-[10px] lg:gap-4">
               <CustomizedInput
@@ -167,6 +179,7 @@ export default function CheckoutForm() {
                 touched={touched}
                 submitCount={submitCount}
                 variant="gradient"
+                onChange={handlePhoneChange}
                 fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
               />
             </div>
@@ -195,7 +208,8 @@ export default function CheckoutForm() {
               </MainButton>
             </div>
           </Form>
-        )}
+          );
+        }}
       </Formik>
     </div>
   );

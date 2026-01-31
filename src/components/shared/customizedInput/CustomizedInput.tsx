@@ -66,7 +66,10 @@ export default function CustomizedInput({
   const errorStylesBase =
     "text-[9px] lg:text-[12px] font-normal leading-none text-white/70";
 
-  const hasError = Boolean(isError && isTouched);
+  // Show errors after submit even if field wasn't touched (fixes autofill: browser doesn't fire blur)
+  const hasError = Boolean(
+    isError && (isTouched || (typeof submitCount === "number" && submitCount > 0))
+  );
 
   return (
     <label className={twMerge(labelStyles, labelClassName)}>
@@ -106,7 +109,7 @@ export default function CustomizedInput({
                 component="p"
                 className={twMerge(
                   errorStylesBase,
-                  "absolute top-[10px] right-[8px] text-right"
+                  "absolute top-[10px] right-[32px] md:right-[50px] text-right"
                 )}
               />
             )}
