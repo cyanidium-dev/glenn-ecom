@@ -1,4 +1,5 @@
 import { SanityImage } from "@/types/sanity";
+import { BasketItem } from "@/types/store";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -24,8 +25,12 @@ interface CartStore {
   updateQuantity: (id: string, delta: number) => void;
   clearCart: () => void;
   getTotalPrice: () => number;
-  setShippingCost: (cost: number) => void; // Новий метод
+  setShippingCost: (cost: number) => void;
   calculateTotal: (items: CartItem[], shipping?: number) => number;
+  syncCartWithSanity: (
+    freshRecords: BasketItem[],
+    freshShipping: number,
+  ) => { hasPriceChanges: boolean; hasShippingChanges: boolean };
 }
 
 export const useCartStore = create<CartStore>()(
@@ -37,6 +42,33 @@ export const useCartStore = create<CartStore>()(
       shippingCost: 0,
 
       toggleDrawer: (open) => set({ isDrawerOpen: open }),
+      syncCartWithSanity: (freshRecords, freshShipping) => {
+        const { cartItems, shippingCost, calculateTotal } = get();
+        let hasPriceChanges = false;
+
+        const updatedItems = cartItems.map((item) => {
+          const fresh = freshRecords.find((r) => r._id === item.id);
+          const freshPrice = fresh ? Number(fresh.priceCHF) : item.price;
+
+          if (freshPrice !== item.price) {
+            hasPriceChanges = true;
+            return { ...item, price: freshPrice };
+          }
+          return item;
+        });
+
+        const hasShippingChanges = freshShipping !== shippingCost;
+
+        if (hasPriceChanges || hasShippingChanges) {
+          set({
+            cartItems: updatedItems,
+            shippingCost: freshShipping,
+            totalPrice: calculateTotal(updatedItems, freshShipping),
+          });
+        }
+
+        return { hasPriceChanges, hasShippingChanges };
+      },
       setShippingCost: (cost) => {
         set((state) => ({
           shippingCost: cost,

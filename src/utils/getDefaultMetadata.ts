@@ -26,8 +26,16 @@ export async function getDefaultMetadata(): Promise<Metadata> {
       default: "Glenn Garbo",
       template: "%s | Glenn Garbo",
     },
-    description: "Official site of Glenn Garbo.",
-    keywords: ["Glenn Garbo", "Glenn Garbo Store"],
+    description:
+      "Glenn Garbo — music, vinyl, live dates, and a journal. Discover releases, shop the store, and stay close to what’s next.",
+    keywords: [
+      "Glenn Garbo",
+      "Glenn Garbo Store",
+      "music",
+      "vinyl",
+      "live dates",
+      "journal",
+    ],
     alternates: {
       canonical: "/",
     },
@@ -37,7 +45,8 @@ export async function getDefaultMetadata(): Promise<Metadata> {
     },
     openGraph: {
       title: "Glenn Garbo",
-      description: "Official site of Glenn Garbo.",
+      description:
+        "Glenn Garbo — music, vinyl, live dates, and a journal. Discover releases, shop the store, and stay close to what’s next.",
       images: [
         {
           url: ogImage,
@@ -53,7 +62,8 @@ export async function getDefaultMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: "Glenn Garbo",
-      description: "Official site of Glenn Garbo.",
+      description:
+        "Glenn Garbo — music, vinyl, live dates, and a journal. Discover releases, shop the store, and stay close to what’s next.",
       images: [ogImage],
     },
   };

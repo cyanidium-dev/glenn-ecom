@@ -1,5 +1,6 @@
 export const allRecordsQuery = `
   *[_type == "record"] | order(order asc) {
+    _id,
     title,
     "coverImage": coverImage{
       asset->{
@@ -16,7 +17,8 @@ export const allRecordsQuery = `
       crop,
       hotspot},
     "slug": slug.current,
-    order
+    order,
+    priceCHF
   }
 `;
 

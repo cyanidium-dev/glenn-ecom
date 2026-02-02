@@ -12,9 +12,7 @@ const Footer = dynamic(() => import("@/components/shared/footer/Footer"), {
 
 export const revalidate = 60;
 
-export async function generateMetadata() {
-  return await getDefaultMetadata();
-}
+export const metadata = getDefaultMetadata();
 
 const roboto = Roboto({
   variable: "--font-roboto",
