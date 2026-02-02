@@ -27,7 +27,6 @@ export async function POST(request: Request) {
       console.error("Kit V3 Error:", data);
       return NextResponse.json({ status: response.status });
     }
-    console.log("data", data);
     return NextResponse.json({ message: "Success." });
   } catch (error) {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
