@@ -91,7 +91,7 @@ export default function TermsAndConditions() {
               Prices and Payment
             </h3>
             <p className="whitespace-pre-line">
-              • All prices are listed in [currency to be confirmed].
+              • All prices are listed in CHF.
               {"\n"}• Payment is processed securely via third-party payment
               providers.
               {"\n"}• Any applicable taxes or shipping costs are shown during
