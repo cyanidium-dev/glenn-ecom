@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
-import {
-  fadeInAnimation,
-  listItemVariants,
-  listVariants,
-} from "@/utils/animationVariants";
-import * as motion from "motion/react-client";
 
 export const metadata: Metadata = {
   title: "Care Instructions | Glenn Garbo",
@@ -47,34 +41,19 @@ export default function CareInstructions() {
   return (
     <section className="pt-[124px] ssm:pt-[131px] lg:pt-[220px] lg:pb-[150px]">
       <Container className="px-[15px] ssm:px-[20px]">
-        <motion.h1
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.85, y: -30, delay: 0.1 })}
-          className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase"
-        >
+        <h1 className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
           Care Instructions for the Distinguished Record Collector
-        </motion.h1>
-        <motion.ul
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={listVariants({ staggerChildren: 0.2, delayChildren: 0.3 })}
-          className="flex flex-col gap-2 lg:gap-[15px] max-w-[730px] mx-auto"
-        >
+        </h1>
+        <ul className="flex flex-col gap-2 lg:gap-[15px] max-w-[730px] mx-auto">
           {careInstructions.map((instruction, index) => (
-            <motion.li
+            <li
               key={index}
-              variants={listItemVariants}
               className="text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] text-center"
             >
               {instruction}
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
       </Container>
     </section>
   );

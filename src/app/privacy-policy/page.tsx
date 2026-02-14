@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
-import { fadeInAnimation } from "@/utils/animationVariants";
-import * as motion from "motion/react-client";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Glenn Garbo",
@@ -28,24 +26,11 @@ export default function PrivacyPolicy() {
   return (
     <section className="pt-[131px] lg:pt-[200px] pb-[84px] lg:pb-[150px]">
       <Container className="px-[15px] ssm:px-[20px]">
-        <motion.h1
-          initial="hidden"
-          whileInView="visible"
-          exit="exit"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={fadeInAnimation({ scale: 0.85, y: -30, delay: 0.1 })}
-          className="mb-[30px] lg:mb-15 mx-auto font-andes text-[48px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase"
-        >
+        <h1 className="mb-[30px] lg:mb-15 mx-auto font-andes text-[48px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
           Privacy Policy
-        </motion.h1>
+        </h1>
         <div className="max-w-[536px] mx-auto flex flex-col gap-[1lh] text-center text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] [counter-reset:section]">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.2 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Data Controller
             </h3>
@@ -61,15 +46,9 @@ export default function PrivacyPolicy() {
                 contact@glenngarbo.com
               </a>
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.3 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Personal Data We Collect
             </h3>
@@ -84,15 +63,9 @@ export default function PrivacyPolicy() {
               {"\n"}Payment information is processed directly by our payment
               providers and is not stored on this website.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.4 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Purpose of Data Processing
             </h3>
@@ -106,15 +79,9 @@ export default function PrivacyPolicy() {
               {"\n"}• To ensure the technical functionality and security of the
               website.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.5 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Legal Basis
             </h3>
@@ -124,15 +91,9 @@ export default function PrivacyPolicy() {
               {"\n"}• The performance of a contract (e.g. processing orders),
               {"\n"}• Legal obligations (e.g. accounting requirements).
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.5 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Third-Party Services
             </h3>
@@ -146,15 +107,9 @@ export default function PrivacyPolicy() {
               {"\n"}• These providers process data in accordance with their own
               privacy policies.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.5 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Cookies
             </h3>
@@ -163,15 +118,9 @@ export default function PrivacyPolicy() {
               functionality. Additional cookies (e.g. analytics) will only be
               used if explicitly enabled.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.5 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Your Rights
             </h3>
@@ -185,15 +134,9 @@ export default function PrivacyPolicy() {
             <p className="whitespace-pre-line">
               Requests can be sent to the contact details listed above.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ scale: 0.85, y: 30, delay: 0.5 })}
-          >
+          <div>
             <h3 className="[counter-increment:section] before:content-[counter(section)'.'] before:mr-1">
               Changes
             </h3>
@@ -201,7 +144,7 @@ export default function PrivacyPolicy() {
               This Privacy Policy may be updated from time to time to reflect
               legal or technical changes.
             </p>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>
