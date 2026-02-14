@@ -5,25 +5,71 @@ import Link from "next/link";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
+import { motion } from "framer-motion";
 import BasketButton from "../basket/BasketButton";
 import { NavMenuDesktop } from "./NavMenu";
 import BasketMenu from "../basket/BasketMenu";
 import { useCartStore } from "@/store/useCartStore";
 
+/** X button position: right edge of 330px menu minus 30px padding minus 24px button width */
+const MENU_OPEN_BUTTON_LEFT = 330 - 30 - 24;
+
+/** Keep button above backdrop for this long after menu close (matches BurgerMenu exit animation) */
+const BURGER_MENU_EXIT_MS = 300;
+
 export default function Header() {
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
+  const [buttonOnTopForExit, setButtonOnTopForExit] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [closedButtonPos, setClosedButtonPos] = useState({ left: 20, top: 50 });
+  const placeholderRef = useRef<HTMLDivElement>(null);
+  const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { scrollY } = useScroll();
-  const toggleHeaderMenuOpen = () => setIsHeaderMenuOpened(!isHeaderMenuOpened);
 
-  const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
-  const toggleDrawer = useCartStore((state) => state.toggleDrawer);
+  const closeHeaderMenu = () => {
+    setIsHeaderMenuOpened(false);
+    setButtonOnTopForExit(true);
+    if (exitTimeoutRef.current) clearTimeout(exitTimeoutRef.current);
+    exitTimeoutRef.current = setTimeout(
+      () => setButtonOnTopForExit(false),
+      BURGER_MENU_EXIT_MS,
+    );
+  };
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
+  const toggleHeaderMenuOpen = () => {
+    if (isHeaderMenuOpened) {
+      closeHeaderMenu();
+    } else {
+      setIsHeaderMenuOpened(true);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (exitTimeoutRef.current) clearTimeout(exitTimeoutRef.current);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (placeholderRef.current) {
+        const rect = placeholderRef.current.getBoundingClientRect();
+        setClosedButtonPos({ left: rect.left, top: rect.top });
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [isHeaderVisible, isScrolled]);
+
+  const isDrawerOpen = useCartStore(state => state.isDrawerOpen);
+  const toggleDrawer = useCartStore(state => state.toggleDrawer);
+
+  useMotionValueEvent(scrollY, "change", latest => {
     setIsScrolled(latest > 20);
     // Show header at the top of the page
     if (latest < 10) {
@@ -64,7 +110,30 @@ export default function Header() {
             isScrolled ? "h-[60px]" : "h-[79px]"
           }`}
         >
-          <BurgerMenuButton toggleHeaderMenuOpen={toggleHeaderMenuOpen} />
+          <div
+            ref={placeholderRef}
+            className="w-6 h-6 shrink-0 md:hidden"
+            aria-hidden
+          />
+          <motion.div
+            className={`fixed md:hidden ${
+              isHeaderMenuOpened || buttonOnTopForExit ? "z-70" : "z-50"
+            }`}
+            initial={false}
+            animate={{
+              left: isHeaderMenuOpened
+                ? MENU_OPEN_BUTTON_LEFT
+                : closedButtonPos.left,
+              top: closedButtonPos.top,
+            }}
+            transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <BurgerMenuButton
+              isHeaderMenuOpened={isHeaderMenuOpened}
+              toggleHeaderMenuOpen={toggleHeaderMenuOpen}
+              className="text-white"
+            />
+          </motion.div>
           <Link
             href="/"
             className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${
@@ -122,13 +191,15 @@ export default function Header() {
       </Container>
       <BurgerMenu
         isHeaderMenuOpened={isHeaderMenuOpened}
-        setIsHeaderMenuOpened={setIsHeaderMenuOpened}
+        setIsHeaderMenuOpened={(value) =>
+          value ? setIsHeaderMenuOpened(true) : closeHeaderMenu()
+        }
       />
       <BasketMenu />
       <Backdrop
         isVisible={isHeaderMenuOpened || isDrawerOpen}
         onClick={() => {
-          setIsHeaderMenuOpened(false);
+          if (isHeaderMenuOpened) closeHeaderMenu();
           toggleDrawer(false);
         }}
       />

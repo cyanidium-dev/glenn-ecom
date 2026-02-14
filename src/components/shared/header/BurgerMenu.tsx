@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { NavMenuMobile } from "./NavMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
-import CloseIcon from "../icons/CloseIcon";
 import { fadeInAnimation, burgerMenuVariants } from "@/utils/animationVariants";
 
 interface BurgerMenuMobTabProps {
@@ -25,17 +24,9 @@ export default function BurgerMenu({
           variants={burgerMenuVariants}
           className={`${
             isHeaderMenuOpened ? "no-doc-scroll" : "pointer-events-none"
-          } md:hidden absolute z-50 top-0 left-0 w-[330px] h-dvh bg-linear-to-l from-[#92001D] to-[#000000] overflow-hidden opacity-100`}
+          } md:hidden absolute z-60 top-0 left-0 w-[330px] h-dvh bg-linear-to-l from-[#92001D] to-[#000000] overflow-hidden opacity-100`}
         >
           <Container className="relative w-full pt-[84px]">
-            <button
-              type="button"
-              aria-label="close menu button"
-              onClick={() => setIsHeaderMenuOpened(false)}
-              className="absolute top-10 right-[30px] w-4 h-4 text-white outline-none"
-            >
-              <CloseIcon className="w-full h-full" />
-            </button>
             <motion.div
               initial="hidden"
               whileInView="visible"

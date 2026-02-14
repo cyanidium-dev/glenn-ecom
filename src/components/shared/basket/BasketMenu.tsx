@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
 import CloseIcon from "../icons/CloseIcon";
@@ -12,7 +10,6 @@ import LinkButton from "../buttons/LinkButton";
 import { useCartStore } from "@/store/useCartStore";
 
 export default function BasketMenu() {
-  const [mounted, setMounted] = useState(false);
   const isDrawerOpen = useCartStore((state) => state.isDrawerOpen);
   const toggleDrawer = useCartStore((state) => state.toggleDrawer);
 
@@ -22,13 +19,8 @@ export default function BasketMenu() {
     (acc, item) => acc + Number(item.price) * item.quantity,
     0,
   );
-  useEffect(() => {
-    // Defer so server and client first paint both return null (avoids hydration error with portal)
-    const id = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(id);
-  }, []);
 
-  const drawer = (
+  return (
     <AnimatePresence>
       {isDrawerOpen && (
         <motion.div
@@ -39,7 +31,7 @@ export default function BasketMenu() {
           variants={basketMenuVariants}
           className={`${
             isDrawerOpen ? "no-doc-scroll" : "pointer-events-none"
-          } fixed z-50 top-0 right-0 min-w-[330px] w-[85vw] max-w-[658px] h-dvh bg-linear-to-l from-[#92001D] to-[#000000] overflow-hidden opacity-100`}
+          } absolute z-60 top-0 right-0 min-w-[330px] w-[85vw] max-w-[658px] h-dvh bg-linear-to-l from-[#92001D] to-[#000000] overflow-hidden opacity-100`}
         >
           <div className="relative w-full h-full flex flex-col">
             <button
@@ -127,11 +119,4 @@ export default function BasketMenu() {
       )}
     </AnimatePresence>
   );
-
-  // Return null until mounted so server and client first paint match (avoids hydration error)
-  // Then portal to body so the drawer isn't affected by the header's transform (e.g. when header is hidden on scroll)
-  if (!mounted || typeof document === "undefined") {
-    return null;
-  }
-  return createPortal(drawer, document.body);
 }
