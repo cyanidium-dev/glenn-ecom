@@ -27,6 +27,7 @@ export default function TestimonialSwiper({
   const [isNextHovered, setIsNextHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isSectionHovered, setIsSectionHovered] = useState(false);
+  const [hasHoverAbility, setHasHoverAbility] = useState(false);
   const dragStartRef = useRef<number | null>(null);
 
   const screenWidth = useScreenWidth();
@@ -105,6 +106,14 @@ export default function TestimonialSwiper({
   }, []);
 
   useEffect(() => {
+    const mq = window.matchMedia("(hover: hover)");
+    setHasHoverAbility(mq.matches);
+    const handler = () => setHasHoverAbility(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
     if (isSectionHovered) return;
     const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
     return () => clearInterval(id);
@@ -113,8 +122,8 @@ export default function TestimonialSwiper({
   return (
     <div
       className="relative"
-      onMouseEnter={() => setIsSectionHovered(true)}
-      onMouseLeave={() => setIsSectionHovered(false)}
+      onMouseEnter={() => hasHoverAbility && setIsSectionHovered(true)}
+      onMouseLeave={() => hasHoverAbility && setIsSectionHovered(false)}
     >
       <div
         className="testimonials-swiper relative w-full h-[280px] sm:h-[431px] lg:h-[817px] overflow-hidden select-none touch-pan-y"
@@ -143,10 +152,7 @@ export default function TestimonialSwiper({
             aria-roledescription="slide"
             aria-label={`Testimonial ${index + 1} of ${count}`}
           >
-            <TestimonialCard
-              name={testimonial.name}
-              text={testimonial.text}
-            />
+            <TestimonialCard name={testimonial.name} text={testimonial.text} />
           </div>
         ))}
       </div>
@@ -155,28 +161,28 @@ export default function TestimonialSwiper({
         type="button"
         aria-label="Previous testimonial"
         onClick={goPrev}
-        className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-500 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-300 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
-        onMouseEnter={() => setIsPrevHovered(true)}
-        onMouseLeave={() => setIsPrevHovered(false)}
+        onMouseEnter={() => hasHoverAbility && setIsPrevHovered(true)}
+        onMouseLeave={() => hasHoverAbility && setIsPrevHovered(false)}
       >
         <ArrowIcon
           className="rotate-180 w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-          fill={isPrevHovered ? solidFill : "gradient"}
+          fill={hasHoverAbility && isPrevHovered ? solidFill : "gradient"}
         />
       </button>
       <button
         type="button"
         aria-label="Next testimonial"
         onClick={goNext}
-        className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-500 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-300 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
-        onMouseEnter={() => setIsNextHovered(true)}
-        onMouseLeave={() => setIsNextHovered(false)}
+        onMouseEnter={() => hasHoverAbility && setIsNextHovered(true)}
+        onMouseLeave={() => hasHoverAbility && setIsNextHovered(false)}
       >
         <ArrowIcon
           className="w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-          fill={isNextHovered ? solidFill : "gradient"}
+          fill={hasHoverAbility && isNextHovered ? solidFill : "gradient"}
         />
       </button>
     </div>
