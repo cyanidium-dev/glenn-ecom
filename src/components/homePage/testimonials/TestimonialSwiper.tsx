@@ -5,6 +5,7 @@ import { TestimonialCardProps } from "./testimonialsData";
 import TestimonialCard from "./TestimonialCard";
 import ArrowIcon from "@/components/shared/icons/ArrowIcon";
 import { useScreenWidth } from "@/hooks/useScreenWidth";
+import { shuffleArray } from "@/utils/arrayUtils";
 
 interface TestimonialSwiperProps {
   testimonialsList: TestimonialCardProps[];
@@ -19,6 +20,8 @@ export default function TestimonialSwiper({
   testimonialsList,
   variant = "",
 }: TestimonialSwiperProps) {
+  const [list, setList] = useState(testimonialsList);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPrevHovered, setIsPrevHovered] = useState(false);
   const [isNextHovered, setIsNextHovered] = useState(false);
@@ -32,7 +35,7 @@ export default function TestimonialSwiper({
   const arrowTopPosition = isLg ? "334.5px" : isSm ? "191.5px" : "115px";
   const solidFill = "white";
 
-  const count = testimonialsList.length;
+  const count = list.length;
   const goPrev = useCallback(() => {
     setCurrentIndex(prev => (prev - 1 + count) % count);
   }, [count]);
@@ -97,6 +100,11 @@ export default function TestimonialSwiper({
   }, [isDragging, handleDragEnd]);
 
   useEffect(() => {
+    setList(shuffleArray(testimonialsList));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- shuffle once after hydration for new order on each page load
+  }, []);
+
+  useEffect(() => {
     if (isSectionHovered) return;
     const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
     return () => clearInterval(id);
@@ -120,7 +128,7 @@ export default function TestimonialSwiper({
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
-        {testimonialsList.map((testimonial, index) => (
+        {list.map((testimonial, index) => (
           <div
             key={`${variant}-${testimonial.id}`}
             className="absolute inset-0 w-full h-full transition-opacity ease-in-out"
