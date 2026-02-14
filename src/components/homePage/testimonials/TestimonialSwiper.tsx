@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { TestimonialCardProps } from "./testimonialsData";
 import TestimonialCard from "./TestimonialCard";
 import ArrowIcon from "@/components/shared/icons/ArrowIcon";
@@ -12,6 +12,8 @@ interface TestimonialSwiperProps {
 }
 
 const FADE_DURATION_MS = 1000;
+const DRAG_THRESHOLD_PX = 50;
+const AUTO_CHANGE_DELAY_MS = 4000;
 
 export default function TestimonialSwiper({
   testimonialsList,
@@ -20,6 +22,9 @@ export default function TestimonialSwiper({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPrevHovered, setIsPrevHovered] = useState(false);
   const [isNextHovered, setIsNextHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isSectionHovered, setIsSectionHovered] = useState(false);
+  const dragStartRef = useRef<number | null>(null);
 
   const screenWidth = useScreenWidth();
   const isLg = screenWidth >= 1024;
@@ -35,12 +40,85 @@ export default function TestimonialSwiper({
     setCurrentIndex(prev => (prev + 1) % count);
   }, [count]);
 
+  const handleDragEnd = useCallback(
+    (endX: number) => {
+      const startX = dragStartRef.current;
+      if (startX === null) return;
+      const delta = startX - endX;
+      if (delta > DRAG_THRESHOLD_PX) goNext();
+      else if (delta < -DRAG_THRESHOLD_PX) goPrev();
+      dragStartRef.current = null;
+      setIsDragging(false);
+    },
+    [goPrev, goNext]
+  );
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    dragStartRef.current = e.touches[0].clientX;
+    setIsDragging(true);
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (dragStartRef.current === null) return;
+      handleDragEnd(e.changedTouches[0].clientX);
+    },
+    [handleDragEnd]
+  );
+
+  const onMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    dragStartRef.current = e.clientX;
+    setIsDragging(true);
+  }, []);
+
+  const onMouseUp = useCallback(
+    (e: React.MouseEvent) => {
+      if (dragStartRef.current === null) return;
+      handleDragEnd(e.clientX);
+    },
+    [handleDragEnd]
+  );
+
+  const onMouseLeave = useCallback(() => {
+    if (dragStartRef.current === null) return;
+    setIsDragging(false);
+    dragStartRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    if (!isDragging) return;
+    const onMouseUpGlobal = (e: MouseEvent) => {
+      if (dragStartRef.current === null) return;
+      handleDragEnd(e.clientX);
+    };
+    window.addEventListener("mouseup", onMouseUpGlobal);
+    return () => window.removeEventListener("mouseup", onMouseUpGlobal);
+  }, [isDragging, handleDragEnd]);
+
+  useEffect(() => {
+    if (isSectionHovered) return;
+    const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
+    return () => clearInterval(id);
+  }, [isSectionHovered, goNext]);
+
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onMouseEnter={() => setIsSectionHovered(true)}
+      onMouseLeave={() => setIsSectionHovered(false)}
+    >
       <div
-        className="testimonials-swiper relative w-full h-[280px] sm:h-[431px] lg:h-[817px] overflow-hidden"
+        className="testimonials-swiper relative w-full h-[280px] sm:h-[431px] lg:h-[817px] overflow-hidden select-none touch-pan-y"
         aria-roledescription="carousel"
         aria-label="Testimonials"
+        style={{ cursor: isDragging ? "grabbing" : "grab" }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchEnd}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
       >
         {testimonialsList.map((testimonial, index) => (
           <div
