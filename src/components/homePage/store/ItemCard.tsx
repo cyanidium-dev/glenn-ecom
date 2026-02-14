@@ -13,10 +13,10 @@ interface ItemCardProps {
 export default function ItemCard({ item }: ItemCardProps) {
   return (
     <li
-      className="group flex flex-col items-center justify-center w-full"
+      className="flex flex-col items-center justify-center w-full"
       key={item.slug}
     >
-      <div className="relative w-full mb-[23px] lg:mb-[20px]">
+      <div className="relative w-full mb-[23px] lg:mb-[20px] group">
         <Link
           href={`/store/${item.slug}`}
           className="relative mx-auto max-w-[685px] h-auto aspect-329/223 md:aspect-685/465 block"
@@ -88,7 +88,7 @@ export default function ItemCard({ item }: ItemCardProps) {
           </motion.div>
 
           {/* Desktop: Disk Image */}
-          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square -z-10 transition-all duration-700 ease-in-out translate-x-1/2 rotate-0 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-360">
+          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square -z-10 transition-all duration-700 ease-in-out translate-x-1/2 rotate-0 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-180">
             <motion.div
               initial="hidden"
               whileInView="visible"

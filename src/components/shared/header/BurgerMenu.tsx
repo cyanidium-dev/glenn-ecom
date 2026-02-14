@@ -36,16 +36,9 @@ export default function BurgerMenu({
             >
               <CloseIcon className="w-full h-full" />
             </button>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              exit="exit"
-              viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ delay: 0.3, x: 30 })}
-              className="w-full"
-            >
+            <div className="w-full">
               <NavMenuMobile setIsHeaderMenuOpened={setIsHeaderMenuOpened} />
-            </motion.div>
+            </div>
           </Container>
         </motion.div>
       )}

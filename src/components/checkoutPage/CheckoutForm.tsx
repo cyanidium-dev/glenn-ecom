@@ -98,7 +98,7 @@ export default function CheckoutForm() {
                   errors={errors}
                   touched={touched}
                   submitCount={submitCount}
-                  variant="gradient"
+                  variant="white"
                   labelText="Country"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />
@@ -109,7 +109,7 @@ export default function CheckoutForm() {
                     errors={errors}
                     touched={touched}
                     submitCount={submitCount}
-                    variant="gradient"
+                    variant="white"
                     labelText="Name"
                     fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                   />
@@ -119,7 +119,7 @@ export default function CheckoutForm() {
                     errors={errors}
                     touched={touched}
                     submitCount={submitCount}
-                    variant="gradient"
+                    variant="white"
                     labelText="Last name"
                     fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                   />
@@ -131,7 +131,7 @@ export default function CheckoutForm() {
                   errors={errors}
                   touched={touched}
                   submitCount={submitCount}
-                  variant="gradient"
+                  variant="white"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />
                 <CustomizedInput
@@ -140,7 +140,7 @@ export default function CheckoutForm() {
                   errors={errors}
                   touched={touched}
                   submitCount={submitCount}
-                  variant="gradient"
+                  variant="white"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />
                 <div className="flex flex-col md:flex-row gap-[10px]">
@@ -151,7 +151,7 @@ export default function CheckoutForm() {
                     errors={errors}
                     touched={touched}
                     submitCount={submitCount}
-                    variant="gradient"
+                    variant="white"
                     fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                   />
                   <CustomizedInput
@@ -161,7 +161,7 @@ export default function CheckoutForm() {
                     errors={errors}
                     touched={touched}
                     submitCount={submitCount}
-                    variant="gradient"
+                    variant="white"
                     fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                   />
                 </div>
@@ -172,7 +172,7 @@ export default function CheckoutForm() {
                   errors={errors}
                   touched={touched}
                   submitCount={submitCount}
-                  variant="gradient"
+                  variant="white"
                   inputType="email"
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />
@@ -182,7 +182,7 @@ export default function CheckoutForm() {
                   errors={errors}
                   touched={touched}
                   submitCount={submitCount}
-                  variant="gradient"
+                  variant="white"
                   onChange={handlePhoneChange}
                   fieldClassName="w-full h-[50px] px-[10px] lg:px-2 lg:h-[60px] text-[16px] lg:text-[18px] leading-[120%] bg-transparent"
                 />

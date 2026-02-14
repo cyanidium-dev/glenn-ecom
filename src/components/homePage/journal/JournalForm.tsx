@@ -86,10 +86,11 @@ export default function JournalForm({
                     labelClassName="mb-5 lg:mb-15 max-w-[650px]"
                   />
                   <MainButton
-                    variant="outline"
+                    variant={(dirty && isValid && !isLoading) ? "white" : "outline"}
                     disabled={!(dirty && isValid) || isLoading}
                     isLoading={isLoading}
                     type="submit"
+                    disabledStyle="fancy"
                     className="w-[132px] lg:w-[180px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none"
                   >
                     Join
