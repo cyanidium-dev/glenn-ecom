@@ -25,9 +25,11 @@ export default function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [closedButtonPos, setClosedButtonPos] = useState({ left: 20, top: 50 });
+  const [closedButtonLeft, setClosedButtonLeft] = useState(20);
+  const headerRef = useRef<HTMLElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
   const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const measureRef = useRef<() => void>(() => {});
   const { scrollY } = useScroll();
 
   const closeHeaderMenu = () => {
@@ -36,7 +38,7 @@ export default function Header() {
     if (exitTimeoutRef.current) clearTimeout(exitTimeoutRef.current);
     exitTimeoutRef.current = setTimeout(
       () => setButtonOnTopForExit(false),
-      BURGER_MENU_EXIT_MS,
+      BURGER_MENU_EXIT_MS
     );
   };
 
@@ -54,20 +56,61 @@ export default function Header() {
     };
   }, []);
 
+  /** Vertical position for burger/X button: matches header size (scrolled = compact, not scrolled = tall) */
+  const BURGER_BUTTON_TOP_SCROLLED = 14; // py-0, row h-[60px] → center ~30px
+  const BURGER_BUTTON_TOP_DEFAULT = 34; // py-3, row h-[79px] → center ~51px
+  const burgerButtonTop = isScrolled
+    ? BURGER_BUTTON_TOP_SCROLLED
+    : BURGER_BUTTON_TOP_DEFAULT;
+
   useLayoutEffect(() => {
     const measure = () => {
-      if (placeholderRef.current) {
-        const rect = placeholderRef.current.getBoundingClientRect();
-        setClosedButtonPos({ left: rect.left, top: rect.top });
+      if (headerRef.current && placeholderRef.current) {
+        const headerRect = headerRef.current.getBoundingClientRect();
+        const placeholderRect = placeholderRef.current.getBoundingClientRect();
+        setClosedButtonLeft(placeholderRect.left - headerRect.left);
       }
     };
+    measureRef.current = measure;
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, [isHeaderVisible, isScrolled]);
 
   const isDrawerOpen = useCartStore(state => state.isDrawerOpen);
+  const drawerOpenRequestedAt = useCartStore(
+    state => state.drawerOpenRequestedAt
+  );
   const toggleDrawer = useCartStore(state => state.toggleDrawer);
+  const confirmDrawerOpen = useCartStore(state => state.confirmDrawerOpen);
+
+  const isBasketRequestedOrOpen = isDrawerOpen || drawerOpenRequestedAt != null;
+
+  // When basket drawer closes, keep header visible (avoid diagonal slide)
+  const prevDrawerOpen = useRef(isDrawerOpen);
+  useEffect(() => {
+    if (prevDrawerOpen.current && !isDrawerOpen) {
+      queueMicrotask(() => setIsHeaderVisible(true));
+    }
+    prevDrawerOpen.current = isDrawerOpen;
+  }, [isDrawerOpen]);
+
+  // First show header, then open basket (after header transition)
+  useEffect(() => {
+    if (drawerOpenRequestedAt == null) return;
+    const t = setTimeout(confirmDrawerOpen, 120);
+    return () => clearTimeout(t);
+  }, [drawerOpenRequestedAt, confirmDrawerOpen]);
+
+  // Show header when visible from scroll OR when basket is requested/open
+  const isHeaderVisibleComputed = isHeaderVisible || isBasketRequestedOrOpen;
+
+  // Re-measure after header slide-in transition so button position is correct
+  useEffect(() => {
+    if (!isHeaderVisibleComputed) return;
+    const t = setTimeout(() => measureRef.current(), 120);
+    return () => clearTimeout(t);
+  }, [isHeaderVisibleComputed]);
 
   useMotionValueEvent(scrollY, "change", latest => {
     setIsScrolled(latest > 20);
@@ -99,8 +142,9 @@ export default function Header() {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 left-0 z-50 w-dvw transition duration-300 ease-in-out ${
-        isHeaderVisible ? "translate-y-0" : "-translate-y-full"
+        isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
       } ${isScrolled ? "py-0" : "py-3"}`}
     >
       <Container>
@@ -123,8 +167,8 @@ export default function Header() {
             animate={{
               left: isHeaderMenuOpened
                 ? MENU_OPEN_BUTTON_LEFT
-                : closedButtonPos.left,
-              top: closedButtonPos.top,
+                : closedButtonLeft,
+              top: burgerButtonTop,
             }}
             transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
           >
@@ -191,13 +235,13 @@ export default function Header() {
       </Container>
       <BurgerMenu
         isHeaderMenuOpened={isHeaderMenuOpened}
-        setIsHeaderMenuOpened={(value) =>
+        setIsHeaderMenuOpened={value =>
           value ? setIsHeaderMenuOpened(true) : closeHeaderMenu()
         }
       />
       <BasketMenu />
       <Backdrop
-        isVisible={isHeaderMenuOpened || isDrawerOpen}
+        isVisible={isHeaderMenuOpened || isBasketRequestedOrOpen}
         onClick={() => {
           if (isHeaderMenuOpened) closeHeaderMenu();
           toggleDrawer(false);
