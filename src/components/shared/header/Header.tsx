@@ -2,6 +2,7 @@
 import Container from "../container/Container";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
@@ -13,6 +14,7 @@ import BasketMenu from "../basket/BasketMenu";
 import { useCartStore } from "@/store/useCartStore";
 
 export default function Header() {
+  const pathname = usePathname();
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -67,6 +69,12 @@ export default function Header() {
           <BurgerMenuButton toggleHeaderMenuOpen={toggleHeaderMenuOpen} />
           <Link
             href="/"
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${
               isScrolled
                 ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
@@ -98,6 +106,12 @@ export default function Header() {
           </div>
           <Link
             href="/"
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${
               isScrolled
                 ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
