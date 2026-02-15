@@ -6,7 +6,13 @@ import { usePathname } from "next/navigation";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
-import { useState, useEffect, useRef, useLayoutEffect, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useContext,
+} from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { motion } from "framer-motion";
 import BasketButton from "../basket/BasketButton";
@@ -150,7 +156,9 @@ export default function Header() {
       className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${
         isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
       } ${splashLayerActive ? "opacity-0 pointer-events-none" : "opacity-100"} ${
-        isScrolled ? "py-0 bg-white/5 max-md:bg-black/50 md:backdrop-blur-sm" : "py-3"
+        isScrolled
+          ? "py-0 bg-black/10 max-md:bg-black/50 md:backdrop-blur-sm"
+          : "py-3"
       }`}
     >
       <Container>
