@@ -31,7 +31,7 @@ export default function ItemCard({ item }: ItemCardProps) {
               x: -20,
               delay: 0.2 * (item.order || 0),
             })}
-            className="relative h-full aspect-460/465 lg:hidden"
+            className="relative h-full aspect-460/465 lg:hidden z-10"
           >
             <Image
               src={getOptimizedImageUrl(item.coverImage, 440, 90, "webp")}
@@ -44,7 +44,7 @@ export default function ItemCard({ item }: ItemCardProps) {
           </motion.div>
 
           {/* Desktop: Cover Image */}
-          <div className="hidden lg:block absolute left-1/2 transition-all duration-700 ease-in-out -translate-x-1/2 group-hover:left-0 group-hover:translate-x-0 h-full aspect-460/465">
+          <div className="hidden z-10 lg:block absolute left-1/2 transition-all duration-700 ease-in-out -translate-x-1/2 group-hover:left-0 group-hover:translate-x-0 h-full aspect-460/465">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -75,7 +75,7 @@ export default function ItemCard({ item }: ItemCardProps) {
             exit="exit"
             viewport={{ once: true, amount: 0.1 }}
             variants={vinylAnimation({ delay: 0.3 * (item.order || 0) })}
-            className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] aspect-square -z-10 lg:hidden"
+            className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] aspect-square lg:hidden"
           >
             <Image
               src={getOptimizedImageUrl(item.discImage, 424, 90, "webp")}
@@ -88,7 +88,7 @@ export default function ItemCard({ item }: ItemCardProps) {
           </motion.div>
 
           {/* Desktop: Disk Image */}
-          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square -z-10 transition-all duration-700 ease-in-out translate-x-1/2 -rotate-90 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-0">
+          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square transition-all duration-700 ease-in-out translate-x-1/2 -rotate-90 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-0">
             <motion.div
               initial="hidden"
               whileInView="visible"
