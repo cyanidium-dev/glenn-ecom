@@ -113,12 +113,11 @@ export default function TestimonialSwiper({
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Auto-advance disabled for testing
-  // useEffect(() => {
-  //   if (isSectionHovered) return;
-  //   const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
-  //   return () => clearInterval(id);
-  // }, [isSectionHovered, goNext]);
+  useEffect(() => {
+    if (isSectionHovered) return;
+    const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
+    return () => clearInterval(id);
+  }, [isSectionHovered, goNext]);
 
   return (
     <div
