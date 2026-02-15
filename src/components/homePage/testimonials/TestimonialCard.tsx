@@ -1,41 +1,35 @@
 "use client";
 import SeparatorLine from "@/components/shared/icons/SeparatorLine";
-import AutoFillText from "@/components/shared/autoFillText/AutoFillText";
 import { useScreenWidth } from "@/hooks/useScreenWidth";
-
-interface TestimonialCardProps {
-  name: string;
-  text: string;
-  isActive?: boolean;
-}
-
-// min/max from text block height (height/7, height/2). Heights: 172, 323, 323, 594 by breakpoint.
-const SIZES = {
-  mobile: { min: 20, max: 66 },
-  lg: { min: 40, max: 220 },
-} as const;
+import type { TestimonialCardProps as TestimonialData } from "./testimonialsData";
 
 export default function TestimonialCard({
   name,
   text,
-  isActive,
-}: TestimonialCardProps) {
-  const screenWidth = useScreenWidth();
-  const isLg = screenWidth >= 1024;
-
-  const { min, max } = isLg ? SIZES.lg : SIZES.mobile;
+  fontSize,
+  fontSizeSm,
+  fontSizeLg,
+  fontSizeXxl,
+}: TestimonialData) {
+  const w = useScreenWidth();
+  // lg from 1024 to <1600, xxl from 1600+
+  const size =
+    w >= 1600
+      ? fontSizeXxl
+      : w >= 1024
+        ? fontSizeLg
+        : w >= 640
+          ? fontSizeSm
+          : fontSize;
 
   return (
     <div className="flex min-h-0 flex-col items-center w-full sm:aspect-390/280 lg:aspect-none h-[280px] sm:h-full md:h-[431px] lg:h-[817px] py-[20px] lg:py-[60px]">
-      <AutoFillText
-        as="p"
-        min={min}
-        max={max}
-        active={isActive}
-        className="font-andes min-w-0 w-full flex-1 px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] text-center lowercase"
+      <p
+        className="font-andes min-w-0 w-full flex-1 px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] text-center lowercase overflow-hidden"
+        style={{ fontSize: `${size}px` }}
       >
         {text}
-      </AutoFillText>
+      </p>
       <div className="w-full shrink-0 text-right">
         <SeparatorLine width="100%" height={2} className="lg:hidden -my-px" />
         <p className="lg:hidden min-h-[3lh] text-[10px] leading-[120%] font-roboto tracking-[0.01em] mt-[10px] text-right uppercase">

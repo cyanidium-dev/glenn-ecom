@@ -113,11 +113,12 @@ export default function TestimonialSwiper({
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  useEffect(() => {
-    if (isSectionHovered) return;
-    const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
-    return () => clearInterval(id);
-  }, [isSectionHovered, goNext]);
+  // Auto-advance disabled for testing
+  // useEffect(() => {
+  //   if (isSectionHovered) return;
+  //   const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
+  //   return () => clearInterval(id);
+  // }, [isSectionHovered, goNext]);
 
   return (
     <div
@@ -152,11 +153,7 @@ export default function TestimonialSwiper({
             aria-roledescription="slide"
             aria-label={`Testimonial ${index + 1} of ${count}`}
           >
-            <TestimonialCard
-              name={testimonial.name}
-              text={testimonial.text}
-              isActive={index === currentIndex}
-            />
+            <TestimonialCard {...testimonial} />
           </div>
         ))}
       </div>
