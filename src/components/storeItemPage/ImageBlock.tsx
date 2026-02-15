@@ -28,7 +28,7 @@ export default function ImageBlock({
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={fadeInAnimation({ x: -20, useLCPOptimization: true })}
-          className="relative h-full aspect-463/469"
+          className="relative h-full aspect-463/469 z-10"
         >
           <Image
             src={getOptimizedImageUrl(
@@ -50,7 +50,7 @@ export default function ImageBlock({
           exit="exit"
           viewport={{ once: true, amount: 0.1 }}
           variants={vinylAnimation({ useLCPOptimization: true })}
-          className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] lg:h-[calc(100%-11px)] aspect-square -z-10"
+          className="absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] lg:h-[calc(100%-11px)] aspect-square"
         >
           <Image
             src={getOptimizedImageUrl(
