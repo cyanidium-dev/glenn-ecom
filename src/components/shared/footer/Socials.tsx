@@ -37,7 +37,7 @@ export default function Socials({ className = "" }: SocialsProps) {
       {socialLinks.map(({ icon: Icon, href, label }) => (
         <li
           key={label}
-          className="relative rounded-[8px] overflow-hidden size-[30px] lg:size-[40px] bg-white group lg:hover:opacity-70 transition duration-300 ease-in-out"
+          className="relative rounded-[8px] overflow-hidden size-[30px] lg:size-[40px] bg-white group md:hover:opacity-70 transition duration-300 ease-in-out"
         >
           <Link
             href={href}
