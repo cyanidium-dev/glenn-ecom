@@ -16,7 +16,7 @@ export default function ItemCard({ item }: ItemCardProps) {
       className="flex flex-col items-center justify-center w-full"
       key={item.slug}
     >
-      <div className="relative w-full mb-[23px] lg:mb-[20px] group">
+      <div className="relative z-20 w-full mb-[23px] lg:mb-[20px] group">
         <Link
           href={`/store/${item.slug}`}
           className="relative mx-auto max-w-[685px] h-auto aspect-329/223 md:aspect-685/465 block"
