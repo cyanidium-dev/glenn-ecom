@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 interface MainButtonProps {
   children: string | ReactNode;
   variant?: "white" | "outline" | "gradient";
+  disabledStyle?: "normal" | "fancy";
   className?: string;
   type?: "submit" | "button";
   disabled?: boolean;
@@ -15,6 +16,7 @@ interface MainButtonProps {
 export default function MainButton({
   children,
   variant = "outline",
+  disabledStyle = "normal",
   className = "",
   type = "button",
   disabled = false,
@@ -23,12 +25,18 @@ export default function MainButton({
 }: MainButtonProps) {
   const variantClasses = {
     white:
-      "bg-white disabled:bg-white/60 text-red hover:bg-[linear-gradient(273.78deg, rgba(255, 255, 255, 0.2) 3.03%, #FFFFFF 50.66%, rgba(255, 255, 255, 0.2) 96.83%)]",
+      "bg-white disabled:bg-white/60 text-red hover:opacity-70 transition-opacity duration-300 ease-in-out",
     outline:
-      "bg-transparent disabled:border-white/60 disabled:text-white/60 border-[2px] border-white text-white hover:bg-white hover:text-red disabled:pointer-events-none",
+      "bg-transparent border-[2px] border-white text-white hover:bg-white hover:text-red disabled:pointer-events-none",
     gradient:
       "bg-transparent disabled:text-white/60 text-white hover:bg-white hover:text-red",
   };
+
+  const disabledClasses = {
+    normal: "disabled:border-white/60 disabled:text-white/60",
+    fancy: "",
+  };
+
   return (
     <button
       type={type}
@@ -38,7 +46,7 @@ export default function MainButton({
         `group relative overflow-hidden enabled:cursor-pointer flex items-center justify-center w-full h-[45px] px-3
          text-[14px] leading-none lg:text-[18px]
       enabled:active:scale-[98%] will-change-transform transition duration-300 ease-in-out
-       ${variantClasses[variant]}`,
+       ${variantClasses[variant]} ${disabledClasses[disabledStyle]}`,
         className
       )}
     >
@@ -57,7 +65,7 @@ export default function MainButton({
           }}
         />
       )}
-      <span className="relative inline-flex items-center justify-center gap-2 w-full min-h-[1em]">
+      <span className="relative z-10 inline-flex items-center justify-center gap-2 w-full min-h-[1em]">
         <span
           className={`absolute inset-0 flex items-center justify-center gap-2 transition-opacity duration-300 ease-in-out ${
             isLoading ? "opacity-0 pointer-events-none" : "opacity-100"

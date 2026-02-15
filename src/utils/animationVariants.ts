@@ -118,7 +118,7 @@ export const modalVariants = {
 
 export const vinylAnimation = ({
   delay = 0.7,
-  duration = 1.5,
+  duration = 0.7,
   initialRotation = -90,
   useLCPOptimization = false,
 } = {}) => ({

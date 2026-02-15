@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
 import CloseIcon from "../icons/CloseIcon";
 import BasketMenuItem from "./BasketMenuItem";
-import { fadeInAnimation, basketMenuVariants } from "@/utils/animationVariants";
+import { basketMenuVariants } from "@/utils/animationVariants";
 
 import SeparatorLine from "../icons/SeparatorLine";
 import LinkButton from "../buttons/LinkButton";
@@ -17,7 +17,7 @@ export default function BasketMenu() {
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + Number(item.price) * item.quantity,
-    0,
+    0
   );
 
   return (
@@ -46,14 +46,7 @@ export default function BasketMenu() {
               <Container className="relative w-full lg:pl-[25px] lg:pr-[27px] xl:pl-[25px] xl:pr-[27px] pt-[34px] lg:pt-[45px] pb-[30px]">
                 {/* Empty Basket Message */}
                 {cartItems.length === 0 && (
-                  <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    exit="exit"
-                    viewport={{ once: true, amount: 0.1 }}
-                    variants={fadeInAnimation({ delay: 0.3, x: -30 })}
-                    className="w-full"
-                  >
+                  <div className="w-full">
                     <h3 className="font-andes lowercase text-[34px] lg:text-[38px] leading-[95%] mb-5 lg:mb-[30px]">
                       Your Cart is empty
                     </h3>
@@ -65,25 +58,18 @@ export default function BasketMenu() {
                     >
                       Continue Shopping
                     </LinkButton>
-                  </motion.div>
+                  </div>
                 )}
                 {cartItems.length > 0 && (
                   <>
                     <h3 className="font-andes lowercase text-[34px] lg:text-[38px] leading-[95%] mb-5 lg:mb-[30px]">
                       Your Cart
                     </h3>
-                    <motion.ul
-                      initial="hidden"
-                      whileInView="visible"
-                      exit="exit"
-                      viewport={{ once: true, amount: 0.1 }}
-                      variants={fadeInAnimation({ delay: 0.3, x: -30 })}
-                      className="w-full flex flex-col gap-5"
-                    >
-                      {cartItems.map((item) => (
+                    <ul className="w-full flex flex-col gap-5">
+                      {cartItems.map(item => (
                         <BasketMenuItem key={item.id} item={item} />
                       ))}
-                    </motion.ul>
+                    </ul>
                   </>
                 )}
               </Container>

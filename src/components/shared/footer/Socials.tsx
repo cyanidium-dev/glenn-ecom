@@ -37,22 +37,17 @@ export default function Socials({ className = "" }: SocialsProps) {
       {socialLinks.map(({ icon: Icon, href, label }) => (
         <li
           key={label}
-          className="relative rounded-[8px] overflow-hidden size-[30px] lg:size-[40px]"
-          style={{
-            background:
-              "linear-gradient(321.47deg, rgba(255, 255, 255, 0.2) 1.07%, #ffffff 49.3%, rgba(255, 255, 255, 0.2) 96.06%)",
-          }}
+          className="relative rounded-[8px] overflow-hidden size-[30px] lg:size-[40px] bg-white group lg:hover:opacity-70 transition duration-300 ease-in-out"
         >
           <Link
             href={href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className="group relative block"
+            className="relative flex items-center justify-center size-full"
             style={{ color: "var(--color-red-bright)" }}
           >
-            <div className="absolute inset-0 size-[30px] -z-10 lg:size-[40px] rounded-[8px] bg-white group-hover:bg-transparent transition duration-300 ease-in-out" />
-            <Icon className="size-[30px] lg:size-[40px] relative z-10" />
+            <Icon className="size-[30px] lg:size-[40px]" />
           </Link>
         </li>
       ))}

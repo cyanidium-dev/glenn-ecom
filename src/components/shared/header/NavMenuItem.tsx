@@ -28,13 +28,7 @@ export default function NavMenuItem({
         href={href}
         className={`group relative block font-andes text-[34px] leading-[95%] ${style}`}
       >
-        <span className="text-white opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0">
-          {title}
-        </span>
-        <span
-          className="absolute inset-0 bg-clip-text text-transparent [-webkit-text-fill-color:transparent] bg-[linear-gradient(273.78deg,rgba(255,255,255,0.2)_3.03%,#fff_50.66%,rgba(255,255,255,0.2)_96.83%)]"
-          aria-hidden
-        >
+        <span className="text-white transition-opacity duration-300 ease-in-out lg:group-hover:opacity-70">
           {title}
         </span>
       </Link>

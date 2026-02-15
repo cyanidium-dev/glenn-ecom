@@ -2,6 +2,7 @@
 import Container from "../container/Container";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
@@ -20,6 +21,7 @@ const MENU_OPEN_BUTTON_LEFT = 330 - 30 - 24;
 const BURGER_MENU_EXIT_MS = 300;
 
 export default function Header() {
+  const pathname = usePathname();
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const [buttonOnTopForExit, setButtonOnTopForExit] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -145,7 +147,7 @@ export default function Header() {
       ref={headerRef}
       className={`fixed top-0 left-0 z-50 w-dvw transition duration-300 ease-in-out ${
         isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
-      } ${isScrolled ? "py-0" : "py-3"}`}
+      } ${isScrolled ? "py-0 bg-white/5 max-md:bg-black/50 md:backdrop-blur-sm" : "py-3"}`}
     >
       <Container>
         {/* Mobile layout: 3 blocks - burger (left), logo (center), basket (right) */}
@@ -180,6 +182,12 @@ export default function Header() {
           </motion.div>
           <Link
             href="/"
+            onClick={e => {
+              if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${
               isScrolled
                 ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
@@ -211,7 +219,13 @@ export default function Header() {
           </div>
           <Link
             href="/"
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${
+            onClick={e => {
+              if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-500 ease-in-out ${
               isScrolled
                 ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
                 : "top-3 w-[96px] aspect-96/79 lg:w-[114px] lg:aspect-114/95"

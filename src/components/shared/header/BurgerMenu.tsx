@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { NavMenuMobile } from "./NavMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
-import { fadeInAnimation, burgerMenuVariants } from "@/utils/animationVariants";
+import { burgerMenuVariants } from "@/utils/animationVariants";
 
 interface BurgerMenuMobTabProps {
   isHeaderMenuOpened: boolean;
@@ -27,16 +27,9 @@ export default function BurgerMenu({
           } md:hidden absolute z-60 top-0 left-0 w-[330px] h-dvh bg-linear-to-l from-[#92001D] to-[#000000] overflow-hidden opacity-100`}
         >
           <Container className="relative w-full pt-[84px]">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              exit="exit"
-              viewport={{ once: true, amount: 0.1 }}
-              variants={fadeInAnimation({ delay: 0.3, x: 30 })}
-              className="w-full"
-            >
+            <div className="w-full">
               <NavMenuMobile setIsHeaderMenuOpened={setIsHeaderMenuOpened} />
-            </motion.div>
+            </div>
           </Container>
         </motion.div>
       )}
