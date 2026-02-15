@@ -11,7 +11,7 @@ export default function Journal() {
   return (
     <section
       id="journal"
-      className="pt-[60px] pb-[130px] xl:pt-[175px] xl:pb-[200px]"
+      className="relative z-20 pt-[60px] pb-[130px] xl:pt-[175px] xl:pb-[200px]"
     >
       <Container>
         <SpoonIcon className="w-full h-auto max-w-[661px] mx-auto aspect-350/80 mb-[15px] lg:mb-5" />
