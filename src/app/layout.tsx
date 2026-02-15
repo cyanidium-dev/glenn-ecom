@@ -14,6 +14,14 @@ export const revalidate = 60;
 
 export const metadata = getDefaultMetadata();
 
+/** Mobile/tablet: color for browser UI (status bar, etc.) and uncovered areas. */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+  themeColor: "#3c0006",
+};
+
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
