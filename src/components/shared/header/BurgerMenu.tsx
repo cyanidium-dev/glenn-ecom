@@ -3,7 +3,7 @@ import { NavMenuMobile } from "./NavMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
 import CloseIcon from "../icons/CloseIcon";
-import { fadeInAnimation, burgerMenuVariants } from "@/utils/animationVariants";
+import { burgerMenuVariants } from "@/utils/animationVariants";
 
 interface BurgerMenuMobTabProps {
   isHeaderMenuOpened: boolean;

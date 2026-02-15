@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Container from "../container/Container";
 import CloseIcon from "../icons/CloseIcon";
 import BasketMenuItem from "./BasketMenuItem";
-import { fadeInAnimation, basketMenuVariants } from "@/utils/animationVariants";
+import { basketMenuVariants } from "@/utils/animationVariants";
 
 import SeparatorLine from "../icons/SeparatorLine";
 import LinkButton from "../buttons/LinkButton";
