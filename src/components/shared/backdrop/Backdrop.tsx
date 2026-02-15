@@ -1,6 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect } from "react";
 
 interface BackdropProps {
   isVisible: boolean;
@@ -15,16 +14,7 @@ export default function Backdrop({
   className = "",
   transparent = false,
 }: BackdropProps) {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    // Defer so server and client first paint both return null (avoids hydration error with portal)
-    const id = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(id);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isVisible) {
         onClick();
@@ -36,11 +26,11 @@ export default function Backdrop({
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [mounted, isVisible, onClick]);
+  }, [isVisible, onClick]);
 
-  const content = (
+  return (
     <div
-      className={`fixed z-40 inset-0 w-dvw h-dvh transition duration-1000 ease-in-out ${
+      className={`fixed z-55 inset-0 w-dvw h-dvh transition duration-1000 ease-in-out ${
         isVisible
           ? "opacity-100 no-doc-scroll"
           : "opacity-0 pointer-events-none"
@@ -48,11 +38,4 @@ export default function Backdrop({
       onClick={onClick}
     />
   );
-
-  // Return null until mounted so server and client first paint match (avoids hydration error)
-  // Then portal to body so the backdrop isn't affected by parent transform (e.g. when header is hidden on scroll)
-  if (!mounted || typeof document === "undefined") {
-    return null;
-  }
-  return createPortal(content, document.body);
 }
