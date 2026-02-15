@@ -13,16 +13,16 @@ export default function TestimonialCard({ name, text }: TestimonialCardProps) {
   const isLg = screenWidth >= 1024;
 
   return (
-    <div className="flex flex-col items-center w-full sm:aspect-390/280 lg:aspect-none h-[280px] sm:h-full md:h-[431px] lg:h-[817px] py-[20px] lg:py-[60px]">
+    <div className="flex min-h-0 flex-col items-center w-full sm:aspect-390/280 lg:aspect-none h-[280px] sm:h-full md:h-[431px] lg:h-[817px] py-[20px] lg:py-[60px]">
       <AutoFillText
         as="p"
-        min={isLg ? 92 : 22}
-        max={isLg ? 260 : 78}
-        className="font-andes px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] h-full text-center lowercase"
+        min={isLg ? 46 : 14}
+        max={isLg ? 240 : 140}
+        className="font-andes min-w-0 w-full flex-1 px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] text-center lowercase"
       >
         {text}
       </AutoFillText>
-      <div className="w-full text-right">
+      <div className="w-full shrink-0 text-right">
         <SeparatorLine width="100%" height={2} className="lg:hidden -my-px" />
         <p className="lg:hidden min-h-[3lh] text-[10px] leading-[120%] font-roboto tracking-[0.01em] mt-[10px] text-right uppercase">
           {name}

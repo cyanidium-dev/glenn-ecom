@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useState,
   useLayoutEffect,
   useRef,
   ElementType,
@@ -19,18 +20,22 @@ interface AutoFitTextProps {
   maxHeight?: number;
 }
 
+const MAX_STEP = 8; // Largest step when far from target; min step is always 1
+
 /**
  * Adjust font size one step per animation frame to avoid forced reflow.
+ * Uses adaptive steps: larger when far from min (faster), 1px when close (smooth).
+ * Calls onComplete when the final size is set so the caller can reveal the text (e.g. fade in).
  * Reading layout (clientWidth, scrollWidth, etc.) immediately after writing
  * (style.fontSize) forces the browser to recalculate layout synchronously.
- * By doing one read and one write per rAF, we avoid read-after-write in the same turn.
  */
 function adjustFontSizeAsync(
   el: HTMLElement,
   min: number,
   max: number,
   maxWidth: number | undefined,
-  maxHeight: number | undefined
+  maxHeight: number | undefined,
+  onComplete?: () => void
 ) {
   let size = max;
   let rafId: number | null = null;
@@ -46,9 +51,12 @@ function adjustFontSizeAsync(
       // Round down so we're not on the exact boundary; avoids jitter from subpixel variance
       const stable = Math.max(min, Math.floor(size / 4) * 4);
       el.style.fontSize = `${stable}px`;
+      onComplete?.();
       return;
     }
-    size -= 1;
+    // Adaptive step: bigger when far from min for speed, 1px when close to avoid overshoot
+    const step = Math.max(1, Math.min(MAX_STEP, Math.floor((size - min) / 8)));
+    size -= step;
     el.style.fontSize = `${size}px`;
     rafId = requestAnimationFrame(tick);
   };
@@ -71,6 +79,7 @@ export default function AutoFitText({
 }: AutoFitTextProps) {
   const Component = as || "div";
   const ref = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useLayoutEffect(() => {
     const el = ref.current;
@@ -81,8 +90,16 @@ export default function AutoFitText({
 
     let cancelAsync: (() => void) | undefined;
     const runAdjust = () => {
+      setIsVisible(false);
       cancelAsync?.();
-      cancelAsync = adjustFontSizeAsync(el, min, max, maxWidth, maxHeight);
+      cancelAsync = adjustFontSizeAsync(
+        el,
+        min,
+        max,
+        maxWidth,
+        maxHeight,
+        () => setIsVisible(true)
+      );
     };
 
     runAdjust();
@@ -119,6 +136,8 @@ export default function AutoFitText({
         ...style,
         fontSize: max,
         overflow: "hidden",
+        opacity: isVisible ? 1 : 0,
+        transition: isVisible ? "opacity 0.2s ease-out" : "none",
       }}
     >
       {children}

@@ -17,7 +17,7 @@ export default function ArrowIcon({
 }: ArrowIconProps) {
   const gradientId = "arrow-gradient";
   const isGradient = fill === "gradient";
-  const resolvedSolid = fill !== "gradient" ? fill ?? "currentColor" : "#fff";
+  const resolvedSolid = fill !== "gradient" ? (fill ?? "currentColor") : "#fff";
 
   return (
     <svg
@@ -49,11 +49,9 @@ export default function ArrowIcon({
         d={ARROW_PATH}
         style={{
           opacity: isGradient ? 0 : 1,
-          transition: "opacity 0.45s ease-in-out",
+          transition: "opacity 0.3s ease-in-out",
         }}
       />
     </svg>
   );
 }
-
-

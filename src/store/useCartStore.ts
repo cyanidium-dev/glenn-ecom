@@ -16,10 +16,13 @@ export interface CartItem {
 interface CartStore {
   cartItems: CartItem[];
   isDrawerOpen: boolean;
+  /** Set when drawer open is requested; header shows first, then confirmDrawerOpen opens basket */
+  drawerOpenRequestedAt: number | null;
   totalPrice: number;
   shippingCost: number;
   // Actions
   toggleDrawer: (open: boolean) => void;
+  confirmDrawerOpen: () => void;
   addToCart: (product: Omit<CartItem, "quantity">, quantity?: number) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, delta: number) => void;
@@ -38,10 +41,18 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       cartItems: [],
       isDrawerOpen: false,
+      drawerOpenRequestedAt: null,
       totalPrice: 0,
       shippingCost: 0,
 
-      toggleDrawer: (open) => set({ isDrawerOpen: open }),
+      toggleDrawer: (open) =>
+        set(() =>
+          open
+            ? { drawerOpenRequestedAt: Date.now() }
+            : { isDrawerOpen: false, drawerOpenRequestedAt: null },
+        ),
+      confirmDrawerOpen: () =>
+        set({ isDrawerOpen: true, drawerOpenRequestedAt: null }),
       syncCartWithSanity: (freshRecords, freshShipping) => {
         const { cartItems, shippingCost, calculateTotal } = get();
         let hasPriceChanges = false;
@@ -102,7 +113,7 @@ export const useCartStore = create<CartStore>()(
           return {
             cartItems: newItems,
             totalPrice: get().calculateTotal(newItems),
-            isDrawerOpen: true,
+            drawerOpenRequestedAt: Date.now(),
           };
         }),
 
