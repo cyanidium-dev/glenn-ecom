@@ -152,7 +152,11 @@ export default function TestimonialSwiper({
             aria-roledescription="slide"
             aria-label={`Testimonial ${index + 1} of ${count}`}
           >
-            <TestimonialCard name={testimonial.name} text={testimonial.text} />
+            <TestimonialCard
+              name={testimonial.name}
+              text={testimonial.text}
+              isActive={index === currentIndex}
+            />
           </div>
         ))}
       </div>
