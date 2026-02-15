@@ -43,7 +43,7 @@ export default function Rights({ className = "" }: RightsProps) {
             <Link
               key={link.href}
               href={link.href}
-              className="lg:hover:underline transition duration-300 ease-in-out"
+              className="md:hover:underline transition duration-300 ease-in-out"
             >
               {link.label}
             </Link>

@@ -28,7 +28,7 @@ export default function NavMenuItem({
         href={href}
         className={`group relative block font-andes text-[34px] leading-[95%] ${style}`}
       >
-        <span className="text-white transition-opacity duration-300 ease-in-out lg:group-hover:opacity-70">
+        <span className="text-white transition-opacity duration-300 ease-in-out md:group-hover:opacity-70">
           {title}
         </span>
       </Link>

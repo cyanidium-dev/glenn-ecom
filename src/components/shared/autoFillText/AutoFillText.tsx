@@ -104,24 +104,52 @@ export default function AutoFitText({
 
     runAdjust();
 
+    // Schedule a single runAdjust after layout (coalesces multiple triggers).
+    // Double rAF gives the browser a chance to commit zoom/layout; delayed run catches stale layout.
+    const ZOOM_SETTLE_MS = 120;
+    let resizeRafId: number | null = null;
+    let catchUpTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const scheduleAdjust = (fromViewportOrWindow = false) => {
+      if (resizeRafId !== null) return;
+      if (catchUpTimeoutId !== null) {
+        clearTimeout(catchUpTimeoutId);
+        catchUpTimeoutId = null;
+      }
+      resizeRafId = requestAnimationFrame(() => {
+        resizeRafId = requestAnimationFrame(() => {
+          resizeRafId = null;
+          runAdjust();
+          // After zoom, layout can settle a frame or two late. Run again once so we don't get stuck at max.
+          if (fromViewportOrWindow) {
+            catchUpTimeoutId = setTimeout(() => {
+              catchUpTimeoutId = null;
+              runAdjust();
+            }, ZOOM_SETTLE_MS);
+          }
+        });
+      });
+    };
+
     // Observe the parent, not the element we're resizing. Otherwise changing fontSize
     // changes our size → ResizeObserver fires → we re-run → jitter on short text.
     const parent = el.parentElement;
     if (!parent) return () => { cancelAsync?.(); el.style.fontSize = original; };
 
-    let resizeRafId: number | null = null;
-    const resizeObserver = new ResizeObserver(() => {
-      if (resizeRafId !== null) return;
-      resizeRafId = requestAnimationFrame(() => {
-        resizeRafId = null;
-        runAdjust();
-      });
-    });
-
+    const resizeObserver = new ResizeObserver(() => scheduleAdjust(false));
     resizeObserver.observe(parent);
+
+    // Re-run on zoom: ResizeObserver doesn't always fire when only zoom changes on desktop.
+    const viewport = typeof window !== "undefined" ? window.visualViewport : null;
+    const onViewportOrWindowResize = () => scheduleAdjust(true);
+    if (viewport) viewport.addEventListener("resize", onViewportOrWindowResize);
+    window.addEventListener("resize", onViewportOrWindowResize);
 
     return () => {
       resizeObserver.disconnect();
+      if (viewport) viewport.removeEventListener("resize", onViewportOrWindowResize);
+      window.removeEventListener("resize", onViewportOrWindowResize);
+      if (catchUpTimeoutId !== null) clearTimeout(catchUpTimeoutId);
       cancelAsync?.();
       if (resizeRafId !== null) cancelAnimationFrame(resizeRafId);
       el.style.fontSize = original;

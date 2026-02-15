@@ -88,7 +88,7 @@ export default function ItemCard({ item }: ItemCardProps) {
           </motion.div>
 
           {/* Desktop: Disk Image */}
-          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square -z-10 transition-all duration-700 ease-in-out translate-x-1/2 rotate-0 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-180">
+          <div className="hidden lg:block absolute top-1/2 right-1/2 -translate-y-1/2 h-[calc(100%-11px)] aspect-square -z-10 transition-all duration-700 ease-in-out translate-x-1/2 -rotate-90 group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-0">
             <motion.div
               initial="hidden"
               whileInView="visible"

@@ -17,7 +17,6 @@ export default function BurgerMenu({
     <AnimatePresence>
       {isHeaderMenuOpened && (
         <motion.div
-          viewport={{ once: true, amount: 0.2 }}
           initial="hidden"
           animate="visible"
           exit="exit"

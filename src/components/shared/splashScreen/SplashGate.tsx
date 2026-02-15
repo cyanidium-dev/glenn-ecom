@@ -129,18 +129,14 @@ export default function SplashGate({
     let alreadyPlayed = false;
     try {
       alreadyPlayed = sessionStorage.getItem("splashPlayed") === "true";
-      console.log("[SplashGate] resolve", { alreadyPlayed, raw: sessionStorage.getItem("splashPlayed") });
-    } catch (e) {
-      console.warn("[SplashGate] sessionStorage access failed", e);
+    } catch {
+      // sessionStorage unavailable
     }
     if (alreadyPlayed) {
-      console.log("[SplashGate] skip path (queueMicrotask setShouldShowSplash(false))");
       queueMicrotask(() => {
-        console.log("[SplashGate] skip microtask executing");
         setShouldShowSplash(false);
       });
     } else {
-      console.log("[SplashGate] show path (setShouldShowSplash(true), setIsSplashVisible(true), setShowCover(true))");
       // Sync setState so splash reliably shows; skip path is deferred to avoid lint.
       setShouldShowSplash(true);
       setIsSplashVisible(true);
@@ -150,7 +146,6 @@ export default function SplashGate({
 
   useEffect(() => {
     if (typeof window === "undefined" || shouldShowSplash !== true) return;
-    console.log("[SplashGate] timer effect started (shouldShowSplash === true)");
 
     const ids = timeoutIds.current;
     const startTime = Date.now();
@@ -172,10 +167,8 @@ export default function SplashGate({
     Promise.any([fontsPromise, windowLoadPromise]).then(() => {
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, MIN_DURATION - elapsed);
-      console.log("[SplashGate] fonts/load ready", { elapsed, remaining, settingTimeoutMs: remaining });
 
       ids.hide = window.setTimeout(() => {
-        console.log("[SplashGate] MIN_DURATION elapsed, setting splashPlayed & starting exit");
         sessionStorage.setItem("splashPlayed", "true");
         setInteractionUnlocked(true);
         // Measure after layout, set rect then next frame trigger exit so exiting instance has exitLogoRect
@@ -184,7 +177,6 @@ export default function SplashGate({
           const selector = `[data-splash-header-logo="${isDesktop ? "desktop" : "mobile"}"]`;
           const el = document.querySelector<HTMLElement>(selector);
           const rect = el?.getBoundingClientRect();
-          console.log("[SplashGate] measure header logo", { isDesktop, selector, found: !!el, rect: rect ? { left: rect.left, top: rect.top, width: rect.width, height: rect.height } : null });
           if (rect) {
             setExitLogoRect({
               left: Math.round(rect.left),
@@ -194,7 +186,6 @@ export default function SplashGate({
             });
           }
           requestAnimationFrame(() => {
-            console.log("[SplashGate] setIsSplashVisible(false)");
             setIsSplashVisible(false);
           });
           ids.unmountSplash = window.setTimeout(() => {
@@ -248,9 +239,6 @@ export default function SplashGate({
   // Show layer when pending (initial cover) or when showing/exiting splash
   const splashLayerActive = shouldShowSplash !== false;
   const showSplashContent = shouldShowSplash === true;
-  if (typeof window !== "undefined") {
-    console.log("[SplashGate] render", { shouldShowSplash, isSplashVisible, splashLayerActive, showSplashContent, showCover, exitLogoRect: !!exitLogoRect });
-  }
   // Red cover: when pending (prevent flash) or when showing splash until cover timer
   const showCoverNow =
     shouldShowSplash === null || (showSplashContent && showCover);

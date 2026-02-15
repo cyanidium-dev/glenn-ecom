@@ -1,8 +1,6 @@
 "use client";
 import MainButton from "../shared/buttons/MainButton";
 import SelectInput from "../shared/selectInput/SelectInput";
-import * as motion from "motion/react-client";
-import { fadeInAnimation } from "@/utils/animationVariants";
 import { useCartStore } from "@/store/useCartStore";
 import { useState } from "react";
 import { SanityRecord } from "@/types/store";
@@ -45,37 +43,18 @@ export default function OrderBlock({ product }: OrderBlockProps) {
 
   return (
     <div>
-      <motion.p
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.3 })}
-        className="text-[14px] lg:text-[18px] leading-[121%] lg:leading-[117%] mb-[5px] lg:mb-2"
-      >
+      <p className="text-[14px] lg:text-[18px] leading-[121%] lg:leading-[117%] mb-[5px] lg:mb-2">
         Quantity
-      </motion.p>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.4 })}
-      >
+      </p>
+      <div>
         <SelectInput
           options={options}
           defaultValue="1"
           onChange={(val) => setQuantity(Number(val))}
           className="mb-5 lg:mb-[17px]"
         />
-      </motion.div>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ y: 20, delay: 0.5 })}
-      >
+      </div>
+      <div>
         <MainButton
           variant={isInCart ? "white" : "outline"}
           className="h-10 md:h-[45px]"
@@ -83,7 +62,7 @@ export default function OrderBlock({ product }: OrderBlockProps) {
         >
           {isInCart ? "Already in Basket" : "Add to Basket"}
         </MainButton>
-      </motion.div>
+      </div>
     </div>
   );
 }
