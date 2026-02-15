@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useContext } from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { motion } from "framer-motion";
 import BasketButton from "../basket/BasketButton";
 import { NavMenuDesktop } from "./NavMenu";
 import BasketMenu from "../basket/BasketMenu";
 import { useCartStore } from "@/store/useCartStore";
+import { SplashContext } from "../splashScreen/SplashGate";
 
 /** X button position: right edge of 330px menu minus 30px padding minus 24px button width */
 const MENU_OPEN_BUTTON_LEFT = 330 - 30 - 24;
@@ -22,6 +23,7 @@ const BURGER_MENU_EXIT_MS = 300;
 
 export default function Header() {
   const pathname = usePathname();
+  const { splashLayerActive } = useContext(SplashContext);
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const [buttonOnTopForExit, setButtonOnTopForExit] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -145,9 +147,11 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 z-50 w-dvw transition duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${
         isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
-      } ${isScrolled ? "py-0 bg-white/5 max-md:bg-black/50 md:backdrop-blur-sm" : "py-3"}`}
+      } ${splashLayerActive ? "opacity-0 pointer-events-none" : "opacity-100"} ${
+        isScrolled ? "py-0 bg-white/5 max-md:bg-black/50 md:backdrop-blur-sm" : "py-3"
+      }`}
     >
       <Container>
         {/* Mobile layout: 3 blocks - burger (left), logo (center), basket (right) */}
@@ -182,6 +186,7 @@ export default function Header() {
           </motion.div>
           <Link
             href="/"
+            data-splash-header-logo="mobile"
             onClick={e => {
               if (pathname === "/") {
                 e.preventDefault();
@@ -219,6 +224,7 @@ export default function Header() {
           </div>
           <Link
             href="/"
+            data-splash-header-logo="desktop"
             onClick={e => {
               if (pathname === "/") {
                 e.preventDefault();
