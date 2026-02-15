@@ -11,7 +11,6 @@ interface ItemCardProps {
 }
 
 export default function ItemCard({ item }: ItemCardProps) {
-  console.log(item);
   return (
     <li
       className="flex flex-col items-center justify-center w-full"
