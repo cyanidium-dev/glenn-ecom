@@ -6,18 +6,32 @@ import { useScreenWidth } from "@/hooks/useScreenWidth";
 interface TestimonialCardProps {
   name: string;
   text: string;
+  isActive?: boolean;
 }
 
-export default function TestimonialCard({ name, text }: TestimonialCardProps) {
+// min/max from text block height (height/7, height/2). Heights: 172, 323, 323, 594 by breakpoint.
+const SIZES = {
+  mobile: { min: 20, max: 66 },
+  lg: { min: 40, max: 220 },
+} as const;
+
+export default function TestimonialCard({
+  name,
+  text,
+  isActive,
+}: TestimonialCardProps) {
   const screenWidth = useScreenWidth();
   const isLg = screenWidth >= 1024;
+
+  const { min, max } = isLg ? SIZES.lg : SIZES.mobile;
 
   return (
     <div className="flex min-h-0 flex-col items-center w-full sm:aspect-390/280 lg:aspect-none h-[280px] sm:h-full md:h-[431px] lg:h-[817px] py-[20px] lg:py-[60px]">
       <AutoFillText
         as="p"
-        min={isLg ? 46 : 14}
-        max={isLg ? 240 : 140}
+        min={min}
+        max={max}
+        active={isActive}
         className="font-andes min-w-0 w-full flex-1 px-[10px] lg:px-5 mb-5 lg:mb-12 flex items-center justify-center leading-[95%] tracking-[0.01em] text-center lowercase"
       >
         {text}

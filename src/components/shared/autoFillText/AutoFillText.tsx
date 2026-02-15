@@ -18,16 +18,17 @@ interface AutoFitTextProps {
   children: ReactNode;
   maxWidth?: number;
   maxHeight?: number;
+  /** When true, re-fits when this slide/card becomes visible (e.g. in a carousel). */
+  active?: boolean;
 }
 
-const MAX_STEP = 8; // Largest step when far from target; min step is always 1
+const MAX_STEP = 4; // Cap step for precision; min step is always 1
+const STEP_DIVISOR = 20; // Larger divisor = smaller steps (more precise)
 
 /**
  * Adjust font size one step per animation frame to avoid forced reflow.
- * Uses adaptive steps: larger when far from min (faster), 1px when close (smooth).
+ * Uses smaller adaptive steps for precision; 1px when close to avoid overshoot.
  * Calls onComplete when the final size is set so the caller can reveal the text (e.g. fade in).
- * Reading layout (clientWidth, scrollWidth, etc.) immediately after writing
- * (style.fontSize) forces the browser to recalculate layout synchronously.
  */
 function adjustFontSizeAsync(
   el: HTMLElement,
@@ -44,18 +45,19 @@ function adjustFontSizeAsync(
     rafId = null;
     const width = maxWidth ?? el.clientWidth;
     const height = maxHeight ?? el.clientHeight;
-    const fits =
-      el.scrollWidth <= width && el.scrollHeight <= height;
+    const fits = el.scrollWidth <= width && el.scrollHeight <= height;
 
     if (fits || size <= min) {
-      // Round down so we're not on the exact boundary; avoids jitter from subpixel variance
       const stable = Math.max(min, Math.floor(size / 4) * 4);
       el.style.fontSize = `${stable}px`;
       onComplete?.();
       return;
     }
-    // Adaptive step: bigger when far from min for speed, 1px when close to avoid overshoot
-    const step = Math.max(1, Math.min(MAX_STEP, Math.floor((size - min) / 8)));
+    // Smaller steps: step = 1 when close to min, otherwise (size-min)/STEP_DIVISOR capped by MAX_STEP
+    const step = Math.max(
+      1,
+      Math.min(MAX_STEP, Math.floor((size - min) / STEP_DIVISOR))
+    );
     size -= step;
     el.style.fontSize = `${size}px`;
     rafId = requestAnimationFrame(tick);
@@ -76,6 +78,7 @@ export default function AutoFitText({
   children,
   maxWidth,
   maxHeight,
+  active,
 }: AutoFitTextProps) {
   const Component = as || "div";
   const ref = useRef<HTMLElement | null>(null);
@@ -92,38 +95,30 @@ export default function AutoFitText({
     const runAdjust = () => {
       setIsVisible(false);
       cancelAsync?.();
-      cancelAsync = adjustFontSizeAsync(
-        el,
-        min,
-        max,
-        maxWidth,
-        maxHeight,
-        () => setIsVisible(true)
+      cancelAsync = adjustFontSizeAsync(el, min, max, maxWidth, maxHeight, () =>
+        setIsVisible(true)
       );
     };
 
     runAdjust();
 
-    // Schedule a single runAdjust after layout (coalesces multiple triggers).
-    // Double rAF gives the browser a chance to commit zoom/layout; delayed run catches stale layout.
-    const ZOOM_SETTLE_MS = 120;
-    let resizeRafId: number | null = null;
-    let catchUpTimeoutId: ReturnType<typeof setTimeout> | null = null;
+    const ZOOM_SETTLE_MS = 150;
+    let scheduledRafId: number | null = null;
+    let settleTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
-    const scheduleAdjust = (fromViewportOrWindow = false) => {
-      if (resizeRafId !== null) return;
-      if (catchUpTimeoutId !== null) {
-        clearTimeout(catchUpTimeoutId);
-        catchUpTimeoutId = null;
+    const scheduleAdjust = (afterZoom = false) => {
+      if (scheduledRafId !== null) return;
+      if (settleTimeoutId !== null) {
+        clearTimeout(settleTimeoutId);
+        settleTimeoutId = null;
       }
-      resizeRafId = requestAnimationFrame(() => {
-        resizeRafId = requestAnimationFrame(() => {
-          resizeRafId = null;
+      scheduledRafId = requestAnimationFrame(() => {
+        scheduledRafId = requestAnimationFrame(() => {
+          scheduledRafId = null;
           runAdjust();
-          // After zoom, layout can settle a frame or two late. Run again once so we don't get stuck at max.
-          if (fromViewportOrWindow) {
-            catchUpTimeoutId = setTimeout(() => {
-              catchUpTimeoutId = null;
+          if (afterZoom) {
+            settleTimeoutId = setTimeout(() => {
+              settleTimeoutId = null;
               runAdjust();
             }, ZOOM_SETTLE_MS);
           }
@@ -131,30 +126,42 @@ export default function AutoFitText({
       });
     };
 
-    // Observe the parent, not the element we're resizing. Otherwise changing fontSize
-    // changes our size → ResizeObserver fires → we re-run → jitter on short text.
     const parent = el.parentElement;
-    if (!parent) return () => { cancelAsync?.(); el.style.fontSize = original; };
+    if (!parent)
+      return () => {
+        cancelAsync?.();
+        el.style.fontSize = original;
+      };
 
     const resizeObserver = new ResizeObserver(() => scheduleAdjust(false));
     resizeObserver.observe(parent);
 
-    // Re-run on zoom: ResizeObserver doesn't always fire when only zoom changes on desktop.
-    const viewport = typeof window !== "undefined" ? window.visualViewport : null;
-    const onViewportOrWindowResize = () => scheduleAdjust(true);
-    if (viewport) viewport.addEventListener("resize", onViewportOrWindowResize);
-    window.addEventListener("resize", onViewportOrWindowResize);
+    const viewport =
+      typeof window !== "undefined" ? window.visualViewport : null;
+    const onResize = () => scheduleAdjust(true);
+    if (viewport) viewport.addEventListener("resize", onResize);
+    window.addEventListener("resize", onResize);
+
+    const intersectionObserver = new IntersectionObserver(
+      entries => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) scheduleAdjust(false);
+      },
+      { threshold: 0.01, root: null }
+    );
+    intersectionObserver.observe(el);
 
     return () => {
       resizeObserver.disconnect();
-      if (viewport) viewport.removeEventListener("resize", onViewportOrWindowResize);
-      window.removeEventListener("resize", onViewportOrWindowResize);
-      if (catchUpTimeoutId !== null) clearTimeout(catchUpTimeoutId);
+      intersectionObserver.disconnect();
+      if (viewport) viewport.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onResize);
+      if (settleTimeoutId !== null) clearTimeout(settleTimeoutId);
+      if (scheduledRafId !== null) cancelAnimationFrame(scheduledRafId);
       cancelAsync?.();
-      if (resizeRafId !== null) cancelAnimationFrame(resizeRafId);
       el.style.fontSize = original;
     };
-  }, [children, min, max, maxWidth, maxHeight]);
+  }, [children, min, max, maxWidth, maxHeight, active]);
 
   return (
     <Component
