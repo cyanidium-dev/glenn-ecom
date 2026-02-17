@@ -1,5 +1,3 @@
-import { fadeInAnimation } from "@/utils/animationVariants";
-import * as motion from "motion/react-client";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
@@ -21,33 +19,17 @@ export default function Rights({ className = "" }: RightsProps) {
         className
       )}
     >
-      <motion.p
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={fadeInAnimation({ x: 20, delay: 0.2 })}
-      >
-        &copy; {year} Glenn Garbo. All rights reserved.
-      </motion.p>
+      <p>&copy; {year} Glenn Garbo. All rights reserved.</p>
       <ul className="flex items-center gap-x-[15px] lg:gap-x-[30px]">
-        {links.map((link, index) => (
-          <motion.li
-            key={link.href}
-            initial="hidden"
-            whileInView="visible"
-            exit="exit"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={fadeInAnimation({ x: -20, delay: 0.2 + index * 0.2 })}
-          >
+        {links.map((link) => (
+          <li key={link.href}>
             <Link
-              key={link.href}
               href={link.href}
               className="md:hover:underline transition duration-300 ease-in-out"
             >
               {link.label}
             </Link>
-          </motion.li>
+          </li>
         ))}
       </ul>
     </div>

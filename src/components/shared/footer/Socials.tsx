@@ -6,8 +6,6 @@ import YoutubeIcon from "../icons/YoutubeIcon";
 import SpotifyIcon from "../icons/SpotifyIcon";
 import { mail, youtube, appleMusic, tidal, spotify } from "@/constants/socials";
 import { twMerge } from "tailwind-merge";
-import { fadeInAnimation } from "@/utils/animationVariants";
-import * as motion from "motion/react-client";
 
 interface SocialsProps {
   className?: string;
@@ -23,12 +21,7 @@ export default function Socials({ className = "" }: SocialsProps) {
   ];
 
   return (
-    <motion.ul
-      initial="hidden"
-      whileInView="visible"
-      exit="exit"
-      viewport={{ once: true, amount: 0.1 }}
-      variants={fadeInAnimation({ x: -20, delay: 0.2 })}
+    <ul
       className={twMerge(
         "flex items-center gap-x-1 lg:gap-x-[5px] justify-center",
         className
@@ -51,6 +44,6 @@ export default function Socials({ className = "" }: SocialsProps) {
           </Link>
         </li>
       ))}
-    </motion.ul>
+    </ul>
   );
 }
