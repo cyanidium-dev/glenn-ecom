@@ -153,9 +153,9 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${isHeaderVisibleComputed ? "translate-y-0 shadow-lg max-md:shadow-sm" : "-translate-y-full"
+      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
         } ${splashLayerActive ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
-          ? "py-0 bg-black/10 max-md:bg-black/50 md:backdrop-blur-sm max-md:shadow-black/50 shadow-black/10"
+          ? `py-0 bg-black/10 max-md:bg-black/50 md:backdrop-blur-sm ${isHeaderVisibleComputed ? "shadow-black/10 shadow-lg max-md:shadow-black/50 max-md:shadow-sm" : ""}`
           : "py-3"
         }`}
     >
