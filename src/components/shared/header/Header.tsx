@@ -19,7 +19,7 @@ import BasketButton from "../basket/BasketButton";
 import { NavMenuDesktop } from "./NavMenu";
 import BasketMenu from "../basket/BasketMenu";
 import { useCartStore } from "@/store/useCartStore";
-import { SplashContext } from "../splashScreen/SplashGate";
+import { SplashContext, LOGO_FADEOUT_DURATION_MS_EXPORT } from "../splashScreen/SplashGate";
 
 /** X button position: right edge of 330px menu minus 30px padding minus 24px button width */
 const MENU_OPEN_BUTTON_LEFT = 330 - 30 - 24;
@@ -29,7 +29,7 @@ const BURGER_MENU_EXIT_MS = 300;
 
 export default function Header() {
   const pathname = usePathname();
-  const { splashLayerActive } = useContext(SplashContext);
+  const { splashLayerActive, headerLogoHidden, splashRevealed } = useContext(SplashContext);
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const [buttonOnTopForExit, setButtonOnTopForExit] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -153,8 +153,8 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
-        } ${splashLayerActive ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
+      className={`fixed top-0 left-0 w-dvw ${splashLayerActive ? "transition-[transform_300ms_ease-in-out,opacity_350ms_ease-in-out]" : "transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out]"} ${splashLayerActive ? "z-[9999] pointer-events-none" : "z-50"} ${isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
+        } ${splashLayerActive && !splashRevealed ? "opacity-0" : ""} ${isScrolled
           ? `py-0 bg-black/10 max-md:bg-black/50 md:backdrop-blur-sm ${isHeaderVisibleComputed ? "shadow-black/10 shadow-lg max-md:shadow-black/50 max-md:shadow-sm" : ""}`
           : "py-3"
         }`}
@@ -197,7 +197,8 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${isScrolled
+            style={{ transitionDuration: `${LOGO_FADEOUT_DURATION_MS_EXPORT}ms` }}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
               ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
               : "top-0 w-[96px] aspect-96/79"
               }`}
@@ -233,7 +234,8 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-500 ease-in-out ${isScrolled
+            style={{ transitionDuration: `${LOGO_FADEOUT_DURATION_MS_EXPORT}ms` }}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-500 ease-in-out transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
               ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
               : "top-3 w-[96px] aspect-96/79 lg:w-[114px] lg:aspect-114/95"
               }`}

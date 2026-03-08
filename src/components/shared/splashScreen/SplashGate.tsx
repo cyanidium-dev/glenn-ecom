@@ -10,6 +10,13 @@ const OVERLAY_FADE_END_MS = 900; // when overlay has faded → unmount splash la
 const HEADER_FADE_MS = 200;
 const LOGO_FADEOUT_DELAY_MS = OVERLAY_FADE_END_MS + HEADER_FADE_MS; // 1100: start logo fade after header has faded in
 const LOGO_FADEOUT_DURATION_MS = 280;
+/** Export so Header can use the same duration for header logo fade-in. */
+export const LOGO_FADEOUT_DURATION_MS_EXPORT = LOGO_FADEOUT_DURATION_MS;
+
+const SPLASH_REVEAL_DELAY_MS = 50;
+const SPLASH_REVEAL_DURATION_MS = 350;
+/** Export so Header can use the same duration for bar entrance. */
+export const SPLASH_REVEAL_DURATION_MS_EXPORT = SPLASH_REVEAL_DURATION_MS;
 const FLY_DURATION = 0.4;
 const LOGO_WIDTH = 180;
 const LOGO_HEIGHT = 150;
@@ -25,17 +32,23 @@ export const SplashContext = createContext<{
   isSplashVisible: boolean;
   /** True when splash layer is shown (initial cover or full splash). Header fully hidden until this is false. */
   splashLayerActive: boolean;
+  /** True when header bar is visible but its logo should be hidden (splash logo is visible). Becomes false when flying logo starts fading so header logo can fade in. */
+  headerLogoHidden: boolean;
+  /** True once splash logo and header bar should be visible (synced entrance). */
+  splashRevealed: boolean;
   interactionUnlocked: boolean;
-}>({ isSplashVisible: true, splashLayerActive: true, interactionUnlocked: false });
+}>({ isSplashVisible: true, splashLayerActive: true, headerLogoHidden: true, splashRevealed: false, interactionUnlocked: false });
 
 function SplashLogo({
   centerRect,
   exitLogoRect,
   logoFadeOut,
+  splashRevealed,
 }: {
   centerRect: ExitLogoRect | null;
   exitLogoRect: ExitLogoRect | null;
   logoFadeOut: boolean;
+  splashRevealed: boolean;
 }) {
   const atHeader = exitLogoRect != null && centerRect != null;
   const initial = centerRect
@@ -48,7 +61,7 @@ function SplashLogo({
         y: 0,
         scaleX: 1,
         scaleY: 1,
-        opacity: 1,
+        opacity: splashRevealed ? 1 : 0,
       }
     : null;
   const animate = atHeader && exitLogoRect && centerRect
@@ -73,13 +86,22 @@ function SplashLogo({
           },
         },
       }
-    : { ...initial, opacity: 1 };
+    : {
+        ...initial,
+        opacity: splashRevealed ? 1 : 0,
+        transition: {
+          opacity: {
+            duration: SPLASH_REVEAL_DURATION_MS / 1000,
+            ease: "easeInOut" as const,
+          },
+        },
+      };
 
   if (!initial) return null;
 
   return (
     <motion.div
-      className="fixed z-9999 overflow-hidden origin-top-left pointer-events-none"
+      className="fixed z-[10000] overflow-hidden origin-top-left pointer-events-none"
       style={{ transformOrigin: "left top", willChange: "transform" }}
       initial={initial}
       animate={animate}
@@ -112,7 +134,8 @@ export default function SplashGate({
     useState<boolean>(false);
   const [showCover, setShowCover] = useState<boolean>(false);
   const [logoFadeOut, setLogoFadeOut] = useState<boolean>(false);
-  const timeoutIds = useRef<{ hide?: number; unmountSplash?: number; logoFade?: number; logoDone?: number }>({});
+  const [splashRevealed, setSplashRevealed] = useState<boolean>(false);
+  const timeoutIds = useRef<{ hide?: number; unmountSplash?: number; logoFade?: number; logoDone?: number; reveal?: number }>({});
   const [centerRect] = useState<ExitLogoRect | null>(() => {
     if (typeof window === "undefined") return null;
     return {
@@ -123,7 +146,15 @@ export default function SplashGate({
     };
   });
 
-  // Resolve before paint: show path runs sync so splash always appears; skip path deferred to avoid setState-in-effect lint.
+  // Synced entrance: reveal splash logo and header together after a short delay.
+  useEffect(() => {
+    if (shouldShowSplash !== true) return;
+    const id = window.setTimeout(() => setSplashRevealed(true), SPLASH_REVEAL_DELAY_MS);
+    timeoutIds.current.reveal = id;
+    return () => {
+      window.clearTimeout(id);
+    };
+  }, [shouldShowSplash]);
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
     let alreadyPlayed = false;
@@ -190,6 +221,7 @@ export default function SplashGate({
           });
           ids.unmountSplash = window.setTimeout(() => {
             setShouldShowSplash(false);
+            setSplashRevealed(false);
           }, OVERLAY_FADE_END_MS);
           ids.logoFade = window.setTimeout(() => setLogoFadeOut(true), LOGO_FADEOUT_DELAY_MS);
           ids.logoDone = window.setTimeout(() => {
@@ -238,6 +270,7 @@ export default function SplashGate({
 
   // Show layer when pending (initial cover) or when showing/exiting splash
   const splashLayerActive = shouldShowSplash !== false;
+  const headerLogoHidden = splashLayerActive && !logoFadeOut;
   const showSplashContent = shouldShowSplash === true;
   // Red cover: when pending (prevent flash) or when showing splash until cover timer
   const showCoverNow =
@@ -245,7 +278,7 @@ export default function SplashGate({
 
   return (
     <SplashContext.Provider
-      value={{ isSplashVisible, splashLayerActive, interactionUnlocked }}
+      value={{ isSplashVisible, splashLayerActive, headerLogoHidden, splashRevealed, interactionUnlocked }}
     >
       {splashLayerActive && (
         <div
@@ -271,6 +304,7 @@ export default function SplashGate({
           centerRect={centerRect}
           exitLogoRect={exitLogoRect}
           logoFadeOut={logoFadeOut}
+          splashRevealed={splashRevealed}
         />
       ) : null}
       {children}
