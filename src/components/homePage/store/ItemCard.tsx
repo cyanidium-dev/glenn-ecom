@@ -13,7 +13,7 @@ interface ItemCardProps {
 export default function ItemCard({ item }: ItemCardProps) {
   return (
     <li
-      className="group flex flex-col items-center justify-center w-full"
+      className="group flex flex-col items-center justify-center w-full pt-1"
       key={item.slug}
     >
       <motion.div
@@ -31,7 +31,7 @@ export default function ItemCard({ item }: ItemCardProps) {
           {/* Desktop cover: direct child of container so left-0 is container left (hover works on all screen sizes). z-20 so it stacks above disk (z-10). */}
           <div
             aria-hidden
-            className="hidden z-20 lg:block absolute left-1/2 top-0 bottom-0 -translate-x-1/2 h-full aspect-460/465 transition-all duration-700 ease-in-out group-hover:left-0 group-hover:translate-x-0 pointer-events-none"
+            className="hidden z-20 lg:block absolute left-1/2 top-0 bottom-0 -translate-x-1/2 h-full aspect-460/465 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:left-0 group-hover:translate-x-0 pointer-events-none"
           >
             <Image
               src={getOptimizedImageUrl(item.coverImage, 920, 90, "webp")}
@@ -63,7 +63,7 @@ export default function ItemCard({ item }: ItemCardProps) {
           {/* Disk: link wraps disk content only (z-10 so cover stays on top) */}
           <Link
             href={`/store/${item.slug}`}
-            className="block absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] aspect-square z-10 pointer-events-auto lg:top-1/2 lg:right-1/2 lg:translate-x-1/2 lg:-translate-y-1/2 lg:h-[calc(100%-11px)] lg:aspect-square transition-all duration-700 ease-in-out group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-0"
+            className="block absolute top-1/2 right-0 -translate-y-1/2 h-[calc(100%-5px)] aspect-square z-10 pointer-events-auto lg:top-1/2 lg:right-1/2 lg:translate-x-1/2 lg:-translate-y-1/2 lg:h-[calc(100%-11px)] lg:aspect-square transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:right-0 group-hover:translate-x-0 group-hover:rotate-0"
           >
             {/* Mobile: Disk Image (keep motion.div with vinylAnimation) */}
             <motion.div
@@ -86,7 +86,7 @@ export default function ItemCard({ item }: ItemCardProps) {
               />
             </motion.div>
             {/* Desktop: Disk Image (plain div, hover only). No extra translate: link has right-1/2 translate-x-1/2 so disk is centered like cover. */}
-            <div className="hidden lg:block absolute inset-0 transition-all duration-700 ease-in-out -rotate-90 group-hover:translate-x-0 group-hover:rotate-0">
+            <div className="hidden lg:block absolute inset-0 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] -rotate-90 group-hover:translate-x-0 group-hover:rotate-0">
               <Image
                 src={getOptimizedImageUrl(item.discImage, 900, 90, "webp")}
                 alt={item.title}
