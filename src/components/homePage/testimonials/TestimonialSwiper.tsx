@@ -14,7 +14,7 @@ interface TestimonialSwiperProps {
 
 const FADE_DURATION_MS = 1000;
 const DRAG_THRESHOLD_PX = 50;
-const AUTO_CHANGE_DELAY_MS = 4000;
+const AUTO_CHANGE_DELAY_MS = 6000;
 
 export default function TestimonialSwiper({
   testimonialsList,
@@ -25,8 +25,9 @@ export default function TestimonialSwiper({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPrevHovered, setIsPrevHovered] = useState(false);
   const [isNextHovered, setIsNextHovered] = useState(false);
+  const [isPrevPressed, setIsPrevPressed] = useState(false);
+  const [isNextPressed, setIsNextPressed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isSectionHovered, setIsSectionHovered] = useState(false);
   const [hasHoverAbility, setHasHoverAbility] = useState(false);
   const dragStartRef = useRef<number | null>(null);
 
@@ -114,17 +115,12 @@ export default function TestimonialSwiper({
   }, []);
 
   useEffect(() => {
-    if (isSectionHovered) return;
     const id = setInterval(goNext, AUTO_CHANGE_DELAY_MS);
     return () => clearInterval(id);
-  }, [isSectionHovered, goNext]);
+  }, [currentIndex, goNext]);
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => hasHoverAbility && setIsSectionHovered(true)}
-      onMouseLeave={() => hasHoverAbility && setIsSectionHovered(false)}
-    >
+    <div className="relative">
       <div
         className="testimonials-swiper relative w-full h-[280px] sm:h-[431px] lg:h-[817px] overflow-hidden select-none touch-pan-y"
         aria-roledescription="carousel"
@@ -164,11 +160,17 @@ export default function TestimonialSwiper({
         className="absolute -left-[10px] lg:-left-[61px] z-10 transition-all duration-300 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
         onMouseEnter={() => hasHoverAbility && setIsPrevHovered(true)}
-        onMouseLeave={() => hasHoverAbility && setIsPrevHovered(false)}
+        onMouseLeave={() => {
+          if (hasHoverAbility) setIsPrevHovered(false);
+          setIsPrevPressed(false);
+        }}
+        onPointerDown={() => !hasHoverAbility && setIsPrevPressed(true)}
+        onPointerUp={() => setIsPrevPressed(false)}
+        onPointerLeave={() => setIsPrevPressed(false)}
       >
         <ArrowIcon
           className="rotate-180 w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-          fill={hasHoverAbility && isPrevHovered ? solidFill : "gradient"}
+          fill={(hasHoverAbility && isPrevHovered) || isPrevPressed ? solidFill : "gradient"}
         />
       </button>
       <button
@@ -178,11 +180,17 @@ export default function TestimonialSwiper({
         className="absolute -right-[10px] lg:-right-[61px] z-10 transition-all duration-300 ease-in-out cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         style={{ top: arrowTopPosition, transform: "translateY(-50%)" }}
         onMouseEnter={() => hasHoverAbility && setIsNextHovered(true)}
-        onMouseLeave={() => hasHoverAbility && setIsNextHovered(false)}
+        onMouseLeave={() => {
+          if (hasHoverAbility) setIsNextHovered(false);
+          setIsNextPressed(false);
+        }}
+        onPointerDown={() => !hasHoverAbility && setIsNextPressed(true)}
+        onPointerUp={() => setIsNextPressed(false)}
+        onPointerLeave={() => setIsNextPressed(false)}
       >
         <ArrowIcon
           className="w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-          fill={hasHoverAbility && isNextHovered ? solidFill : "gradient"}
+          fill={(hasHoverAbility && isNextHovered) || isNextPressed ? solidFill : "gradient"}
         />
       </button>
     </div>
