@@ -39,7 +39,7 @@ export default function Header() {
   const headerRef = useRef<HTMLElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
   const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const measureRef = useRef<() => void>(() => {});
+  const measureRef = useRef<() => void>(() => { });
   const { scrollY } = useScroll();
 
   const closeHeaderMenu = () => {
@@ -153,20 +153,17 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${
-        isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
-      } ${splashLayerActive ? "opacity-0 pointer-events-none" : "opacity-100"} ${
-        isScrolled
-          ? "py-0 bg-black/10 max-md:bg-black/50 md:backdrop-blur-sm"
+      className={`fixed top-0 left-0 z-50 w-dvw transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out] ${isHeaderVisibleComputed ? "translate-y-0 shadow-lg max-md:shadow-sm" : "-translate-y-full"
+        } ${splashLayerActive ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
+          ? "py-0 bg-black/10 max-md:bg-black/50 md:backdrop-blur-sm max-md:shadow-black/50 shadow-black/10"
           : "py-3"
-      }`}
+        }`}
     >
       <Container>
         {/* Mobile layout: 3 blocks - burger (left), logo (center), basket (right) */}
         <div
-          className={`relative md:hidden flex items-center justify-between transition-all duration-300 ease-in-out ${
-            isScrolled ? "h-[60px]" : "h-[79px]"
-          }`}
+          className={`relative md:hidden flex items-center justify-between transition-all duration-300 ease-in-out ${isScrolled ? "h-[60px]" : "h-[79px]"
+            }`}
         >
           <div
             ref={placeholderRef}
@@ -174,9 +171,8 @@ export default function Header() {
             aria-hidden
           />
           <motion.div
-            className={`fixed md:hidden ${
-              isHeaderMenuOpened || buttonOnTopForExit ? "z-70" : "z-50"
-            }`}
+            className={`fixed md:hidden ${isHeaderMenuOpened || buttonOnTopForExit ? "z-70" : "z-50"
+              }`}
             initial={false}
             animate={{
               left: isHeaderMenuOpened
@@ -201,11 +197,10 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${
-              isScrolled
-                ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
-                : "top-0 w-[96px] aspect-96/79"
-            }`}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out ${isScrolled
+              ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
+              : "top-0 w-[96px] aspect-96/79"
+              }`}
           >
             <Image
               src="/images/logo.webp"
@@ -223,9 +218,8 @@ export default function Header() {
 
         {/* Desktop layout: nav (left half), logo (center), basket (far right) */}
         <div
-          className={`hidden md:flex items-center justify-between transition-all duration-300 ease-in-out ${
-            isScrolled ? "h-[60px] lg:h-[70px]" : "h-[79px] lg:h-[95px]"
-          }`}
+          className={`hidden md:flex items-center justify-between transition-all duration-300 ease-in-out ${isScrolled ? "h-[60px] lg:h-[70px]" : "h-[79px] lg:h-[95px]"
+            }`}
         >
           <div className="flex-1 flex items-center">
             <NavMenuDesktop />
@@ -239,11 +233,10 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-500 ease-in-out ${
-              isScrolled
-                ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
-                : "top-3 w-[96px] aspect-96/79 lg:w-[114px] lg:aspect-114/95"
-            }`}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-500 ease-in-out ${isScrolled
+              ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
+              : "top-3 w-[96px] aspect-96/79 lg:w-[114px] lg:aspect-114/95"
+              }`}
           >
             <Image
               src="/images/logo.webp"
