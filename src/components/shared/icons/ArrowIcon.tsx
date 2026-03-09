@@ -9,11 +9,14 @@ interface ArrowIconProps {
    * Solid fill is animated via an opacity overlay (SVG can't transition gradient ↔ solid).
    */
   fill?: string;
+  /** Override transition duration for the solid overlay (e.g. "0.2s" for faster touch feedback). Default "0.3s". */
+  transitionDuration?: string;
 }
 
 export default function ArrowIcon({
   className = "",
   fill = "currentColor",
+  transitionDuration = "0.3s",
 }: ArrowIconProps) {
   const gradientId = "arrow-gradient";
   const isGradient = fill === "gradient";
@@ -49,7 +52,7 @@ export default function ArrowIcon({
         d={ARROW_PATH}
         style={{
           opacity: isGradient ? 0 : 1,
-          transition: "opacity 0.3s ease-in-out",
+          transition: `opacity ${transitionDuration} ease-in-out`,
         }}
       />
     </svg>

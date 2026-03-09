@@ -29,7 +29,13 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         <div className="absolute inset-0 z-30 pointer-events-none">
           <MusicFrameIcon className="w-full h-full" />
         </div>
-        <div className="relative w-[75%] aspect-square">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block relative w-[75%] aspect-square xl:pointer-events-none"
+          aria-label={`Listen to ${title}`}
+        >
           <div
             className="absolute z-10 inset-0 w-full h-full pointer-events-none"
             style={{
@@ -46,7 +52,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
               className="object-cover"
             />
           ) : null}
-        </div>
+        </a>
         <div
           className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center absolute inset-0 z-20 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
           style={{
