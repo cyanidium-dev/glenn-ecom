@@ -28,7 +28,7 @@ export default function PageDecorations() {
         }}
       />
       <div
-        className="absolute top-[73%] bottom-[-102%] lg:top-[129%] lg:bottom-[-142%] 2xl:bottom-[-102%] left-1/2 -translate-x-1/2 w-full"
+        className="absolute top-[73%] bottom-[-60%] lg:top-[129%] lg:bottom-[-102%] left-1/2 -translate-x-1/2 w-full"
         style={{
           background:
             "linear-gradient(180.31deg, #010101 0.28%, #830019 62.26%, #93001C 89.33%)",

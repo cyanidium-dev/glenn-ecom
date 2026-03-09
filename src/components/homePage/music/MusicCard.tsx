@@ -71,6 +71,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         variants={fadeInAnimation({ delay: 0.3 * index, y: 10 })}
         initial="hidden"
         whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
         exit="exit"
         className="lg:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
       >
@@ -80,6 +81,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         variants={fadeInAnimation({ delay: 0.5 * index, y: 10 })}
         initial="hidden"
         whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
         exit="exit"
         className="lg:hidden"
       >

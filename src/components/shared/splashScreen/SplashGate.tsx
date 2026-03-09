@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, createContext } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { DeviceProvider } from "@/contexts/DeviceContext";
 import SplashScreen from "./SplashScreen";
 
 const MIN_DURATION = 500; // ms
@@ -307,7 +308,9 @@ export default function SplashGate({
           splashRevealed={splashRevealed}
         />
       ) : null}
-      {children}
+      <DeviceProvider>
+        {children}
+      </DeviceProvider>
     </SplashContext.Provider>
   );
 }

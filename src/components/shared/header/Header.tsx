@@ -40,6 +40,8 @@ export default function Header() {
   const placeholderRef = useRef<HTMLDivElement>(null);
   const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const measureRef = useRef<() => void>(() => { });
+  const prevPathnameRef = useRef(pathname);
+  const wasScrolledBeforeNavRef = useRef(false);
   const { scrollY } = useScroll();
 
   const closeHeaderMenu = () => {
@@ -123,7 +125,9 @@ export default function Header() {
   }, [isHeaderVisibleComputed]);
 
   useMotionValueEvent(scrollY, "change", latest => {
-    setIsScrolled(latest > 20);
+    const scrolled = latest > 20;
+    wasScrolledBeforeNavRef.current = scrolled;
+    setIsScrolled(scrolled);
     // Show header at the top of the page
     if (latest < 10) {
       setIsHeaderVisible(true);
@@ -149,6 +153,31 @@ export default function Header() {
       window.removeEventListener("resize", handleResize);
     };
   }, [isHeaderMenuOpened]);
+
+  // On page navigation: if logo was small (scrolled), snap to full size instantly on the new page
+  const [logoTransitionInstant, setLogoTransitionInstant] = useState(false);
+  useLayoutEffect(() => {
+    if (pathname !== prevPathnameRef.current) {
+      const shouldBeInstant = wasScrolledBeforeNavRef.current;
+      prevPathnameRef.current = pathname;
+      if (shouldBeInstant) queueMicrotask(() => setLogoTransitionInstant(true));
+    }
+  }, [pathname]);
+  useEffect(() => {
+    if (logoTransitionInstant && !isScrolled) {
+      const id = requestAnimationFrame(() => {
+        requestAnimationFrame(() => setLogoTransitionInstant(false));
+      });
+      return () => cancelAnimationFrame(id);
+    }
+  }, [logoTransitionInstant, isScrolled]);
+
+  const mobileLogoTransition = logoTransitionInstant
+    ? `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 100ms, top 0ms, width 0ms`
+    : `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 300ms ease-in-out, top 300ms ease-in-out, width 300ms ease-in-out`;
+  const desktopLogoTransition = logoTransitionInstant
+    ? `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 100ms, top 0ms, width 0ms`
+    : `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 500ms ease-in-out, top 500ms ease-in-out, width 500ms ease-in-out`;
 
   return (
     <header
@@ -197,8 +226,10 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            style={{ transitionDuration: `${LOGO_FADEOUT_DURATION_MS_EXPORT}ms` }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-300 ease-in-out transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
+            style={{
+              transition: mobileLogoTransition,
+            }}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
               ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
               : "top-0 w-[96px] aspect-96/79"
               }`}
@@ -234,8 +265,10 @@ export default function Header() {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }
             }}
-            style={{ transitionDuration: `${LOGO_FADEOUT_DURATION_MS_EXPORT}ms` }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-all duration-500 ease-in-out transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
+            style={{
+              transition: desktopLogoTransition,
+            }}
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
               ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
               : "top-3 w-[96px] aspect-96/79 lg:w-[114px] lg:aspect-114/95"
               }`}
