@@ -69,8 +69,10 @@ export function DeviceProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // Sync device defaults into animation variants so components don't need useDevice() for animations
-  setDeviceAnimationDefaults({ disableXY: isPhone, duration: animationDuration });
+  // Sync device defaults into animation variants after commit (not during render)
+  useEffect(() => {
+    setDeviceAnimationDefaults({ disableXY: isPhone, duration: animationDuration });
+  }, [isPhone, animationDuration]);
 
   return (
     <DeviceContext.Provider
