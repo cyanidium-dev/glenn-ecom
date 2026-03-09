@@ -20,6 +20,7 @@ import { NavMenuDesktop } from "./NavMenu";
 import BasketMenu from "../basket/BasketMenu";
 import { useCartStore } from "@/store/useCartStore";
 import { SplashContext, LOGO_FADEOUT_DURATION_MS_EXPORT } from "../splashScreen/SplashGate";
+import { NavigationContext } from "../navigation/NavigationContext";
 
 /** X button position: right edge of 330px menu minus 30px padding minus 24px button width */
 const MENU_OPEN_BUTTON_LEFT = 330 - 30 - 24;
@@ -27,9 +28,18 @@ const MENU_OPEN_BUTTON_LEFT = 330 - 30 - 24;
 /** Keep button above backdrop for this long after menu close (matches BurgerMenu exit animation) */
 const BURGER_MENU_EXIT_MS = 300;
 
+/** Delay after navigation ends before scroll-based header behavior (compact/hide) is re-enabled */
+const SCROLL_BEHAVIOR_COOLDOWN_MS = 450;
+
+/** Delay before logo opacity is applied during navigation (logo resizes instantly first) */
+const NAVIGATION_LOGO_REVEAL_DELAY_MS = 80;
+/** Duration of logo opacity transition when revealing after navigation */
+const NAVIGATION_LOGO_OPACITY_MS = 120;
+
 export default function Header() {
   const pathname = usePathname();
   const { splashLayerActive, headerLogoHidden, splashRevealed } = useContext(SplashContext);
+  const { isNavigating } = useContext(NavigationContext);
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const [buttonOnTopForExit, setButtonOnTopForExit] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -40,9 +50,68 @@ export default function Header() {
   const placeholderRef = useRef<HTMLDivElement>(null);
   const exitTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const measureRef = useRef<() => void>(() => { });
-  const prevPathnameRef = useRef(pathname);
-  const wasScrolledBeforeNavRef = useRef(false);
   const { scrollY } = useScroll();
+  const isNavigatingRef = useRef(isNavigating);
+  const [isScrollCooldown, setIsScrollCooldown] = useState(false);
+  const isScrollCooldownRef = useRef(false);
+  const scrollCooldownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [navigationLogoRevealed, setNavigationLogoRevealed] = useState(true);
+  const navigationLogoRevealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasResetHeaderForNewPageRef = useRef(false);
+  const [pathnameWhenNavStarted, setPathnameWhenNavStarted] = useState(pathname);
+
+  useEffect(() => {
+    isNavigatingRef.current = isNavigating;
+  }, [isNavigating]);
+
+  useEffect(() => {
+    isScrollCooldownRef.current = isScrollCooldown;
+  }, [isScrollCooldown]);
+
+  // When link is clicked (isNavigating = true): store current pathname; don't reset header yet.
+  // When isNavigating becomes false: clear logo reveal timeout.
+  const prevIsNavigatingForPathRef = useRef(isNavigating);
+  useEffect(() => {
+    if (isNavigating) {
+      if (!prevIsNavigatingForPathRef.current) {
+        queueMicrotask(() => setPathnameWhenNavStarted(pathname));
+      }
+      prevIsNavigatingForPathRef.current = true;
+      if (scrollCooldownTimeoutRef.current) {
+        clearTimeout(scrollCooldownTimeoutRef.current);
+        scrollCooldownTimeoutRef.current = null;
+      }
+    } else {
+      prevIsNavigatingForPathRef.current = false;
+      hasResetHeaderForNewPageRef.current = false;
+      queueMicrotask(() => setPathnameWhenNavStarted(pathname));
+      queueMicrotask(() => setNavigationLogoRevealed(true));
+      if (navigationLogoRevealTimeoutRef.current) {
+        clearTimeout(navigationLogoRevealTimeoutRef.current);
+        navigationLogoRevealTimeoutRef.current = null;
+      }
+    }
+  }, [isNavigating, pathname]);
+
+  // When actual navigation starts (pathname changed while navigating): reset header so it appears with new content
+  const hasActualNavigationStarted =
+    isNavigating && pathname !== pathnameWhenNavStarted;
+  useEffect(() => {
+    if (!hasActualNavigationStarted || hasResetHeaderForNewPageRef.current) return;
+    hasResetHeaderForNewPageRef.current = true;
+    queueMicrotask(() => setNavigationLogoRevealed(false));
+    if (navigationLogoRevealTimeoutRef.current) clearTimeout(navigationLogoRevealTimeoutRef.current);
+    navigationLogoRevealTimeoutRef.current = setTimeout(() => {
+      navigationLogoRevealTimeoutRef.current = null;
+      setNavigationLogoRevealed(true);
+    }, NAVIGATION_LOGO_REVEAL_DELAY_MS);
+    queueMicrotask(() => {
+      setIsScrollCooldown(false);
+      isScrollCooldownRef.current = false;
+      setIsHeaderVisible(true);
+      setIsScrolled(false);
+    });
+  }, [hasActualNavigationStarted]);
 
   const closeHeaderMenu = () => {
     setIsHeaderMenuOpened(false);
@@ -65,13 +134,16 @@ export default function Header() {
   useEffect(() => {
     return () => {
       if (exitTimeoutRef.current) clearTimeout(exitTimeoutRef.current);
+      if (scrollCooldownTimeoutRef.current) clearTimeout(scrollCooldownTimeoutRef.current);
+      if (navigationLogoRevealTimeoutRef.current) clearTimeout(navigationLogoRevealTimeoutRef.current);
     };
   }, []);
 
   /** Vertical position for burger/X button: matches header size (scrolled = compact, not scrolled = tall) */
   const BURGER_BUTTON_TOP_SCROLLED = 14; // py-0, row h-[60px] → center ~30px
   const BURGER_BUTTON_TOP_DEFAULT = 34; // py-3, row h-[79px] → center ~51px
-  const burgerButtonTop = isScrolled
+  const isScrolledForDisplay = (hasActualNavigationStarted || isScrollCooldown) ? false : isScrolled;
+  const burgerButtonTop = isScrolledForDisplay
     ? BURGER_BUTTON_TOP_SCROLLED
     : BURGER_BUTTON_TOP_DEFAULT;
 
@@ -87,7 +159,7 @@ export default function Header() {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [isHeaderVisible, isScrolled]);
+  }, [isHeaderVisible, isScrolledForDisplay]);
 
   const isDrawerOpen = useCartStore(state => state.isDrawerOpen);
   const drawerOpenRequestedAt = useCartStore(
@@ -114,8 +186,8 @@ export default function Header() {
     return () => clearTimeout(t);
   }, [drawerOpenRequestedAt, confirmDrawerOpen]);
 
-  // Show header when visible from scroll OR when basket is requested/open
-  const isHeaderVisibleComputed = isHeaderVisible || isBasketRequestedOrOpen;
+  // Show header when visible from scroll OR when basket is requested/open OR when navigating OR during scroll cooldown
+  const isHeaderVisibleComputed = isHeaderVisible || isBasketRequestedOrOpen || isNavigating || isScrollCooldown;
 
   // Re-measure after header slide-in transition so button position is correct
   useEffect(() => {
@@ -125,8 +197,8 @@ export default function Header() {
   }, [isHeaderVisibleComputed]);
 
   useMotionValueEvent(scrollY, "change", latest => {
+    if (isNavigatingRef.current || isScrollCooldownRef.current) return;
     const scrolled = latest > 20;
-    wasScrolledBeforeNavRef.current = scrolled;
     setIsScrolled(scrolled);
     // Show header at the top of the page
     if (latest < 10) {
@@ -137,6 +209,27 @@ export default function Header() {
     }
     setLastScrollY(latest);
   });
+
+  // When navigation ends, start cooldown then sync scroll state so header stays normal until re-enabled
+  const prevIsNavigatingRef = useRef(isNavigating);
+  useEffect(() => {
+    if (prevIsNavigatingRef.current && !isNavigating) {
+      if (scrollCooldownTimeoutRef.current) clearTimeout(scrollCooldownTimeoutRef.current);
+      queueMicrotask(() => {
+        setIsScrollCooldown(true);
+        isScrollCooldownRef.current = true;
+      });
+      scrollCooldownTimeoutRef.current = setTimeout(() => {
+        scrollCooldownTimeoutRef.current = null;
+        const latest = scrollY.get();
+        setIsScrollCooldown(false);
+        isScrollCooldownRef.current = false;
+        setLastScrollY(latest);
+        setIsScrolled(latest > 20);
+      }, SCROLL_BEHAVIOR_COOLDOWN_MS);
+    }
+    prevIsNavigatingRef.current = isNavigating;
+  }, [isNavigating, scrollY]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -154,30 +247,14 @@ export default function Header() {
     };
   }, [isHeaderMenuOpened]);
 
-  // On page navigation: if logo was small (scrolled), snap to full size instantly on the new page
-  const [logoTransitionInstant, setLogoTransitionInstant] = useState(false);
-  useLayoutEffect(() => {
-    if (pathname !== prevPathnameRef.current) {
-      const shouldBeInstant = wasScrolledBeforeNavRef.current;
-      prevPathnameRef.current = pathname;
-      if (shouldBeInstant) queueMicrotask(() => setLogoTransitionInstant(true));
-    }
-  }, [pathname]);
-  useEffect(() => {
-    if (logoTransitionInstant && !isScrolled) {
-      const id = requestAnimationFrame(() => {
-        requestAnimationFrame(() => setLogoTransitionInstant(false));
-      });
-      return () => cancelAnimationFrame(id);
-    }
-  }, [logoTransitionInstant, isScrolled]);
-
-  const mobileLogoTransition = logoTransitionInstant
-    ? `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 100ms, top 0ms, width 0ms`
+  const mobileLogoTransition = hasActualNavigationStarted
+    ? `opacity ${NAVIGATION_LOGO_OPACITY_MS}ms ease-in-out ${NAVIGATION_LOGO_REVEAL_DELAY_MS}ms, transform 0ms, top 0ms, width 0ms`
     : `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 300ms ease-in-out, top 300ms ease-in-out, width 300ms ease-in-out`;
-  const desktopLogoTransition = logoTransitionInstant
-    ? `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 100ms, top 0ms, width 0ms`
+  const desktopLogoTransition = hasActualNavigationStarted
+    ? `opacity ${NAVIGATION_LOGO_OPACITY_MS}ms ease-in-out ${NAVIGATION_LOGO_REVEAL_DELAY_MS}ms, transform 0ms, top 0ms, width 0ms`
     : `opacity ${LOGO_FADEOUT_DURATION_MS_EXPORT}ms ease-in-out, transform 500ms ease-in-out, top 500ms ease-in-out, width 500ms ease-in-out`;
+
+  const logoOpacityHidden = (hasActualNavigationStarted && !navigationLogoRevealed) || headerLogoHidden;
 
   return (
     <header
@@ -191,7 +268,7 @@ export default function Header() {
       <Container>
         {/* Mobile layout: 3 blocks - burger (left), logo (center), basket (right) */}
         <div
-          className={`relative md:hidden flex items-center justify-between transition-all duration-300 ease-in-out ${isScrolled ? "h-[60px]" : "h-[79px]"
+          className={`relative md:hidden flex items-center justify-between transition-all duration-300 ease-in-out ${isScrolledForDisplay ? "h-[60px]" : "h-[79px]"
             }`}
         >
           <div
@@ -229,7 +306,7 @@ export default function Header() {
             style={{
               transition: mobileLogoTransition,
             }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-opacity ease-in-out ${logoOpacityHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolledForDisplay
               ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79"
               : "top-0 w-[96px] aspect-96/79"
               }`}
@@ -250,7 +327,7 @@ export default function Header() {
 
         {/* Desktop layout: nav (left half), logo (center), basket (far right) */}
         <div
-          className={`hidden md:flex items-center justify-between transition-all duration-300 ease-in-out ${isScrolled ? "h-[60px] lg:h-[70px]" : "h-[79px] lg:h-[95px]"
+          className={`hidden md:flex items-center justify-between transition-all duration-300 ease-in-out ${isScrolledForDisplay ? "h-[60px] lg:h-[70px]" : "h-[79px] lg:h-[95px]"
             }`}
         >
           <div className="flex-1 flex items-center">
@@ -268,7 +345,7 @@ export default function Header() {
             style={{
               transition: desktopLogoTransition,
             }}
-            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-opacity ease-in-out ${headerLogoHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolled
+            className={`absolute z-10 left-1/2 -translate-x-1/2 transition-opacity ease-in-out ${logoOpacityHidden ? "opacity-0 pointer-events-none" : "opacity-100"} ${isScrolledForDisplay
               ? "top-1/2 -translate-y-1/2 w-[60px] aspect-96/79 lg:w-[70px] lg:aspect-114/95"
               : "top-3 w-[96px] aspect-96/79 lg:w-[114px] lg:aspect-114/95"
               }`}
