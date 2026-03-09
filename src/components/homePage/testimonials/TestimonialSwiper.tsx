@@ -171,6 +171,7 @@ export default function TestimonialSwiper({
         <ArrowIcon
           className="rotate-180 w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
           fill={(hasHoverAbility && isPrevHovered) || isPrevPressed ? solidFill : "gradient"}
+          transitionDuration={isPrevPressed ? "0.1s" : "0.3s"}
         />
       </button>
       <button
@@ -191,6 +192,7 @@ export default function TestimonialSwiper({
         <ArrowIcon
           className="w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
           fill={(hasHoverAbility && isNextHovered) || isNextPressed ? solidFill : "gradient"}
+          transitionDuration={isNextPressed ? "0.1s" : "0.3s"}
         />
       </button>
     </div>
