@@ -14,6 +14,7 @@ interface TestimonialSwiperProps {
 
 const FADE_DURATION_MS = 1000;
 const DRAG_THRESHOLD_PX = 50;
+const DRAG_HINT_THRESHOLD_PX = 20;
 const AUTO_CHANGE_DELAY_MS = 6000;
 
 export default function TestimonialSwiper({
@@ -29,6 +30,7 @@ export default function TestimonialSwiper({
   const [isNextPressed, setIsNextPressed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [hasHoverAbility, setHasHoverAbility] = useState(false);
+  const [dragDirection, setDragDirection] = useState<"prev" | "next" | null>(null);
   const dragStartRef = useRef<number | null>(null);
 
   const screenWidth = useScreenWidth();
@@ -54,6 +56,7 @@ export default function TestimonialSwiper({
       else if (delta < -DRAG_THRESHOLD_PX) goPrev();
       dragStartRef.current = null;
       setIsDragging(false);
+      setDragDirection(null);
     },
     [goPrev, goNext]
   );
@@ -61,6 +64,13 @@ export default function TestimonialSwiper({
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     dragStartRef.current = e.touches[0].clientX;
     setIsDragging(true);
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (dragStartRef.current === null) return;
+    const currentX = e.touches[0].clientX;
+    const delta = dragStartRef.current - currentX;
+    setDragDirection(delta > DRAG_HINT_THRESHOLD_PX ? "next" : delta < -DRAG_HINT_THRESHOLD_PX ? "prev" : null);
   }, []);
 
   const onTouchEnd = useCallback(
@@ -88,17 +98,27 @@ export default function TestimonialSwiper({
   const onMouseLeave = useCallback(() => {
     if (dragStartRef.current === null) return;
     setIsDragging(false);
+    setDragDirection(null);
     dragStartRef.current = null;
   }, []);
 
   useEffect(() => {
     if (!isDragging) return;
+    const onMouseMove = (e: MouseEvent) => {
+      if (dragStartRef.current === null) return;
+      const delta = dragStartRef.current - e.clientX;
+      setDragDirection(delta > DRAG_HINT_THRESHOLD_PX ? "next" : delta < -DRAG_HINT_THRESHOLD_PX ? "prev" : null);
+    };
     const onMouseUpGlobal = (e: MouseEvent) => {
       if (dragStartRef.current === null) return;
       handleDragEnd(e.clientX);
     };
+    window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUpGlobal);
-    return () => window.removeEventListener("mouseup", onMouseUpGlobal);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUpGlobal);
+    };
   }, [isDragging, handleDragEnd]);
 
   useEffect(() => {
@@ -127,6 +147,7 @@ export default function TestimonialSwiper({
         aria-label="Testimonials"
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
         onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
         onMouseDown={onMouseDown}
@@ -170,8 +191,8 @@ export default function TestimonialSwiper({
       >
         <ArrowIcon
           className="rotate-180 w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-          fill={(hasHoverAbility && isPrevHovered) || isPrevPressed ? solidFill : "gradient"}
-          transitionDuration={isPrevPressed ? "0.1s" : "0.3s"}
+          fill={(hasHoverAbility && isPrevHovered) || isPrevPressed || (isDragging && dragDirection === "prev") ? solidFill : "gradient"}
+          transitionDuration={isPrevPressed || (isDragging && dragDirection === "prev") ? "0.2s" : "0.3s"}
         />
       </button>
       <button
@@ -191,8 +212,8 @@ export default function TestimonialSwiper({
       >
         <ArrowIcon
           className="w-[12px] h-[45px] lg:w-[61px] lg:h-[139px]"
-          fill={(hasHoverAbility && isNextHovered) || isNextPressed ? solidFill : "gradient"}
-          transitionDuration={isNextPressed ? "0.1s" : "0.3s"}
+          fill={(hasHoverAbility && isNextHovered) || isNextPressed || (isDragging && dragDirection === "next") ? solidFill : "gradient"}
+          transitionDuration={isNextPressed || (isDragging && dragDirection === "next") ? "0.2s" : "0.3s"}
         />
       </button>
     </div>
