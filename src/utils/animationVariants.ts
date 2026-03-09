@@ -8,9 +8,10 @@ let deviceAnimationDefaults: { disableXY: boolean; duration: number } = {
   duration: 0.7,
 };
 
-export function setDeviceAnimationDefaults(
-  next: { disableXY: boolean; duration: number }
-): void {
+export function setDeviceAnimationDefaults(next: {
+  disableXY: boolean;
+  duration: number;
+}): void {
   deviceAnimationDefaults = next;
 }
 
@@ -150,23 +151,19 @@ export const modalVariants = {
 
 export const vinylAnimation = ({
   delay = 0.7,
-  duration,
+  duration = 0.7,
   initialRotation = -90,
   useLCPOptimization = false,
-  disableXY,
 }: {
   delay?: number;
   duration?: number;
   initialRotation?: number;
   useLCPOptimization?: boolean;
-  disableXY?: boolean;
 } = {}) => {
-  const noXY = disableXY ?? deviceAnimationDefaults.disableXY;
-  const d = duration ?? deviceAnimationDefaults.duration;
   return {
     hidden: {
       opacity: useLCPOptimization ? 0.001 : 0,
-      x: noXY ? 0 : "-50%",
+      x: "-50%",
       rotate: initialRotation,
       willChange: "opacity, transform",
     },
@@ -175,7 +172,7 @@ export const vinylAnimation = ({
       x: 0,
       rotate: 0,
       transition: {
-        duration: d,
+        duration,
         delay,
         ease: [0.25, 0.1, 0.25, 1] as const,
       },

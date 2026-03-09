@@ -67,24 +67,12 @@ export default function MusicCard({ item, index }: MusicCardProps) {
           </LinkButton>
         </div>
       </motion.div>
-      <motion.h3
-        variants={fadeInAnimation({ delay: 0.3 * index, y: 10 })}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        exit="exit"
+      <h3
         className="lg:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
       >
         {title}
-      </motion.h3>
-      <motion.div
-        variants={fadeInAnimation({ delay: 0.5 * index, y: 10 })}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        exit="exit"
-        className="lg:hidden"
-      >
+      </h3>
+      <div className="lg:hidden">
         <LinkButton
           href={link}
           target="_blank"
@@ -94,7 +82,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         >
           Listen
         </LinkButton>
-      </motion.div>
+      </div>
     </li>
   );
 }
