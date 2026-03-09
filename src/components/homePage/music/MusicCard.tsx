@@ -24,7 +24,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         whileInView="visible"
         exit="exit"
         viewport={{ once: true, amount: 0.1 }}
-        className="group relative mb-[25px] lg:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520"
+        className="group relative mb-[25px] xl:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520"
       >
         <div className="absolute inset-0 z-30 pointer-events-none">
           <MusicFrameIcon className="w-full h-full" />
@@ -68,11 +68,11 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         </div>
       </motion.div>
       <h3
-        className="lg:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
+        className="xl:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
       >
         {title}
       </h3>
-      <div className="lg:hidden">
+      <div className="xl:hidden">
         <LinkButton
           href={link}
           target="_blank"
