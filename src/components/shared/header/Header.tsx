@@ -261,7 +261,7 @@ export default function Header() {
       ref={headerRef}
       className={`fixed top-0 left-0 w-dvw ${splashLayerActive ? "transition-[transform_300ms_ease-in-out,opacity_350ms_ease-in-out]" : "transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out]"} ${splashLayerActive ? "z-[9999] pointer-events-none" : "z-50"} ${isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
         } ${splashLayerActive && !splashRevealed ? "opacity-0" : ""} ${isScrolled
-          ? `py-0 md:bg-black/15 bg-black/50 md:backdrop-blur-sm ${isHeaderVisibleComputed ? "md:shadow-black/15 shadow-black/50 shadow-md" : ""}`
+          ? `py-0 md:bg-black/5 bg-black/50 md:backdrop-blur-xs ${isHeaderVisibleComputed ? "md:shadow-black/5 shadow-black/50 shadow-md" : ""}`
           : "py-3"
         }`}
     >
