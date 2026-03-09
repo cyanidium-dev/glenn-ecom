@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
+import PageFadeIn from "@/components/shared/PageFadeIn";
 
 export const metadata: Metadata = {
   title: "Terms and Conditions | Glenn Garbo",
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
 
 export default function TermsAndConditions() {
   return (
-    <section className="pt-[131px] lg:pt-[200px] pb-[84px] lg:pb-[150px]">
+    <PageFadeIn>
+      <section className="pt-[131px] lg:pt-[200px] pb-[84px] lg:pb-[150px]">
       <Container className="px-[15px] ssm:px-[25px]">
         <h1 className="mb-[30px] lg:mb-15 mx-auto font-andes text-[48px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
           Terms and conditions
@@ -130,5 +132,6 @@ export default function TermsAndConditions() {
         </div>
       </Container>
     </section>
+    </PageFadeIn>
   );
 }

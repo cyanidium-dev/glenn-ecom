@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
+import PageFadeIn from "@/components/shared/PageFadeIn";
 
 export const metadata: Metadata = {
   title: "Care Instructions | Glenn Garbo",
@@ -39,22 +40,24 @@ export default function CareInstructions() {
     "• After each listening session, we advise returning the record immediately to its inner and outer sleeves, safeguarding it from dust accumulation and surface abrasion.",
   ];
   return (
-    <section className="pt-[124px] ssm:pt-[131px] lg:pt-[220px] lg:pb-[150px]">
-      <Container className="px-[15px] ssm:px-[20px]">
-        <h1 className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
-          Care Instructions for the Distinguished Record Collector
-        </h1>
-        <ul className="flex flex-col gap-2 lg:gap-[15px] max-w-[730px] mx-auto">
-          {careInstructions.map((instruction, index) => (
-            <li
-              key={index}
-              className="text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] text-center"
-            >
-              {instruction}
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
+    <PageFadeIn>
+      <section className="pt-[124px] ssm:pt-[131px] pb-[44px] lg:pt-[220px] lg:pb-[150px]">
+        <Container className="px-[15px] ssm:px-[20px]">
+          <h1 className="mb-[30px] lg:mb-15 max-w-[1200px] mx-auto font-andes text-[46px] ssm:text-[47px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
+            Care Instructions for the Distinguished Record Collector
+          </h1>
+          <ul className="flex flex-col gap-2 lg:gap-[15px] max-w-[730px] mx-auto">
+            {careInstructions.map((instruction, index) => (
+              <li
+                key={index}
+                className="text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%] text-center"
+              >
+                {instruction}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+    </PageFadeIn>
   );
 }

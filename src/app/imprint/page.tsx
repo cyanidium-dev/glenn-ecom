@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/shared/container/Container";
+import PageFadeIn from "@/components/shared/PageFadeIn";
 
 export const metadata: Metadata = {
   title: "Imprint | Glenn Garbo",
@@ -24,26 +25,28 @@ export const metadata: Metadata = {
 
 export default function Imprint() {
   return (
-    <section className="pt-[131px] lg:pt-[200px] pb-[84px] lg:pb-[150px]">
-      <Container className="px-[15px] ssm:px-[20px]">
-        <h1 className="mb-[30px] lg:mb-15 mx-auto font-andes text-[48px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
-          Imprint
-        </h1>
-        <div className="max-w-[536px] mx-auto text-center text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%]">
-          <p className="whitespace-pre-line">
-            Website owner and responsible for content:
-            {"\n"}Mathias Biehle
-            {"\n"}Switzerland
-            {"\n"}
-            <a
-              href="mailto:contact@glenngarbo.com"
-              className="underline hover:text-white/60 transition duration-300 ease-in-out"
-            >
-              contact@glenngarbo.com
-            </a>
-          </p>
-        </div>
-      </Container>
-    </section>
+    <PageFadeIn>
+      <section className="pt-[131px] lg:pt-[200px] pb-[84px] lg:pb-[150px]">
+        <Container className="px-[15px] ssm:px-[20px]">
+          <h1 className="mb-[30px] lg:mb-15 mx-auto font-andes text-[48px] lg:text-[96px] leading-[95%] font-medium tracking-0.01em text-center lowercase">
+            Imprint
+          </h1>
+          <div className="max-w-[536px] mx-auto text-center text-[12px] leading-[116%] lg:text-[18px] lg:leading-[121%]">
+            <p className="whitespace-pre-line">
+              Website owner and responsible for content:
+              {"\n"}Mathias Biehle
+              {"\n"}Switzerland
+              {"\n"}
+              <a
+                href="mailto:contact@glenngarbo.com"
+                className="underline hover:text-white/60 transition duration-300 ease-in-out"
+              >
+                contact@glenngarbo.com
+              </a>
+            </p>
+          </div>
+        </Container>
+      </section>
+    </PageFadeIn>
   );
 }

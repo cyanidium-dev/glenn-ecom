@@ -4,6 +4,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import Header from "@/components/shared/header/Header";
 import SplashGate from "@/components/shared/splashScreen/SplashGate";
+import NavigationProvider from "@/components/shared/navigation/NavigationContext";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 
 const Footer = dynamic(() => import("@/components/shared/footer/Footer"), {
@@ -60,9 +61,11 @@ export default function RootLayout({
         className={`${roboto.variable} ${rubik.variable} ${andes.variable} flex min-h-screen flex-col antialiased overflow-hidden`}
       >
         <SplashGate>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <NavigationProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </NavigationProvider>
         </SplashGate>
       </body>
     </html>
