@@ -6,13 +6,7 @@ import { usePathname } from "next/navigation";
 import BurgerMenuButton from "./BurgerButton";
 import BurgerMenu from "./BurgerMenu";
 import Backdrop from "../backdrop/Backdrop";
-import {
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-  useContext,
-} from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useContext } from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { motion } from "framer-motion";
 import BasketButton from "../basket/BasketButton";
@@ -38,7 +32,7 @@ const NAVIGATION_LOGO_OPACITY_MS = 120;
 
 export default function Header() {
   const pathname = usePathname();
-  const { splashLayerActive, headerLogoHidden, splashRevealed } = useContext(SplashContext);
+  const { isSplashVisible, splashLayerActive, headerLogoHidden, interactionUnlocked } = useContext(SplashContext);
   const { isNavigating } = useContext(NavigationContext);
   const [isHeaderMenuOpened, setIsHeaderMenuOpened] = useState(false);
   const [buttonOnTopForExit, setButtonOnTopForExit] = useState(false);
@@ -260,7 +254,7 @@ export default function Header() {
     <header
       ref={headerRef}
       className={`fixed top-0 left-0 w-dvw ${splashLayerActive ? "transition-[transform_300ms_ease-in-out,opacity_350ms_ease-in-out]" : "transition-[transform_300ms_ease-in-out,opacity_200ms_ease-out]"} ${splashLayerActive ? "z-[9999] pointer-events-none" : "z-50"} ${isHeaderVisibleComputed ? "translate-y-0" : "-translate-y-full"
-        } ${splashLayerActive && !splashRevealed ? "opacity-0" : ""} ${isScrolled
+        } ${splashLayerActive && (!interactionUnlocked || isSplashVisible) ? "opacity-0" : ""} ${isScrolled
           ? `py-0 md:bg-black/5 bg-black/50 md:backdrop-blur-xs ${isHeaderVisibleComputed ? "md:shadow-black/5 shadow-black/50 shadow-md" : ""}`
           : "py-3"
         }`}
