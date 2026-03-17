@@ -16,17 +16,7 @@ export default function ItemCard({ item }: ItemCardProps) {
       className="group flex flex-col items-center justify-center w-full pt-1"
       key={item.slug}
     >
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        exit="exit"
-        variants={fadeInAnimation({
-          duration: 0.4,
-          delay: 0.2 * (item.order || 0),
-        })}
-        className="relative z-20 w-full mb-[23px] lg:mb-[20px] pointer-events-none"
-      >
+      <div className="relative z-20 w-full mb-[23px] lg:mb-[20px] pointer-events-none">
         <div className="relative mx-auto max-w-[685px] h-auto aspect-329/223 md:aspect-685/465 pointer-events-none block">
           {/* Desktop cover: direct child of container so left-0 is container left (hover works on all screen sizes). z-20 so it stacks above disk (z-10). */}
           <div
@@ -98,7 +88,7 @@ export default function ItemCard({ item }: ItemCardProps) {
             </div>
           </Link>
         </div>
-      </motion.div>
+      </div>
       <motion.h3
         variants={fadeInAnimation({ delay: 0.3 * (item.order || 0), y: 10 })}
         initial="hidden"
