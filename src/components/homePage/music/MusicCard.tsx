@@ -1,7 +1,5 @@
 import LinkButton from "@/components/shared/buttons/LinkButton";
 import MusicFrameIcon from "@/components/shared/icons/MusicFrameIcon";
-import { fadeInAnimation } from "@/utils/animationVariants";
-import * as motion from "motion/react-client";
 import Image from "next/image";
 import { MainPageMusicItem } from "@/types/music";
 import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
@@ -18,14 +16,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
 
   return (
     <li className="flex flex-col items-center justify-center w-full">
-      <motion.div
-        variants={fadeInAnimation({ delay: 0.2 * index, y: 10 })}
-        initial="hidden"
-        whileInView="visible"
-        exit="exit"
-        viewport={{ once: true, amount: 0.1 }}
-        className="group relative mb-[25px] xl:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520"
-      >
+      <div className="group relative mb-[25px] xl:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520">
         <div className="absolute inset-0 z-30 pointer-events-none">
           <MusicFrameIcon className="w-full h-full" />
         </div>
@@ -72,7 +63,7 @@ export default function MusicCard({ item, index }: MusicCardProps) {
             Listen
           </LinkButton>
         </div>
-      </motion.div>
+      </div>
       <h3
         className="xl:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
       >

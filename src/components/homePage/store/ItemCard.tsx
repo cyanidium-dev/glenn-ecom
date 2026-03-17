@@ -1,4 +1,4 @@
-import { fadeInAnimation, vinylAnimation } from "@/utils/animationVariants";
+import { vinylAnimation } from "@/utils/animationVariants";
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import { MainPageStoreItem } from "@/types/store";
@@ -89,40 +89,14 @@ export default function ItemCard({ item }: ItemCardProps) {
           </Link>
         </div>
       </div>
-      <motion.h3
-        variants={fadeInAnimation({ delay: 0.3 * (item.order || 0), y: 10 })}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        exit="exit"
-        className="hidden lg:block font-andes text-center text-[42px] font-medium leading-[95%] lowercase mb-[15px]"
-      >
-        {item.title}
-      </motion.h3>
-      <h3 className="lg:hidden font-andes text-center text-[28px] font-medium leading-[95%] lowercase mb-[15px]">
+      <h3 className="font-andes text-center text-[28px] lg:text-[42px] font-medium leading-[95%] lowercase mb-[15px]">
         {item.title}
       </h3>
-      <motion.div
-        variants={fadeInAnimation({ delay: 0.5 * (item.order || 0), y: 10 })}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        exit="exit"
-        className="hidden lg:block"
-      >
+      <div>
         <LinkButton
           href={`/store/${item.slug}`}
           variant="outline"
-          className="w-[126px] h-[45px] text-[18px] leading-none border-[3px]"
-        >
-          Shop
-        </LinkButton>
-      </motion.div>
-      <div className="lg:hidden">
-        <LinkButton
-          href={`/store/${item.slug}`}
-          variant="outline"
-          className="w-[131px] h-[39px] text-[14px] leading-none"
+          className="w-[131px] lg:w-[126px] xl:w-[126px] 2xl:w-[126px] h-[39px] lg:h-[45px] text-[14px] lg:text-[18px] leading-none border-[3px]"
         >
           Shop
         </LinkButton>
