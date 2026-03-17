@@ -44,7 +44,7 @@ export default function MusicCard({ item }: MusicCardProps) {
           ) : null}
         </a>
         <div
-          className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center absolute inset-0 z-20 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+          className="hidden xl:flex xl:flex-col xl:items-center xl:justify-center absolute inset-0 z-20 opacity-0 xl:group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
           style={{
             background: "#92001D99",
           }}
