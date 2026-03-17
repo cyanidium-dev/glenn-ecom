@@ -15,7 +15,7 @@ export default function MusicCard({ item }: MusicCardProps) {
 
   return (
     <li className="flex flex-col items-center justify-center w-full">
-      <div className="group relative mb-[25px] xl:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520">
+      <div className="group relative mb-[25px] 2xl:mb-0 flex items-center justify-center w-full h-auto aspect-330/320 max-w-[535px] lg:aspect-535/520">
         <div className="absolute inset-0 z-30 pointer-events-none">
           <MusicFrameIcon className="w-full h-full" />
         </div>
