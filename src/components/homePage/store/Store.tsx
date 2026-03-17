@@ -18,7 +18,7 @@ export default function Store({ records }: StoreProps) {
       className="relative pt-[75px] pb-[60px] lg:pt-[150px] lg:pb-[175px]"
     >
       <PageDecorations />
-      <Container>
+      <Container className="relative z-20">
         <h2 className="font-andes text-[46px] lg:text-[110px] leading-[95%] text-center mb-5 lg:mb-10">
           Store
         </h2>

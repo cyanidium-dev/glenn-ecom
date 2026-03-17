@@ -18,8 +18,8 @@ export default function Music({ music }: MusicProps) {
           Music
         </h2>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-[50px] md:gap-x-10 lg:gap-x-10 2xl:gap-x-0 items-center justify-center w-full">
-          {music.map((item, index) => (
-            <MusicCard key={item._id} item={item} index={index} />
+          {music.map((item) => (
+            <MusicCard key={item._id} item={item} />
           ))}
         </ul>
       </Container>

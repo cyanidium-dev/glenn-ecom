@@ -6,10 +6,9 @@ import { getOptimizedImageUrl } from "@/utils/sanityImageUrl";
 
 interface MusicCardProps {
   item: MainPageMusicItem;
-  index: number;
 }
 
-export default function MusicCard({ item, index }: MusicCardProps) {
+export default function MusicCard({ item }: MusicCardProps) {
   const { title, image, streamingLinks } = item;
   const link = streamingLinks?.[0]?.url ?? "#";
   const imageUrl = image ? getOptimizedImageUrl(image, 800, 90, "webp") : "";
@@ -65,11 +64,11 @@ export default function MusicCard({ item, index }: MusicCardProps) {
         </div>
       </div>
       <h3
-        className="xl:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
+        className="2xl:hidden font-andes text-center text-[32px] font-medium leading-[95%] lowercase mb-[15px]"
       >
         {title}
       </h3>
-      <div className="xl:hidden">
+      <div className="2xl:hidden">
         <LinkButton
           href={link}
           target="_blank"
