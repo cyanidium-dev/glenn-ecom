@@ -9,28 +9,26 @@ export default function LiveList({ events }: LiveListProps) {
   if (!events || !events.length) {
     return (
       <>
-        <div>
-          <SeparatorLine className="w-full -my-px h-[2px]" />
-          <div className="md:flex md:items-center md:justify-between mb-[22px] lg:mb-0 lg:pb-5 pt-[7px] lg:pt-5">
-            <div>
-              <h3 className="text-[14px] lg:text-[22px] font-medium leading-[120%] mb-[5px]">
-                There are no upcoming events at the moment.
-              </h3>
-              <p className="text-[11px] lg:text-[22px] leading-[120%]">
-                Join the list to be notified when new dates are announced in
-                your area.
-              </p>
-            </div>
-            <LinkButton
-              href="#journal"
-              variant="outline"
-              className="w-[132px] h-[39px] text-[14px] leading-none"
-            >
-              Join
-            </LinkButton>
+        <SeparatorLine className="w-full -my-px h-[2px]" />
+        <div className="md:flex md:items-center md:justify-between mb-[22px] lg:mb-0 lg:pb-5 pt-[7px] lg:pt-5">
+          <div className="mb-[15px] md:mb-0">
+            <h3 className="text-[14px] lg:text-[22px] font-medium leading-[120%] mb-[5px]">
+              There are no upcoming events at the moment.
+            </h3>
+            <p className="text-[11px] lg:text-[22px] leading-[120%]">
+              Join the list to be notified when new dates are announced in
+              your area.
+            </p>
           </div>
-          <SeparatorLine className="w-full -my-px h-[2px] hidden md:block" />
+          <LinkButton
+            href="#journal"
+            variant="outline"
+            className="w-[132px] h-[39px] text-[14px] leading-none"
+          >
+            Join
+          </LinkButton>
         </div>
+        <SeparatorLine className="w-full -my-px h-[2px] hidden md:block" />
       </>
     );
   }

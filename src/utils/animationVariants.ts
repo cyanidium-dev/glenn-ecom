@@ -76,7 +76,7 @@ export const basketMenuVariants = {
   visible: {
     x: "0%",
     opacity: 1,
-    transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] as const },
+    transition: { duration: 0.25, ease: [0.33, 1, 0.68, 1] as const },
   },
   exit: {
     x: "100%",
