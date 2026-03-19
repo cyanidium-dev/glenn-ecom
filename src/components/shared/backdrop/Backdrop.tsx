@@ -7,6 +7,8 @@ interface BackdropProps {
   onClick: () => void;
   className?: string;
   transparent?: boolean;
+  /** Delay in seconds before entrance animation starts (e.g. to sync with basket drawer) */
+  entranceDelay?: number;
 }
 
 export default function Backdrop({
@@ -14,6 +16,7 @@ export default function Backdrop({
   onClick,
   className = "",
   transparent = false,
+  entranceDelay = 0,
 }: BackdropProps) {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -40,10 +43,13 @@ export default function Backdrop({
             opacity: 0,
             transition: { duration: 0.3, ease: [0.42, 0, 1, 1] as const },
           }}
-          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] as const }}
-          className={`fixed z-55 inset-0 w-dvw h-dvh no-doc-scroll ${
-            transparent ? "bg-transparent" : "bg-black/60"
-          } ${className}`}
+          transition={{
+            duration: 0.4,
+            delay: entranceDelay,
+            ease: [0.25, 0.1, 0.25, 1] as const,
+          }}
+          className={`fixed z-55 inset-0 w-dvw h-dvh no-doc-scroll ${transparent ? "bg-transparent" : "bg-black/60"
+            } ${className}`}
           onClick={onClick}
           aria-hidden
         />

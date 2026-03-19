@@ -173,12 +173,16 @@ export default function Header() {
     prevDrawerOpen.current = isDrawerOpen;
   }, [isDrawerOpen]);
 
-  // First show header, then open basket (after header transition)
+  // Open basket: immediately if header is already visible, else after header slide-in (120ms)
   useEffect(() => {
     if (drawerOpenRequestedAt == null) return;
+    if (isHeaderVisible) {
+      confirmDrawerOpen();
+      return;
+    }
     const t = setTimeout(confirmDrawerOpen, 120);
     return () => clearTimeout(t);
-  }, [drawerOpenRequestedAt, confirmDrawerOpen]);
+  }, [drawerOpenRequestedAt, confirmDrawerOpen, isHeaderVisible]);
 
   // Show header when visible from scroll OR when basket is requested/open OR when navigating OR during scroll cooldown
   const isHeaderVisibleComputed = isHeaderVisible || isBasketRequestedOrOpen || isNavigating || isScrollCooldown;
@@ -373,6 +377,14 @@ export default function Header() {
           if (isHeaderMenuOpened) closeHeaderMenu();
           toggleDrawer(false);
         }}
+        entranceDelay={
+          isBasketRequestedOrOpen &&
+          !isHeaderMenuOpened &&
+          drawerOpenRequestedAt != null &&
+          !isHeaderVisible
+            ? 0.12
+            : 0
+        }
       />
     </header>
   );
